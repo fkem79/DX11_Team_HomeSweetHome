@@ -12,7 +12,7 @@ AStarScene::AStarScene()
 
 
 //	CAMERA->SetTarget(kaya->GetTransform());
-	//CAMERA->SetTarget(belle->GetTransform());
+	CAMERA->SetTarget(belle->GetTransform());
 }
 
 AStarScene::~AStarScene()
