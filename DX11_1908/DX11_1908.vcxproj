@@ -116,6 +116,12 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -143,6 +149,12 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -174,6 +186,12 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -205,6 +223,12 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+    <PostBuildEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
+    </PostBuildEvent>
+    <PreLinkEvent>
+      <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
+    </PreLinkEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ADX11Resource\Model\Belle.h" />
