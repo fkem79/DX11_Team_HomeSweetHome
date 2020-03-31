@@ -7,7 +7,8 @@ private:
 		IDLE,
 		RUN,
 		ATTACK,
-		ETC
+		TurnLeft,
+		TurnRight
 	}state;
 
 	Transform* transform;

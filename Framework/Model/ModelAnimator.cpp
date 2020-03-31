@@ -19,8 +19,11 @@ ModelAnimator::~ModelAnimator()
 	delete frameBuffer;
 	delete[] clipTransform;
 
-	texture->Release();
-	srv->Release();
+	if(texture != nullptr)
+		texture->Release();
+
+	if (srv != nullptr)
+		srv->Release();
 
 	for (Transform* transform : transforms)
 		delete transform;

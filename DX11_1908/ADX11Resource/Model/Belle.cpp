@@ -2,7 +2,7 @@
 #include "Belle.h"
 
 Belle::Belle()
-	: moveSpeed(30.0f), rotSpeed(2.0f), state(IDLE), accelation(10.0f),
+	: moveSpeed(10.0f), rotSpeed(2.0f), state(IDLE), accelation(10.0f),
 	deceleration(3.0f), velocity(0, 0, 0)
 {
 	model = new ModelAnimator(L"ModelAnimationInstancing");
@@ -47,6 +47,12 @@ void Belle::Input()
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
+	/*일단 보류
+	if (KEYDOWN(VK_F3))
+		SetAnimation(TurnLeft);
+
+	if (KEYDOWN(VK_F4))
+		SetAnimation(TurnRight);*/
 }
 
 void Belle::Move()
@@ -111,10 +117,22 @@ void Belle::ReadData()
 	reader->ExportAnimClip(0, name + "/Attack");
 	delete reader;
 
+	reader = new ModelReader();
+	reader->ReadFile("ModelData/Animations/" + name + "/TurnLeft.fbx");
+	reader->ExportAnimClip(0, name + "/TurnLeft");
+	delete reader;
+
+	reader = new ModelReader();
+	reader->ReadFile("ModelData/Animations/" + name + "/TurnRight.fbx");
+	reader->ExportAnimClip(0, name + "/TurnRight");
+	delete reader;
+
 	string path = name + "/" + name;
 	model->ReadMaterial(path);
 	model->ReadMesh(path);
 	model->ReadClip(name + "/Idle");
 	model->ReadClip(name + "/Walk");
 	model->ReadClip(name + "/Attack");
+	model->ReadClip(name + "/TurnLeft");
+	model->ReadClip(name + "/TurnRight");
 }
