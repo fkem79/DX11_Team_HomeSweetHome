@@ -1,4 +1,5 @@
 #include "Framework.h"
+#include "Model.h"
 
 Model::Model()
 {
@@ -247,6 +248,14 @@ void Model::SetNormalMap(wstring file)
 {
 	for (ModelMesh* mesh : meshes)
 		mesh->GetMaterial()->SetNormalMap(file);
+}
+
+void Model::SetSpecular(Float4 color)
+{
+	for (ModelMesh* mesh : meshes)
+	{
+		mesh->GetMaterial()->GetBuffer()->data.specular = color;
+	}
 }
 
 void Model::Attach(wstring shader, Model* model, int parentBoneIndex, Transform* transform)

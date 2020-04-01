@@ -14,6 +14,8 @@ Belle::Belle()
 	model->PlayClip(0, state);
 
 	transform->scale = Vector3(0.05f, 0.05f, 0.05f);
+
+	model->GetModel()->SetSpecular(Float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 Belle::~Belle()
@@ -47,6 +49,7 @@ void Belle::Input()
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
+
 	/*일단 보류
 	if (KEYDOWN(VK_F3))
 		SetAnimation(TurnLeft);
@@ -94,7 +97,7 @@ void Belle::SetIdle()
 
 void Belle::ReadData()
 {
-	string name = "Belle";
+	string name = "bel2";
 
 	ModelReader* reader = new ModelReader();
 	reader->ReadFile("ModelData/Models/" + name + ".fbx");
