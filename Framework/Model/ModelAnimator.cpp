@@ -19,11 +19,16 @@ ModelAnimator::~ModelAnimator()
 	delete frameBuffer;
 	delete[] clipTransform;
 
+<<<<<<< HEAD
 	if(texture != nullptr)
 		texture->Release();
 
 	if (srv != nullptr)
 		srv->Release();
+=======
+	texture->Release();
+	srv->Release();
+>>>>>>> sub/master
 
 	for (Transform* transform : transforms)
 		delete transform;
@@ -234,7 +239,11 @@ void ModelAnimator::CreateTexture()
 	for (ModelMesh* mesh : *model->GetMeshes())
 		mesh->SetTransformsSRV(srv);
 }
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> sub/master
 void ModelAnimator::CreateClipTransform(UINT index)
 {
 	Matrix* bones = new Matrix[MAX_MODEL_BONE];
@@ -277,6 +286,7 @@ void ModelAnimator::CreateClipTransform(UINT index)
 		}
 	}
 }
+<<<<<<< HEAD
 */
 
 void ModelAnimator::CreateClipTransform(UINT index)
@@ -322,3 +332,5 @@ void ModelAnimator::CreateClipTransform(UINT index)
 		}
 	}
 }
+=======
+>>>>>>> sub/master

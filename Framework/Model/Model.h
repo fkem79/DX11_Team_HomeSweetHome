@@ -28,8 +28,11 @@ public:
 	void SetSpecularMap(wstring file);
 	void SetNormalMap(wstring file);
 
+<<<<<<< HEAD
 	void SetSpecular(Float4 color);
 
+=======
+>>>>>>> sub/master
 	void Attach(wstring shader, Model* model,
 		int parentBoneIndex, Transform* transform = nullptr);
 
