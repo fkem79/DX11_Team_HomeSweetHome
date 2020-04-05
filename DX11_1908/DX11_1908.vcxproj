@@ -232,6 +232,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ADX11Resource\Model\Belle.h" />
+    <ClInclude Include="ADX11Resource\Model\PlayerHead.h" />
+    <ClInclude Include="ADX11Resource\Model\PlayerLHand.h" />
     <ClInclude Include="AStar\AStar.h" />
     <ClInclude Include="AStar\Heap.h" />
     <ClInclude Include="AStar\Node.h" />
@@ -275,6 +277,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ADX11Resource\Model\Belle.cpp" />
+    <ClCompile Include="ADX11Resource\Model\PlayerHead.cpp" />
+    <ClCompile Include="ADX11Resource\Model\PlayerLHand.cpp" />
     <ClCompile Include="AStar\AStar.cpp" />
     <ClCompile Include="AStar\Heap.cpp" />
     <ClCompile Include="AStar\Node.cpp" />

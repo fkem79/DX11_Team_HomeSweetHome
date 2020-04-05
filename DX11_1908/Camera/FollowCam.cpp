@@ -43,13 +43,18 @@ void FollowCam::Update()
 
 	Vector3 tempOffset = XMVector3TransformCoord(offset.data, matRotation);
 
+	Vector3 t = { 2.0f, 0.0f, 0.0f };
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
+	//matView = XMMatrixLookAtLH(t.data, (target->position + tempOffset).data, up.data);
+	
+
+	//matview
 }
 
 void FollowCam::PostRender()
 {
 	Camera::PostRender();
-	ImGui::SliderFloat("Distance", &distance, 1.0f, 100.0f);
+	ImGui::SliderFloat("Distance", &distance, -100.0f, 100.0f);
 	ImGui::SliderFloat("Height", &height, 1.0f, 100.0f);
 	ImGui::SliderFloat("MoveDamping", &moveDamping, 0.0f, 30.0f);
 	ImGui::SliderFloat("RotDamping", &rotDamping, 0.0f, 30.0f);
@@ -72,9 +77,9 @@ void FollowCam::MouseControl()
 	distance -= Keyboard::Get()->GetWheel() * zoomSpeed;
 	height -= Keyboard::Get()->GetWheel() * zoomSpeed;
 
-	if (distance < 1.0f)
+	/*if (distance < 1.0f)
 		distance = 1.0f;
 
 	if (height < 1.0f)
-		height = 1.0f;
+		height = 1.0f;*/
 }

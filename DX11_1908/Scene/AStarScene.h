@@ -9,6 +9,8 @@ private:
 	AStar* aStar;
 
 	Belle* belle;
+	PlayerHead* playerHaed;
+	PlayerLHand* playerLHand;
 
 public:
 	AStarScene();

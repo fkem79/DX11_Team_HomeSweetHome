@@ -25,6 +25,8 @@
 
 #include "Objects/Model/Kaya.h"
 #include "ADX11Resource/Model/Belle.h"
+#include "ADX11Resource/Model/PlayerHead.h"
+#include "ADX11Resource/Model/PlayerLHand.h"
 
 #include "Objects/Sphere.h"
 #include "Objects/Shadow.h"

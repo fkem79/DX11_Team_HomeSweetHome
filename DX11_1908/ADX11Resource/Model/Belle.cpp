@@ -25,8 +25,8 @@ Belle::~Belle()
 
 void Belle::Update()
 {
-	Input();
-	Move();
+	//Input();
+//	Move();
 
 	model->Update();
 }
