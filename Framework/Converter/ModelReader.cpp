@@ -26,6 +26,10 @@ void ModelReader::ExportMaterial(string savePath, bool isOverwrite)
 	WriteMaterial(savePath, isOverwrite);
 }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> sub/master
 void ModelReader::ReadMaterial()
 {
 	for (UINT i = 0; i < scene->mNumMaterials; i++)
@@ -186,6 +190,7 @@ string ModelReader::WriteTexture(string savePath, string file)
 
 	return Path::GetFileName(path);
 }
+<<<<<<< HEAD
 /*
 void ModelReader::ExportMesh(string savePath, bool isOverwrite)
 {
@@ -194,10 +199,13 @@ void ModelReader::ExportMesh(string savePath, bool isOverwrite)
 	savePath = "ModelData/Meshes/" + savePath + ".mesh";
 	WriteMeshData(savePath, isOverwrite);
 }*/
+=======
+>>>>>>> sub/master
 
 void ModelReader::ExportMesh(string savePath, bool isOverwrite)
 {
 	ReadBoneData(scene->mRootNode, -1, -1);
+<<<<<<< HEAD
 	for (UINT i = 0;i < scene->mNumMeshes;i++)
 	{
 		aiMesh* mesh = scene->mMeshes[i];
@@ -214,12 +222,18 @@ void ModelReader::ExportMesh(string savePath, bool isOverwrite)
 			}
 		}
 	}
+=======
+>>>>>>> sub/master
 	ReadSkinData();
 	savePath = "ModelData/Meshes/" + savePath + ".mesh";
 	WriteMeshData(savePath, isOverwrite);
 }
 
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> sub/master
 void ModelReader::ReadBoneData(aiNode* node, int index, int parent)
 {
 	AssimpBone* bone = new AssimpBone();
@@ -246,6 +260,7 @@ void ModelReader::ReadBoneData(aiNode* node, int index, int parent)
 		ReadBoneData(node->mChildren[i], bones.size(), index);
 	}
 }
+<<<<<<< HEAD
 */
 
 void ModelReader::ReadBoneData(aiNode* node, int index, int parent)
@@ -276,6 +291,8 @@ void ModelReader::ReadBoneData(aiNode* node, int index, int parent)
 		ReadBoneData(node->mChildren[i], bones.size(), index);
 	}
 }
+=======
+>>>>>>> sub/master
 
 void ModelReader::ReadMeshData(aiNode* node, int bone)
 {
@@ -597,4 +614,7 @@ void ModelReader::WriteClipData(Clip* clip, string savePath, bool isOverwrite)
 
 	delete w;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> sub/master

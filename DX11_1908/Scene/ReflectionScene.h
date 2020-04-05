@@ -1,21 +1,15 @@
 #pragma once
 
-class AStarScene : public Scene
+class ReflectionScene : public Scene
 {
 private:
-	Terrain* terrain;
-	Kaya* kaya;
 	CubeSky* sky;
-	AStar* aStar;
-<<<<<<< HEAD
-
-	Belle* belle;
-
-=======
->>>>>>> sub/master
+	Sphere* sphere;	
+	Terrain* terrain;
+	Reflection* reflection;
 public:
-	AStarScene();
-	~AStarScene();
+	ReflectionScene();
+	~ReflectionScene();
 	
 	virtual void Update() override;
 	virtual void PreRender() override;

@@ -12,9 +12,15 @@ Environment::Environment()
 	CreatePerspective();	
     CreateSamplerState();
 
+<<<<<<< HEAD
    // mainCamera = new FreeCam();
     //mainCamera->position = Vector3(0, 0, -3);    
     mainCamera = new FollowCam();
+=======
+    mainCamera = new FreeCam();
+    mainCamera->position = Vector3(0, 0, -3);    
+    //mainCamera = new FollowCam();
+>>>>>>> sub/master
 }
 
 Environment::~Environment()

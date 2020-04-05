@@ -23,6 +23,12 @@ void Kaya::Update()
 {	
 	Input();
 	Move();
+<<<<<<< HEAD
+=======
+	Rotate();
+
+	transform->position.SetY(terrain->GetHeight(transform->position));
+>>>>>>> sub/master
 
 	model->Update();	
 }
@@ -46,6 +52,68 @@ void Kaya::Input()
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
+<<<<<<< HEAD
+=======
+
+	if (KEYDOWN(VK_LBUTTON))
+	{
+		path.clear();
+
+		terrain->ComputePicking(&destPos);		
+
+		Ray ray;
+		ray.position = transform->position;
+		ray.direction = (destPos - transform->position).Normal();
+
+		float distance = Distance(ray.position, destPos);
+
+		if (aStar->IsCollisionObstacle(ray, distance))
+		{
+			int startIndex = aStar->FindCloseNode(transform->position);
+			int endIndex = aStar->FindCloseNode(destPos);
+
+			aStar->Reset();
+
+			path = aStar->FindPath(startIndex, endIndex);
+
+			aStar->MakeDirectPath(transform->position, destPos, path);
+
+			path.insert(path.begin(), destPos);
+
+			int pathSize = path.size();
+
+			while (path.size() > 2)
+			{
+				vector<Vector3> tempPath;
+				for (int i = 1; i < path.size() - 1; i++)
+					tempPath.push_back(path[i]);
+
+				Vector3 start = path.back();
+				Vector3 end = path.front();
+
+				aStar->MakeDirectPath(start, end, tempPath);
+
+				path.clear();
+				path.push_back(end);
+
+				for (Vector3 temp : tempPath)
+					path.push_back(temp);
+
+				path.push_back(start);
+
+				if (pathSize == path.size())
+					break;
+				else
+					pathSize = path.size();
+			}
+		}
+		else
+		{
+			path.push_back(destPos);
+		}
+	}
+
+>>>>>>> sub/master
 }
 
 void Kaya::Move()
@@ -53,6 +121,11 @@ void Kaya::Move()
 	if (state == ATTACK)
 		return;
 
+<<<<<<< HEAD
+=======
+	MovePath();
+
+>>>>>>> sub/master
 	float magnitude = velocity.Length();
 
 	if (magnitude > 1.0f)
@@ -72,6 +145,45 @@ void Kaya::Move()
 	}	
 }
 
+<<<<<<< HEAD
+=======
+void Kaya::MovePath()
+{
+	if (path.empty())
+		return;
+
+	Vector3 dest = path.back();
+
+	Vector3 direction = dest - transform->position;
+	velocity = direction.Normal();
+
+	if (direction.Length() < 0.3f)
+		path.pop_back();
+}
+
+void Kaya::Rotate()
+{
+	if (velocity.Length() < 0.1f)
+		return;
+
+	Vector3 start = transform->GetForward();
+	Vector3 end = velocity.Normal();
+
+	float cosValue = start.Dot(end);
+	float angle = acos(cosValue);
+
+	if (angle < 0.1f)
+		return;
+
+	Vector3 cross = start.Cross(end);
+
+	if (cross.GetY() > 0.0f)
+		transform->rotation -= kUp * DELTA * rotSpeed;
+	else
+		transform->rotation += kUp * DELTA * rotSpeed;
+}
+
+>>>>>>> sub/master
 void Kaya::SetAnimation(AnimState value)
 {
 	if (state != value)

@@ -116,12 +116,15 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+<<<<<<< HEAD
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
     </PreLinkEvent>
+=======
+>>>>>>> sub/master
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -149,12 +152,15 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+<<<<<<< HEAD
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
     </PreLinkEvent>
+=======
+>>>>>>> sub/master
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -186,12 +192,15 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+<<<<<<< HEAD
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
     </PostBuildEvent>
     <PreLinkEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.lib" "$(OutputPath)\assimp-vc142-mtd.lib"</Command>
     </PreLinkEvent>
+=======
+>>>>>>> sub/master
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -223,6 +232,7 @@
     <FxCompile>
       <ShaderModel>5.0</ShaderModel>
     </FxCompile>
+<<<<<<< HEAD
     <PostBuildEvent>
       <Command>copy /Y "$(SolutionDir)Assimp\assimp-vc142-mtd.dll" "$(OutputPath)\assimp-vc142-mtd.dll"</Command>
     </PostBuildEvent>
@@ -232,10 +242,18 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="ADX11Resource\Model\Belle.h" />
+=======
+  </ItemDefinitionGroup>
+  <ItemGroup>
+>>>>>>> sub/master
     <ClInclude Include="AStar\AStar.h" />
     <ClInclude Include="AStar\Heap.h" />
     <ClInclude Include="AStar\Node.h" />
     <ClInclude Include="Camera\Camera.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Camera\FixityCam.h" />
+>>>>>>> sub/master
     <ClInclude Include="Camera\FollowCam.h" />
     <ClInclude Include="Camera\FreeCam.h" />
     <ClInclude Include="DX11_1908.h" />
@@ -249,6 +267,10 @@
     <ClInclude Include="Objects\Particle\Rain.h" />
     <ClInclude Include="Objects\Particle\Snow.h" />
     <ClInclude Include="Objects\Particle\Spark.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Objects\Reflection.h" />
+>>>>>>> sub/master
     <ClInclude Include="Objects\Shadow.h" />
     <ClInclude Include="Objects\Sphere.h" />
     <ClInclude Include="Objects\Landscape\Terrain.h" />
@@ -267,6 +289,10 @@
     <ClInclude Include="Scene\LightScene.h" />
     <ClInclude Include="Scene\ModelScene.h" />
     <ClInclude Include="Scene\ParticleScene.h" />
+<<<<<<< HEAD
+=======
+    <ClInclude Include="Scene\ReflectionScene.h" />
+>>>>>>> sub/master
     <ClInclude Include="Scene\RenderTargetScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadowScene.h" />
@@ -274,11 +300,18 @@
     <ClInclude Include="targetver.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="ADX11Resource\Model\Belle.cpp" />
+=======
+>>>>>>> sub/master
     <ClCompile Include="AStar\AStar.cpp" />
     <ClCompile Include="AStar\Heap.cpp" />
     <ClCompile Include="AStar\Node.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Camera\FixityCam.cpp" />
+>>>>>>> sub/master
     <ClCompile Include="Camera\FollowCam.cpp" />
     <ClCompile Include="Camera\FreeCam.cpp" />
     <ClCompile Include="DX11_1908.cpp" />
@@ -291,6 +324,10 @@
     <ClCompile Include="Objects\Particle\Rain.cpp" />
     <ClCompile Include="Objects\Particle\Snow.cpp" />
     <ClCompile Include="Objects\Particle\Spark.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Objects\Reflection.cpp" />
+>>>>>>> sub/master
     <ClCompile Include="Objects\Shadow.cpp" />
     <ClCompile Include="Objects\Sphere.cpp" />
     <ClCompile Include="Objects\Landscape\Terrain.cpp" />
@@ -314,6 +351,10 @@
     <ClCompile Include="Scene\LightScene.cpp" />
     <ClCompile Include="Scene\ModelScene.cpp" />
     <ClCompile Include="Scene\ParticleScene.cpp" />
+<<<<<<< HEAD
+=======
+    <ClCompile Include="Scene\ReflectionScene.cpp" />
+>>>>>>> sub/master
     <ClCompile Include="Scene\RenderTargetScene.cpp" />
     <ClCompile Include="Scene\ShadowScene.cpp" />
     <ClCompile Include="Scene\TutorialScene.cpp" />
@@ -361,6 +402,15 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Effect</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Effect</ShaderType>
     </FxCompile>
+<<<<<<< HEAD
+=======
+    <FxCompile Include="Shaders\EnvironmentMapping.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+>>>>>>> sub/master
     <FxCompile Include="Shaders\GeometryBillboard.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
@@ -448,6 +498,15 @@
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
+<<<<<<< HEAD
+=======
+    <FxCompile Include="Shaders\Reflection.hlsl">
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+>>>>>>> sub/master
     <FxCompile Include="Shaders\Render2D.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
