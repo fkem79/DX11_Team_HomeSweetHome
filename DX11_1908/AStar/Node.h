@@ -42,11 +42,5 @@ private:
 	void Update();
 	void Render();
 
-<<<<<<< HEAD
 	void AddEdge(Node* node);	
-=======
-	void AddEdge(Node* node);
-
-	BoxCollider* SetObstacle();
->>>>>>> sub/master
 };

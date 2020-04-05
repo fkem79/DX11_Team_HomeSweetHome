@@ -135,17 +135,7 @@
     <ClInclude Include="AStar\Heap.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-<<<<<<< HEAD
     <ClInclude Include="ADX11Resource\Model\Belle.h">
-=======
-    <ClInclude Include="Scene\ReflectionScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Reflection.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\FixityCam.h">
->>>>>>> sub/master
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
@@ -261,17 +251,7 @@
     <ClCompile Include="AStar\AStar.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-<<<<<<< HEAD
     <ClCompile Include="ADX11Resource\Model\Belle.cpp">
-=======
-    <ClCompile Include="Scene\ReflectionScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Reflection.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\FixityCam.cpp">
->>>>>>> sub/master
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -317,11 +297,6 @@
     <FxCompile Include="Shaders\MRT.hlsl" />
     <FxCompile Include="Shaders\ShadowDepth.hlsl" />
     <FxCompile Include="Shaders\Lighting.hlsl" />
-<<<<<<< HEAD
-=======
-    <FxCompile Include="Shaders\EnvironmentMapping.hlsl" />
-    <FxCompile Include="Shaders\Reflection.hlsl" />
->>>>>>> sub/master
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Header.hlsli" />
