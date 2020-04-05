@@ -18,11 +18,7 @@ Sphere::Sphere(float radius, UINT sliceCount, UINT stackCount)
 
 	fillMode[0] = new RasterizerState();
 	fillMode[1] = new RasterizerState();
-<<<<<<< HEAD
 	fillMode[1]->FillMode(D3D11_FILL_WIREFRAME);
-=======
-	//fillMode[1]->FillMode(D3D11_FILL_WIREFRAME);
->>>>>>> sub/master
 }
 
 Sphere::Sphere(wstring shaderFile, float radius, UINT sliceCount, UINT stackCount)

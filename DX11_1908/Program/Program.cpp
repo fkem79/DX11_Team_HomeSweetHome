@@ -15,10 +15,6 @@
 #include "Scene/ShadowScene.h"
 #include "Scene/LightScene.h"
 #include "Scene/AStarScene.h"
-<<<<<<< HEAD
-=======
-#include "Scene/ReflectionScene.h"
->>>>>>> sub/master
 
 Program::Program()
 {
@@ -35,12 +31,7 @@ Program::Program()
 	//scenes.push_back(new RenderTargetScene());
 	//scenes.push_back(new ShadowScene());
 	//scenes.push_back(new LightScene());
-<<<<<<< HEAD
 	scenes.push_back(new AStarScene());
-=======
-	//scenes.push_back(new AStarScene());
-	scenes.push_back(new ReflectionScene());
->>>>>>> sub/master
 }
 
 Program::~Program()

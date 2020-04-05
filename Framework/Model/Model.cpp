@@ -1,8 +1,5 @@
 #include "Framework.h"
-<<<<<<< HEAD
 #include "Model.h"
-=======
->>>>>>> sub/master
 
 Model::Model()
 {
@@ -253,7 +250,6 @@ void Model::SetNormalMap(wstring file)
 		mesh->GetMaterial()->SetNormalMap(file);
 }
 
-<<<<<<< HEAD
 void Model::SetSpecular(Float4 color)
 {
 	for (ModelMesh* mesh : meshes)
@@ -262,8 +258,6 @@ void Model::SetSpecular(Float4 color)
 	}
 }
 
-=======
->>>>>>> sub/master
 void Model::Attach(wstring shader, Model* model, int parentBoneIndex, Transform* transform)
 {
 	//Copy Material

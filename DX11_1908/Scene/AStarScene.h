@@ -7,12 +7,9 @@ private:
 	Kaya* kaya;
 	CubeSky* sky;
 	AStar* aStar;
-<<<<<<< HEAD
 
 	Belle* belle;
 
-=======
->>>>>>> sub/master
 public:
 	AStarScene();
 	~AStarScene();

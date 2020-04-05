@@ -14,10 +14,6 @@
 #include "Camera/Camera.h"
 #include "Camera/FreeCam.h"
 #include "Camera/FollowCam.h"
-<<<<<<< HEAD
-=======
-#include "Camera/FixityCam.h"
->>>>>>> sub/master
 
 #include "Environment/Environment.h"
 
@@ -28,17 +24,10 @@
 #include "Objects/UI/Render2D.h"
 
 #include "Objects/Model/Kaya.h"
-<<<<<<< HEAD
 #include "ADX11Resource/Model/Belle.h"
 
 #include "Objects/Sphere.h"
 #include "Objects/Shadow.h"
-=======
-
-#include "Objects/Sphere.h"
-#include "Objects/Shadow.h"
-#include "Objects/Reflection.h"
->>>>>>> sub/master
 
 #include "AStar/Node.h"
 #include "AStar/Heap.h"

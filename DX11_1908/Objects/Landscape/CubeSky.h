@@ -13,9 +13,4 @@ public:
 	~CubeSky();
 
 	void Render();
-<<<<<<< HEAD
-=======
-
-	Texture* GetCubeMap() { return cubeMap; }
->>>>>>> sub/master
 };
