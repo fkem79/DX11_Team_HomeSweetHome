@@ -2,7 +2,7 @@
 #include "FirstPersonView.h"
 
 FirstPersonView::FirstPersonView()	
-	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(30),rotDamping(50), rotY(0),
+	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(70),rotDamping(50), rotY(0),
 	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr)
 {
 }
@@ -41,11 +41,7 @@ void FirstPersonView::Update()
 	position = XMVectorLerp(position.data, destPos.data, moveDamping * DELTA);
 
 	Vector3 tempOffset = XMVector3TransformCoord(targetOffset.data, matRotation);
-
-	Vector3 t = { 2.0f, 0.0f, 0.0f };
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
-
-	MouseControl();
 }
 
 void FirstPersonView::PostRender()
@@ -60,48 +56,8 @@ void FirstPersonView::MouseControl()
 		Vector3 val = MOUSEPOS - oldPos;
 
 		rotY += val.GetX() * 0.001f;
-
-		targetOffset = { targetOffset.GetX()+ val.GetX() *0.01f, targetOffset.GetY() - val.GetY() * 0.01f, 8 };
-
-		if (targetOffset.GetX() > 5.0f)
-			targetOffset.SetX(5.0f);
-
-		if (targetOffset.GetX() < -5.0f)
-			targetOffset.SetX(-5.0f);
-
-		if (targetOffset.GetY() >10.0f)
-			targetOffset.SetY(10.0f);
-
-		if (targetOffset.GetY() < 0.0f)
-			targetOffset.SetY(0.0f);
 	}
 
 	oldPos = MOUSEPOS;
 
-
-	/*float mXPos, mYPos;
-
-	mXPos = oldPos.GetX();
-	mYPos = oldPos.GetY();
-
-	if (mXPos > 20.0f)
-		mXPos = 20.0f;
-
-	if (mXPos < -20.0f)
-		mXPos = -20.0f;
-
-	if (mYPos > 20.0f)
-		mYPos = 20.0f;
-
-	if (mYPos < -20.0f)
-		mYPos = -20.0f;
-
-	
-	//targetOffset = { MOUSEPOS.GetX(), MOUSEPOS.GetY(), 8 };
-	targetOffset = { mXPos, 7, 8 };
-	*/
-	//distance -= Keyboard::Get()->GetWheel() * zoomSpeed;
-	//height -= Keyboard::Get()->GetWheel() * zoomSpeed;
-
-	
 }

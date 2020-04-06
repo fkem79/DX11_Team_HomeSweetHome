@@ -69,15 +69,17 @@ void PlayerLHand::ReadData()
 	reader->ExportMesh(name + "/" + name);
 	delete reader;
 
+	
 	reader = new ModelReader();
-	reader->ReadFile("ModelData/Animations/" + name + "/Idle.fbx");
-	reader->ExportAnimClip(0, name + "/Idle");
+	reader->ReadFile("ModelData/Animations/" + name + "/Holding.fbx");
+	reader->ExportAnimClip(0, name + "/Holding");
 	delete reader;
 
 	string path = name + "/" + name;
 	model->ReadMaterial(path);
 	model->ReadMesh(path);
-	model->ReadClip(name + "/Idle");
+	model->ReadClip(name + "/Holding");
+	
 	//model->ReadClip(name + "/Idle");
 	//model->ReadClip(name + "/Idle");
 

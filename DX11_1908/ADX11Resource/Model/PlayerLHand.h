@@ -6,10 +6,8 @@ private:
 	enum AnimState
 	{
 		IDLE,
-		RUN,
-		ATTACK,
-		TurnLeft,
-		TurnRight
+		HOLDING,
+		ATTACK
 	}state;
 
 	Transform* transform;

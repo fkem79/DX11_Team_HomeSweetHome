@@ -2,11 +2,12 @@
 #include "PlayerHead.h"
 
 PlayerHead::PlayerHead()
-	: moveSpeed(10.0f), rotSpeed(2.0f), state(IDLE), accelation(10.0f),
-	deceleration(3.0f), velocity(0, 0, 0)
+	: moveSpeed(10.0f), dashSpeed(25.0f), crouchSpeed(5.0f), rotSpeed(1.5f), mouseRotSpeed(3.0f), dashMouseRotSpeed(4.0f), state(IDLE), accelation(10.0f),
+	deceleration(3.0f), velocity(0, 0, 0), oldMousePos(0, 0, 0), crouchOn(false), crouchValue(3.0f)
 {
+	// rotSpeed ÇöÀç ¾È ¾¸
+
 	model = new ModelAnimator(L"ModelAnimationInstancing");
-	//model = new ModelAnimator(L"ModelInstancing");
 	transform = model->AddTransform();
 	ReadData();
 	model->SetEndEvent(ATTACK, bind(&PlayerHead::SetIdle, this));
@@ -25,8 +26,10 @@ PlayerHead::~PlayerHead()
 
 void PlayerHead::Update()
 {
+	MouseControl();
 	Input();
 	Move();
+	Crouch();
 
 	model->Update();
 }
@@ -38,15 +41,16 @@ void PlayerHead::Render()
 
 void PlayerHead::Input()
 {
-	if (KEYPRESS(VK_UP))
+	if (KEYPRESS('W'))
 		velocity -= transform->GetForward() * accelation * DELTA;
-	if (KEYPRESS(VK_DOWN))
+	if (KEYPRESS('S'))
 		velocity += transform->GetForward() * accelation * DELTA;
 
-	if (KEYPRESS(VK_RIGHT))
-		transform->rotation += transform->GetUp() * rotSpeed * DELTA;
-	if (KEYPRESS(VK_LEFT))
-		transform->rotation -= transform->GetUp() * rotSpeed * DELTA;
+	if (KEYPRESS('D'))
+		velocity -= transform->GetRight() * accelation * DELTA;
+	if (KEYPRESS('A'))
+		velocity += transform->GetRight() * accelation * DELTA;
+
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
@@ -64,7 +68,13 @@ void PlayerHead::Move()
 
 	if (magnitude > 0.1f)
 	{
-		transform->position += velocity * moveSpeed * DELTA;
+		
+		if(KEYPRESS('C'))
+			transform->position += velocity * crouchSpeed * DELTA;
+		else if (KEYPRESS(VK_SHIFT))
+			transform->position += velocity * dashSpeed * DELTA;
+		else
+			transform->position += velocity * moveSpeed * DELTA;
 
 		SetAnimation(RUN);
 
@@ -72,6 +82,24 @@ void PlayerHead::Move()
 	}
 	else
 		SetAnimation(IDLE);
+}
+
+void PlayerHead::Crouch()
+{
+	if (KEYDOWN('C'))
+		crouchOn = true;
+
+	if (crouchOn)
+	{
+		crouchOn = false;
+		transform->position.SetY(transform->position.GetY() - crouchValue);
+	}
+	
+	if (KEYUP('C'))
+	{
+		crouchOn = false;
+		transform->position.SetY(transform->position.GetY() + crouchValue);
+	}
 }
 
 void PlayerHead::SetAnimation(AnimState value)
@@ -110,4 +138,30 @@ void PlayerHead::ReadData()
 	model->ReadClip(name + "/Idle");
 	model->ReadClip(name + "/Idle");
 	
+}
+
+void PlayerHead::MouseControl()
+{
+	Vector3 val = MOUSEPOS - oldMousePos;
+
+	if (val.GetX() > 0.0f)
+	{
+		if (KEYPRESS(VK_SHIFT))
+			transform->rotation += transform->GetUp() * dashMouseRotSpeed * DELTA;
+		else
+			transform->rotation += transform->GetUp() * mouseRotSpeed * DELTA;
+	}
+
+
+	if (val.GetX() < 0.0f)
+	{
+		if (KEYPRESS(VK_SHIFT))
+			transform->rotation -= transform->GetUp() * dashMouseRotSpeed * DELTA;
+		else
+			transform->rotation -= transform->GetUp() * mouseRotSpeed * DELTA;
+	}
+	
+
+		
+	oldMousePos = MOUSEPOS;
 }
