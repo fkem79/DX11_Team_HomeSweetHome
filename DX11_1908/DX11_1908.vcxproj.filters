@@ -144,6 +144,9 @@
     <ClInclude Include="ADX11Resource\Model\PlayerLHand.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Camera\FirstPersonView.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11_1908.cpp">
@@ -264,6 +267,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="ADX11Resource\Model\PlayerLHand.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera\FirstPersonView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

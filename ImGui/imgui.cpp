@@ -3393,8 +3393,8 @@ void ImGui::UpdateMouseWheel()
         window->FontWindowScale = new_font_scale;
         if (!(window->Flags & ImGuiWindowFlags_ChildWindow))
         {
-            const ImVec2 offset = window->Size * (1.0f - scale) * (g.IO.MousePos - window->Pos) / window->Size;
-            SetWindowPos(window, window->Pos + offset, 0);
+            const ImVec2 targetOffset = window->Size * (1.0f - scale) * (g.IO.MousePos - window->Pos) / window->Size;
+            SetWindowPos(window, window->Pos + targetOffset, 0);
             window->Size = ImFloor(window->Size * scale);
             window->SizeFull = ImFloor(window->SizeFull * scale);
         }
@@ -6444,10 +6444,10 @@ void ImGui::SetWindowPos(ImGuiWindow* window, const ImVec2& pos, ImGuiCond cond)
     // Set
     const ImVec2 old_pos = window->Pos;
     window->Pos = ImFloor(pos);
-    ImVec2 offset = window->Pos - old_pos;
-    window->DC.CursorPos += offset;         // As we happen to move the window while it is being appended to (which is a bad idea - will smear) let's at least offset the cursor
-    window->DC.CursorMaxPos += offset;      // And more importantly we need to offset CursorMaxPos/CursorStartPos this so ContentSize calculation doesn't get affected.
-    window->DC.CursorStartPos += offset;
+    ImVec2 targetOffset = window->Pos - old_pos;
+    window->DC.CursorPos += targetOffset;         // As we happen to move the window while it is being appended to (which is a bad idea - will smear) let's at least offset the cursor
+    window->DC.CursorMaxPos += targetOffset;      // And more importantly we need to offset CursorMaxPos/CursorStartPos this so ContentSize calculation doesn't get affected.
+    window->DC.CursorStartPos += targetOffset;
 }
 
 void ImGui::SetWindowPos(const ImVec2& pos, ImGuiCond cond)
@@ -6788,13 +6788,13 @@ void ImGui::ActivateItem(ImGuiID id)
     g.NavNextActivateId = id;
 }
 
-void ImGui::SetKeyboardFocusHere(int offset)
+void ImGui::SetKeyboardFocusHere(int targetOffset)
 {
-    IM_ASSERT(offset >= -1);    // -1 is allowed but not below
+    IM_ASSERT(targetOffset >= -1);    // -1 is allowed but not below
     ImGuiContext& g = *GImGui;
     ImGuiWindow* window = g.CurrentWindow;
     g.FocusRequestNextWindow = window;
-    g.FocusRequestNextCounterAll = window->DC.FocusCounterAll + 1 + offset;
+    g.FocusRequestNextCounterAll = window->DC.FocusCounterAll + 1 + targetOffset;
     g.FocusRequestNextCounterTab = INT_MAX;
 }
 

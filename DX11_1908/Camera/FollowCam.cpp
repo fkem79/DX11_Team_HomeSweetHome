@@ -2,8 +2,8 @@
 #include "FollowCam.h"
 
 FollowCam::FollowCam()
-	: distance(60), height(60), offset(0, 5, 0), moveDamping(5),
-	rotDamping(0), rotY(0), zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0),
+	: distance(0), height(0), targetOffset(0, 5, 5), moveDamping(5),
+	rotDamping(50), rotY(0), zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0),
 	target(nullptr)
 {
 }
@@ -38,10 +38,11 @@ void FollowCam::Update()
 
 	destPos += target->position;
 	destPos.SetY(destPos.GetY() + height);
+	//destPos += positionOffset;
 
-	position = XMVectorLerp(position.data, destPos.data, moveDamping * DELTA);
+	position = XMVectorLerp(position.data, destPos.data, moveDamping * DELTA);	
 
-	Vector3 tempOffset = XMVector3TransformCoord(offset.data, matRotation);
+	Vector3 tempOffset = XMVector3TransformCoord(targetOffset.data, matRotation);
 
 	Vector3 t = { 2.0f, 0.0f, 0.0f };
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
@@ -59,7 +60,7 @@ void FollowCam::PostRender()
 	ImGui::SliderFloat("MoveDamping", &moveDamping, 0.0f, 30.0f);
 	ImGui::SliderFloat("RotDamping", &rotDamping, 0.0f, 30.0f);
 	//Float3 tempOffset = offset;
-	ImGui::SliderFloat3("Offset", (float*)&offset, -20.0f, 20.0f);
+	ImGui::SliderFloat3("TargetOffset", (float*)&targetOffset, -20.0f, 20.0f);	
 	//offset = tempOffset;
 }
 

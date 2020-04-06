@@ -238,6 +238,7 @@
     <ClInclude Include="AStar\Heap.h" />
     <ClInclude Include="AStar\Node.h" />
     <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\FirstPersonView.h" />
     <ClInclude Include="Camera\FollowCam.h" />
     <ClInclude Include="Camera\FreeCam.h" />
     <ClInclude Include="DX11_1908.h" />
@@ -283,6 +284,7 @@
     <ClCompile Include="AStar\Heap.cpp" />
     <ClCompile Include="AStar\Node.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\FirstPersonView.cpp" />
     <ClCompile Include="Camera\FollowCam.cpp" />
     <ClCompile Include="Camera\FreeCam.cpp" />
     <ClCompile Include="DX11_1908.cpp" />

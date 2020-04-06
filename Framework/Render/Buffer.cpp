@@ -2,7 +2,7 @@
 #include "Buffer.h"
 
 VertexBuffer::VertexBuffer(void* data, UINT stride, UINT count, bool isCpuWrite, bool isGpuWrite)
-    : stride(stride), offset(0)
+    : stride(stride), targetOffset(0)
 {
     D3D11_BUFFER_DESC bd = {};        
     //D3D11_USAGE_DEFAULT = 0,//GPU에서 읽고 쓰기 가능
@@ -44,7 +44,7 @@ VertexBuffer::~VertexBuffer()
 
 void VertexBuffer::Set(UINT slot)
 {
-    DC->IASetVertexBuffers(slot, 1, &buffer, &stride, &offset);
+    DC->IASetVertexBuffers(slot, 1, &buffer, &stride, &targetOffset);
 }
 
 void VertexBuffer::Update(void* data, UINT count)

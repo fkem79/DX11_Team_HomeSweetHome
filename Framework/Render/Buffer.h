@@ -11,7 +11,7 @@ private:
 	ID3D11Buffer* buffer;
 
 	UINT stride;
-	UINT offset;
+	UINT targetOffset;
 
 public:
 	VertexBuffer(void* data, UINT stride, UINT count, bool isCpuWrite = false, bool isGpuWrite = false);

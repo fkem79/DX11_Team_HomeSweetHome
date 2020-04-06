@@ -1547,19 +1547,19 @@ HRESULT DirectX::LoadFromDDSMemory(
     if (FAILED(hr))
         return hr;
 
-    size_t offset = sizeof(uint32_t) + sizeof(DDS_HEADER);
+    size_t targetOffset = sizeof(uint32_t) + sizeof(DDS_HEADER);
     if (convFlags & CONV_FLAGS_DX10)
-        offset += sizeof(DDS_HEADER_DXT10);
+        targetOffset += sizeof(DDS_HEADER_DXT10);
 
-    assert(offset <= size);
+    assert(targetOffset <= size);
 
     const uint32_t *pal8 = nullptr;
     if (convFlags & CONV_FLAGS_PAL8)
     {
-        pal8 = reinterpret_cast<const uint32_t*>(static_cast<const uint8_t*>(pSource) + offset);
+        pal8 = reinterpret_cast<const uint32_t*>(static_cast<const uint8_t*>(pSource) + targetOffset);
         assert(pal8);
-        offset += (256 * sizeof(uint32_t));
-        if (size < offset)
+        targetOffset += (256 * sizeof(uint32_t));
+        if (size < targetOffset)
             return E_FAIL;
     }
 
@@ -1577,10 +1577,10 @@ HRESULT DirectX::LoadFromDDSMemory(
         cflags |= CP_FLAGS_BAD_DXTN_TAILS;
     }
 
-    const void* pPixels = static_cast<const uint8_t*>(pSource) + offset;
+    const void* pPixels = static_cast<const uint8_t*>(pSource) + targetOffset;
     assert(pPixels);
     hr = CopyImage(pPixels,
-        size - offset,
+        size - targetOffset,
         mdata,
         cflags,
         convFlags,
@@ -1660,7 +1660,7 @@ HRESULT DirectX::LoadFromDDSFile(
     if (FAILED(hr))
         return hr;
 
-    DWORD offset = MAX_HEADER_SIZE;
+    DWORD targetOffset = MAX_HEADER_SIZE;
 
     if (!(convFlags & CONV_FLAGS_DX10))
     {
@@ -1671,7 +1671,7 @@ HRESULT DirectX::LoadFromDDSFile(
             return HRESULT_FROM_WIN32(GetLastError());
         }
 
-        offset = sizeof(uint32_t) + sizeof(DDS_HEADER);
+        targetOffset = sizeof(uint32_t) + sizeof(DDS_HEADER);
     }
 
     std::unique_ptr<uint32_t[]> pal8;
@@ -1693,10 +1693,10 @@ HRESULT DirectX::LoadFromDDSFile(
             return E_FAIL;
         }
 
-        offset += (256 * sizeof(uint32_t));
+        targetOffset += (256 * sizeof(uint32_t));
     }
 
-    DWORD remaining = fileInfo.EndOfFile.LowPart - offset;
+    DWORD remaining = fileInfo.EndOfFile.LowPart - targetOffset;
     if (remaining == 0)
         return E_FAIL;
 

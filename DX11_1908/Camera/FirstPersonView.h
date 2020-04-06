@@ -1,12 +1,11 @@
 #pragma once
-
-class FollowCam : public Camera
+class FirstPersonView : public Camera
 {
 private:
 	float distance;
 	float height;
 
-	Vector3 targetOffset;	
+	Vector3 targetOffset;
 
 	Vector3 destPos;
 	float destRot;
@@ -22,8 +21,8 @@ private:
 	Transform* target;
 
 public:
-	FollowCam();
-	~FollowCam();
+	FirstPersonView();
+	~FirstPersonView();
 
 	void Update() override;
 	void PostRender() override;
@@ -32,3 +31,4 @@ public:
 
 	void SetTarget(Transform* value) override { target = value; }
 };
+

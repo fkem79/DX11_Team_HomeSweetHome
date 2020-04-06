@@ -14,6 +14,7 @@
 #include "Camera/Camera.h"
 #include "Camera/FreeCam.h"
 #include "Camera/FollowCam.h"
+#include "Camera/FirstPersonView.h"
 
 #include "Environment/Environment.h"
 

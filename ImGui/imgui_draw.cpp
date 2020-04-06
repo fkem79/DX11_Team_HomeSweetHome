@@ -1737,7 +1737,7 @@ int ImFontAtlas::AddCustomRectRegular(unsigned int id, int width, int height)
     return CustomRects.Size - 1; // Return index
 }
 
-int ImFontAtlas::AddCustomRectFontGlyph(ImFont* font, ImWchar id, int width, int height, float advance_x, const ImVec2& offset)
+int ImFontAtlas::AddCustomRectFontGlyph(ImFont* font, ImWchar id, int width, int height, float advance_x, const ImVec2& targetOffset)
 {
     IM_ASSERT(font != NULL);
     IM_ASSERT(width > 0 && width <= 0xFFFF);
@@ -1747,7 +1747,7 @@ int ImFontAtlas::AddCustomRectFontGlyph(ImFont* font, ImWchar id, int width, int
     r.Width = (unsigned short)width;
     r.Height = (unsigned short)height;
     r.GlyphAdvanceX = advance_x;
-    r.GlyphOffset = offset;
+    r.GlyphOffset = targetOffset;
     r.Font = font;
     CustomRects.push_back(r);
     return CustomRects.Size - 1; // Return index
@@ -2175,8 +2175,8 @@ static void ImFontAtlasBuildRenderDefaultTexData(ImFontAtlas* atlas)
     else
     {
         IM_ASSERT(r.Width == 2 && r.Height == 2);
-        const int offset = (int)(r.X) + (int)(r.Y) * w;
-        atlas->TexPixelsAlpha8[offset] = atlas->TexPixelsAlpha8[offset + 1] = atlas->TexPixelsAlpha8[offset + w] = atlas->TexPixelsAlpha8[offset + w + 1] = 0xFF;
+        const int targetOffset = (int)(r.X) + (int)(r.Y) * w;
+        atlas->TexPixelsAlpha8[targetOffset] = atlas->TexPixelsAlpha8[targetOffset + 1] = atlas->TexPixelsAlpha8[targetOffset + w] = atlas->TexPixelsAlpha8[targetOffset + w + 1] = 0xFF;
     }
     atlas->TexUvWhitePixel = ImVec2((r.X + 0.5f) * atlas->TexUvScale.x, (r.Y + 0.5f) * atlas->TexUvScale.y);
 }
@@ -3046,10 +3046,10 @@ void ImGui::RenderMouseCursor(ImDrawList* draw_list, ImVec2 pos, float scale, Im
     IM_ASSERT(mouse_cursor > ImGuiMouseCursor_None && mouse_cursor < ImGuiMouseCursor_COUNT);
 
     ImFontAtlas* font_atlas = draw_list->_Data->Font->ContainerAtlas;
-    ImVec2 offset, size, uv[4];
-    if (font_atlas->GetMouseCursorTexData(mouse_cursor, &offset, &size, &uv[0], &uv[2]))
+    ImVec2 targetOffset, size, uv[4];
+    if (font_atlas->GetMouseCursorTexData(mouse_cursor, &targetOffset, &size, &uv[0], &uv[2]))
     {
-        pos -= offset;
+        pos -= targetOffset;
         const ImTextureID tex_id = font_atlas->TexID;
         draw_list->PushTextureID(tex_id);
         draw_list->AddImage(tex_id, pos + ImVec2(1,0)*scale, pos + ImVec2(1,0)*scale + size*scale, uv[2], uv[3], col_shadow);
