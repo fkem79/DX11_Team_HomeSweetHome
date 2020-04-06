@@ -18,7 +18,7 @@ AStarScene::AStarScene()
 
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };
 
-
+	int a;
 	CAMERA->SetTarget(kaya->GetTransform());
 //	CAMERA->SetTarget(belle->GetTransform());
 	//CAMERA->SetTarget(playerHaed->GetTransform());
