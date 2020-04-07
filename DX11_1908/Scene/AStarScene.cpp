@@ -52,8 +52,6 @@ void AStarScene::Render()
 {
 	terrain->Render();
 	belle->Render();
-//	kaya->Render();
-	//aStar->Render();
 
 	playerHaed->Render();
 	//playerLHand->Render();

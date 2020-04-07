@@ -5,6 +5,7 @@ FirstPersonView::FirstPersonView()
 	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(70),rotDamping(50), rotY(0),
 	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr)
 {
+	
 }
 
 FirstPersonView::~FirstPersonView()

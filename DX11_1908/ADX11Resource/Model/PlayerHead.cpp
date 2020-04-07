@@ -51,6 +51,12 @@ void PlayerHead::Input()
 	if (KEYPRESS('A'))
 		velocity += transform->GetRight() * accelation * DELTA;
 
+	if (KEYPRESS(VK_RBUTTON))
+	{
+		if (KEYPRESS('Q'))
+			transform->rotation.SetX(transform->rotation.GetX()+0.1f);
+
+	}
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
@@ -147,21 +153,31 @@ void PlayerHead::MouseControl()
 	if (val.GetX() > 0.0f)
 	{
 		if (KEYPRESS(VK_SHIFT))
+		{
 			transform->rotation += transform->GetUp() * dashMouseRotSpeed * DELTA;
+			//transform->rotation += transform->GetRight() * dashMouseRotSpeed * DELTA;
+		}
 		else
+		{
 			transform->rotation += transform->GetUp() * mouseRotSpeed * DELTA;
+		}
+			
 	}
-
 
 	if (val.GetX() < 0.0f)
 	{
 		if (KEYPRESS(VK_SHIFT))
+		{
 			transform->rotation -= transform->GetUp() * dashMouseRotSpeed * DELTA;
+			//transform->rotation -= transform->GetRight() * dashMouseRotSpeed * DELTA;
+		}
 		else
+		{
 			transform->rotation -= transform->GetUp() * mouseRotSpeed * DELTA;
+		//	transform->rotation -= transform->GetRight() * mouseRotSpeed * DELTA;
+		}
+			
 	}
-	
-
 		
 	oldMousePos = MOUSEPOS;
 }
