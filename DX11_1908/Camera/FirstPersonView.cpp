@@ -2,8 +2,8 @@
 #include "FirstPersonView.h"
 
 FirstPersonView::FirstPersonView()	
-	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(70),rotDamping(50), rotY(0),
-	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr)
+	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(130.0f),rotDamping(50), rotY(0),
+	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr), targetOffsetYSpeed(15.0f)
 {
 	
 }
@@ -43,6 +43,8 @@ void FirstPersonView::Update()
 
 	Vector3 tempOffset = XMVector3TransformCoord(targetOffset.data, matRotation);
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
+
+	MouseControl();
 }
 
 void FirstPersonView::PostRender()
@@ -52,13 +54,23 @@ void FirstPersonView::PostRender()
 
 void FirstPersonView::MouseControl()
 {
-	if (KEYPRESS(VK_RBUTTON))
-	{
-		Vector3 val = MOUSEPOS - oldPos;
+	Vector3 val = MOUSEPOS - oldPos;
 
-		rotY += val.GetX() * 0.001f;
-	}
+	if (val.GetY() > 0.0f)
+		targetOffset.SetY(targetOffset.GetY() - (targetOffset.GetY() * targetOffsetYSpeed * DELTA));
 
+	if (val.GetY() < 0.0f)
+		targetOffset.SetY(targetOffset.GetY() + (targetOffset.GetY() * targetOffsetYSpeed * DELTA));
+
+	// offset의 아래로 3.8 ~ 위로 13.0 
+	// 수치 조정 필요하면 조정 가능하나 아래로 너무 내리면 박스(머리)가 보임
+	if (targetOffset.GetY() < 3.8f)
+		targetOffset.SetY(3.8f);
+
+	if (targetOffset.GetY() > 13.0f)
+		targetOffset.SetY(13.0f);
+	
 	oldPos = MOUSEPOS;
+
 
 }

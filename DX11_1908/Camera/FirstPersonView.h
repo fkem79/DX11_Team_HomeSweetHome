@@ -20,6 +20,8 @@ private:
 
 	Transform* target;
 
+	float targetOffsetYSpeed;
+
 public:
 	FirstPersonView();
 	~FirstPersonView();

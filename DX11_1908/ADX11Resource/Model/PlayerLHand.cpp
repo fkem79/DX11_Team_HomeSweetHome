@@ -13,8 +13,8 @@ PlayerLHand::PlayerLHand()
 
 	model->PlayClip(0, state);
 
-	//transform->scale = Vector3(0.05f, 0.05f, 0.05f);
-	transform->scale = Vector3(0.5f, 0.5f, 0.5f);
+	transform->scale = Vector3(0.05f, 0.05f, 0.05f);
+	//transform->scale = Vector3(0.5f, 0.5f, 0.5f);
 
 	model->GetModel()->SetSpecular(Float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
@@ -38,6 +38,7 @@ void PlayerLHand::Update()
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);*/
 	model->Update();
+	//transform->UpdateWorld();
 }
 
 void PlayerLHand::Render()

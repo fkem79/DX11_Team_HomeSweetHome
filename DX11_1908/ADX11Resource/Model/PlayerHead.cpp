@@ -2,7 +2,7 @@
 #include "PlayerHead.h"
 
 PlayerHead::PlayerHead()
-	: moveSpeed(10.0f), dashSpeed(25.0f), crouchSpeed(5.0f), rotSpeed(1.5f), mouseRotSpeed(3.0f), dashMouseRotSpeed(4.0f), state(IDLE), accelation(10.0f),
+	: moveSpeed(10.0f), dashSpeed(25.0f), crouchSpeed(5.0f), rotSpeed(1.5f), mouseRotSpeed(3.0f), dashMouseRotSpeed(4.5f), state(IDLE), accelation(10.0f),
 	deceleration(3.0f), velocity(0, 0, 0), oldMousePos(0, 0, 0), crouchOn(false), crouchValue(3.0f)
 {
 	// rotSpeed ÇöÀç ¾È ¾¸
@@ -153,30 +153,17 @@ void PlayerHead::MouseControl()
 	if (val.GetX() > 0.0f)
 	{
 		if (KEYPRESS(VK_SHIFT))
-		{
 			transform->rotation += transform->GetUp() * dashMouseRotSpeed * DELTA;
-			//transform->rotation += transform->GetRight() * dashMouseRotSpeed * DELTA;
-		}
 		else
-		{
 			transform->rotation += transform->GetUp() * mouseRotSpeed * DELTA;
-		}
-			
 	}
 
 	if (val.GetX() < 0.0f)
 	{
 		if (KEYPRESS(VK_SHIFT))
-		{
 			transform->rotation -= transform->GetUp() * dashMouseRotSpeed * DELTA;
-			//transform->rotation -= transform->GetRight() * dashMouseRotSpeed * DELTA;
-		}
 		else
-		{
 			transform->rotation -= transform->GetUp() * mouseRotSpeed * DELTA;
-		//	transform->rotation -= transform->GetRight() * mouseRotSpeed * DELTA;
-		}
-			
 	}
 		
 	oldMousePos = MOUSEPOS;

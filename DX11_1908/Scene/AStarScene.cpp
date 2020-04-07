@@ -13,14 +13,14 @@ AStarScene::AStarScene()
 	playerHaed = new PlayerHead();
 	playerLHand = new PlayerLHand();
 
-	playerLHand->GetTransform()->SetParent(&playerHaed->GetTransform()->GetWorld());
-	playerLHand->GetTransform()->position = { 0.0f, -10.0f, 0.0f };
+	//playerLHand->GetTransform()->SetParent(&playerHaed->GetTransform()->GetWorld());
+	playerLHand->GetTransform()->position = { 5.0f, 10.0f, 5.0f };
 
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };
 
 //	CAMERA->SetTarget(belle->GetTransform());
 	CAMERA->SetTarget(playerHaed->GetTransform());
-//	CAMERA->SetTarget(playerLHand->GetTransform());
+	//CAMERA->SetTarget(playerLHand->GetTransform());
 }
 
 AStarScene::~AStarScene()
@@ -42,6 +42,8 @@ void AStarScene::Update()
 	aStar->Update();
 	playerHaed->Update();
 	playerLHand->Update();
+
+	//playerLHand->GetTransform()->UpdateWorld();
 }
 
 void AStarScene::PreRender()
@@ -54,7 +56,7 @@ void AStarScene::Render()
 	belle->Render();
 
 	playerHaed->Render();
-	//playerLHand->Render();
+	playerLHand->Render();
 }
 
 void AStarScene::PostRender()
