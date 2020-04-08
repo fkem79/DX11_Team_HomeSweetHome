@@ -27,7 +27,7 @@ void FreeCam::Update()
 		position += forward * Keyboard::Get()->GetWheel() * moveSpeed * DELTA;
 	}
 
-	{//Rotation
+	/*{//Rotation
 		Vector3 value = MOUSEPOS - oldPos;
 
 		if (KEYPRESS(VK_RBUTTON))
@@ -40,6 +40,8 @@ void FreeCam::Update()
 
 		oldPos = MOUSEPOS;
 	}
-
+	*/
+	oldPos = MOUSEPOS;
 	View();
+	
 }

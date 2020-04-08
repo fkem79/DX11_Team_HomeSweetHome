@@ -195,6 +195,35 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
     switch (message)
     {
+    case WM_CREATE:
+        {
+            g_mouse->SetWindow(hWnd);
+        }
+        break;
+    case WM_ACTIVATEAPP:
+        {
+            Mouse::ProcessMessage(message, wParam, lParam);
+        }
+        break;
+    case WM_INPUT:
+    case WM_MOUSEMOVE:
+        Keyboard::Get()->SetMouse(LOWORD(lParam), HIWORD(lParam));
+    case WM_LBUTTONDOWN:
+    case WM_LBUTTONUP:
+    case WM_RBUTTONDOWN:
+    case WM_RBUTTONUP:
+    case WM_MBUTTONDOWN:
+    case WM_MBUTTONUP:
+    case WM_MOUSEWHEEL:
+    {
+        short value = (short)HIWORD(wParam);
+        Keyboard::Get()->SetWheel((float)value);
+    }
+    case WM_XBUTTONDOWN:
+    case WM_XBUTTONUP:
+    case WM_MOUSEHOVER:
+        Mouse::ProcessMessage(message, wParam, lParam);
+        break;
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);
@@ -212,15 +241,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             }
         }
         break;
-    case WM_MOUSEMOVE:
-        Keyboard::Get()->SetMouse(LOWORD(lParam), HIWORD(lParam));
-        break;
-    case WM_MOUSEWHEEL:
-    {
-        short value = (short)HIWORD(wParam);
-        Keyboard::Get()->SetWheel((float)value);
-    }
-        break;
+    //case WM_MOUSEMOVE:
+    //    Keyboard::Get()->SetMouse(LOWORD(lParam), HIWORD(lParam));
+    //    break;
+    //case WM_MOUSEWHEEL:
+    //{
+    //    short value = (short)HIWORD(wParam);
+    //    Keyboard::Get()->SetWheel((float)value);
+    //}
+    //    break;
     case WM_PAINT:
         {
             PAINTSTRUCT ps;

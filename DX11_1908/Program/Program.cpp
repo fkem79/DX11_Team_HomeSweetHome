@@ -15,6 +15,7 @@
 #include "Scene/ShadowScene.h"
 #include "Scene/LightScene.h"
 #include "Scene/AStarScene.h"
+#include "Scene/MapScene.h"
 
 Program::Program()
 {
@@ -32,6 +33,7 @@ Program::Program()
 	//scenes.push_back(new ShadowScene());
 	//scenes.push_back(new LightScene());
 	scenes.push_back(new AStarScene());
+	//scenes.push_back(new MapScene());
 }
 
 Program::~Program()

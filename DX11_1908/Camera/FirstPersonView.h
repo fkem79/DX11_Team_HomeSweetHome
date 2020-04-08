@@ -22,6 +22,11 @@ private:
 
 	float targetOffsetYSpeed;
 
+	float mouseRotSpeed;		// 마우스로 움직일 때 
+	float dashMouseRotSpeed;	// 마우스로 움직이고 대쉬하고 있을 때
+
+	bool mouseControlOn;
+
 public:
 	FirstPersonView();
 	~FirstPersonView();

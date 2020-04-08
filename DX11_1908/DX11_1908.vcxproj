@@ -234,6 +234,7 @@
     <ClInclude Include="ADX11Resource\Model\Belle.h" />
     <ClInclude Include="ADX11Resource\Model\PlayerHead.h" />
     <ClInclude Include="ADX11Resource\Model\PlayerLHand.h" />
+    <ClInclude Include="ADX11Resource\Object\DoorWall.h" />
     <ClInclude Include="AStar\AStar.h" />
     <ClInclude Include="AStar\Heap.h" />
     <ClInclude Include="AStar\Node.h" />
@@ -268,6 +269,7 @@
     <ClInclude Include="Scene\InstancingScene.h" />
     <ClInclude Include="Scene\LandscapeScene.h" />
     <ClInclude Include="Scene\LightScene.h" />
+    <ClInclude Include="Scene\MapScene.h" />
     <ClInclude Include="Scene\ModelScene.h" />
     <ClInclude Include="Scene\ParticleScene.h" />
     <ClInclude Include="Scene\RenderTargetScene.h" />
@@ -280,6 +282,7 @@
     <ClCompile Include="ADX11Resource\Model\Belle.cpp" />
     <ClCompile Include="ADX11Resource\Model\PlayerHead.cpp" />
     <ClCompile Include="ADX11Resource\Model\PlayerLHand.cpp" />
+    <ClCompile Include="ADX11Resource\Object\DoorWall.cpp" />
     <ClCompile Include="AStar\AStar.cpp" />
     <ClCompile Include="AStar\Heap.cpp" />
     <ClCompile Include="AStar\Node.cpp" />
@@ -318,6 +321,7 @@
     <ClCompile Include="Scene\InstancingScene.cpp" />
     <ClCompile Include="Scene\LandscapeScene.cpp" />
     <ClCompile Include="Scene\LightScene.cpp" />
+    <ClCompile Include="Scene\MapScene.cpp" />
     <ClCompile Include="Scene\ModelScene.cpp" />
     <ClCompile Include="Scene\ParticleScene.cpp" />
     <ClCompile Include="Scene\RenderTargetScene.cpp" />
@@ -528,10 +532,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Shaders\Header.hlsli" />
     <None Include="Shaders\Render.hlsli" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
+    <Import Project="..\packages\directxtk_desktop_2015.2019.12.17.1\build\native\directxtk_desktop_2015.targets" Condition="Exists('..\packages\directxtk_desktop_2015.2019.12.17.1\build\native\directxtk_desktop_2015.targets')" />
   </ImportGroup>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>이 프로젝트는 이 컴퓨터에 없는 NuGet 패키지를 참조합니다. 해당 패키지를 다운로드하려면 NuGet 패키지 복원을 사용하십시오. 자세한 내용은 http://go.microsoft.com/fwlink/?LinkID=322105를 참조하십시오. 누락된 파일은 {0}입니다.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\directxtk_desktop_2015.2019.12.17.1\build\native\directxtk_desktop_2015.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\directxtk_desktop_2015.2019.12.17.1\build\native\directxtk_desktop_2015.targets'))" />
+  </Target>
 </Project>

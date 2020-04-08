@@ -5,8 +5,6 @@ PlayerHead::PlayerHead()
 	: moveSpeed(10.0f), dashSpeed(25.0f), crouchSpeed(5.0f), rotSpeed(1.5f), mouseRotSpeed(3.0f), dashMouseRotSpeed(4.5f), state(IDLE), accelation(10.0f),
 	deceleration(3.0f), velocity(0, 0, 0), oldMousePos(0, 0, 0), crouchOn(false), crouchValue(3.0f)
 {
-	// rotSpeed ÇöÀç ¾È ¾¸
-
 	model = new ModelAnimator(L"ModelAnimationInstancing");
 	transform = model->AddTransform();
 	ReadData();
@@ -26,7 +24,7 @@ PlayerHead::~PlayerHead()
 
 void PlayerHead::Update()
 {
-	MouseControl();
+	//MouseControl();
 	Input();
 	Move();
 	Crouch();
@@ -148,7 +146,10 @@ void PlayerHead::ReadData()
 
 void PlayerHead::MouseControl()
 {
-	Vector3 val = MOUSEPOS - oldMousePos;
+	//Vector3 val = MOUSEPOS - oldMousePos;
+	auto mouse_state = g_mouse->GetState();
+
+	Vector3 val = Vector3(mouse_state.x, mouse_state.y, 0);
 
 	if (val.GetX() > 0.0f)
 	{

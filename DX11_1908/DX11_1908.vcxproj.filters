@@ -147,6 +147,12 @@
     <ClInclude Include="Camera\FirstPersonView.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\MapScene.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="ADX11Resource\Object\DoorWall.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DX11_1908.cpp">
@@ -272,6 +278,12 @@
     <ClCompile Include="Camera\FirstPersonView.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Scene\MapScene.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="ADX11Resource\Object\DoorWall.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11_1908.rc">
@@ -319,5 +331,6 @@
   <ItemGroup>
     <None Include="Shaders\Header.hlsli" />
     <None Include="Shaders\Render.hlsli" />
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

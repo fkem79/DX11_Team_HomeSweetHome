@@ -3,7 +3,8 @@
 
 FirstPersonView::FirstPersonView()	
 	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(130.0f),rotDamping(50), rotY(0),
-	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr), targetOffsetYSpeed(15.0f)
+	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr), targetOffsetYSpeed(7.0f),
+	mouseRotSpeed(5.0f), dashMouseRotSpeed(6.5f), mouseControlOn(false)
 {
 	
 }
@@ -30,7 +31,7 @@ void FirstPersonView::Update()
 	}
 	else
 	{
-		MouseControl();
+		//MouseControl();
 		matRotation = XMMatrixRotationY(rotY);
 	}
 
@@ -42,6 +43,7 @@ void FirstPersonView::Update()
 	position = XMVectorLerp(position.data, destPos.data, moveDamping * DELTA);
 
 	Vector3 tempOffset = XMVector3TransformCoord(targetOffset.data, matRotation);
+	// 이거 터지는 이유를 모르겠네 왜 nan이 들어가지
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
 
 	MouseControl();
@@ -50,11 +52,22 @@ void FirstPersonView::Update()
 void FirstPersonView::PostRender()
 {
 	ImGui::SliderFloat3("TargetOffset", (float*)&targetOffset, -20.0f, 20.0f);	
+	ImGui::Checkbox("mouseControlOn", &mouseControlOn);
+
+	if(mouseControlOn)
+		g_mouse->SetMode(Mouse::MODE_RELATIVE);
+	else
+		g_mouse->SetMode(Mouse::MODE_ABSOLUTE);
+
 }
 
 void FirstPersonView::MouseControl()
 {
-	Vector3 val = MOUSEPOS - oldPos;
+	auto mouse_state = g_mouse->GetState();
+	Vector3 val = Vector3(mouse_state.x, mouse_state.y, 0);
+
+	if (!mouseControlOn)
+		return;
 
 	if (val.GetY() > 0.0f)
 		targetOffset.SetY(targetOffset.GetY() - (targetOffset.GetY() * targetOffsetYSpeed * DELTA));
@@ -69,8 +82,23 @@ void FirstPersonView::MouseControl()
 
 	if (targetOffset.GetY() > 13.0f)
 		targetOffset.SetY(13.0f);
-	
-	oldPos = MOUSEPOS;
 
+	if (target == nullptr)
+		return;
 
+	if (val.GetX() > 0.0f)
+	{
+		if (KEYPRESS(VK_SHIFT))
+			target->rotation += target->GetUp() * dashMouseRotSpeed * DELTA;
+		else
+			target->rotation += target->GetUp() * mouseRotSpeed * DELTA;
+	}
+
+	if (val.GetX() < 0.0f)
+	{
+		if (KEYPRESS(VK_SHIFT))
+			target->rotation -= target->GetUp() * dashMouseRotSpeed * DELTA;
+		else
+			target->rotation -= target->GetUp() * mouseRotSpeed * DELTA;
+	}
 }

@@ -9,6 +9,13 @@
 
 #include <windows.h>
 
+#include <Mouse.h>
+//#include <Keyboard.h>
+using namespace DirectX;
+
+extern std::unique_ptr<Mouse> g_mouse;
+//extern unique_ptr<Keyboard> g_keyboard;
+
 #include "../Framework/Framework.h"
 
 #include "Camera/Camera.h"
@@ -28,6 +35,8 @@
 #include "ADX11Resource/Model/Belle.h"
 #include "ADX11Resource/Model/PlayerHead.h"
 #include "ADX11Resource/Model/PlayerLHand.h"
+
+#include "ADX11Resource/Object/DoorWall.h"
 
 #include "Objects/Sphere.h"
 #include "Objects/Shadow.h"

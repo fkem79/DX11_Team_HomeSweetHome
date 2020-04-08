@@ -26,8 +26,7 @@ Terrain::Terrain()
 
 	size = 1 * (indices.size() / 3);
 
-	structuredBuffer = new StructuredBuffer(
-		input, sizeof(InputDesc), size, sizeof(OutputDesc), size);
+	structuredBuffer = new StructuredBuffer(input, sizeof(InputDesc), size, sizeof(OutputDesc), size);
 
 	rayBuffer = new RayBuffer();
 

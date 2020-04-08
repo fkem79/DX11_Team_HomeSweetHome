@@ -13,6 +13,8 @@ AStarScene::AStarScene()
 	playerHaed = new PlayerHead();
 	playerLHand = new PlayerLHand();
 
+	playerHaed->GetTransform()->position = { 10.0f, 0.0f, 15.0f };
+	playerHaed->GetTransform()->rotation = { 0, 180.0f, 0 };
 	//playerLHand->GetTransform()->SetParent(&playerHaed->GetTransform()->GetWorld());
 	playerLHand->GetTransform()->position = { 5.0f, 10.0f, 5.0f };
 
@@ -40,6 +42,7 @@ void AStarScene::Update()
 	terrain->Update();
 	belle->Update();
 	aStar->Update();
+
 	playerHaed->Update();
 	playerLHand->Update();
 
@@ -56,7 +59,7 @@ void AStarScene::Render()
 	belle->Render();
 
 	playerHaed->Render();
-	playerLHand->Render();
+//	playerLHand->Render();
 }
 
 void AStarScene::PostRender()

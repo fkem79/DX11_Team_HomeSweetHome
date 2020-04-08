@@ -3,8 +3,7 @@
 
 FollowCam::FollowCam()
 	: distance(0), height(0), targetOffset(0, 5, 5), moveDamping(5),
-	rotDamping(50), rotY(0), zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0),
-	target(nullptr)
+	rotDamping(50), rotY(0), zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr)
 {
 }
 
@@ -43,13 +42,9 @@ void FollowCam::Update()
 	position = XMVectorLerp(position.data, destPos.data, moveDamping * DELTA);	
 
 	Vector3 tempOffset = XMVector3TransformCoord(targetOffset.data, matRotation);
-
-	Vector3 t = { 2.0f, 0.0f, 0.0f };
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
-	//matView = XMMatrixLookAtLH(t.data, (target->position + tempOffset).data, up.data);
 	
-
-	//matview
+	
 }
 
 void FollowCam::PostRender()
