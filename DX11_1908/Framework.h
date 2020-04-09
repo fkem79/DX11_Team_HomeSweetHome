@@ -35,6 +35,7 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "ADX11Resource/Model/Belle.h"
 #include "ADX11Resource/Model/PlayerHead.h"
 #include "ADX11Resource/Model/PlayerLHand.h"
+#include "ADX11Resource/Model/Player.h"
 
 #include "ADX11Resource/Object/DoorWall.h"
 

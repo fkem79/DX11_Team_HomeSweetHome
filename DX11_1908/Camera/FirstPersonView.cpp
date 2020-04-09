@@ -2,11 +2,11 @@
 #include "FirstPersonView.h"
 
 FirstPersonView::FirstPersonView()	
-	: distance(0.0f), height(9.0f), targetOffset(0, 7, 8), moveDamping(130.0f),rotDamping(50), rotY(0),
-	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr), targetOffsetYSpeed(7.0f),
+	: distance(0.0f), height(9.0f), moveDamping(130.0f),rotDamping(50), rotY(0),
+	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), targetOffsetYSpeed(7.0f),
 	mouseRotSpeed(5.0f), dashMouseRotSpeed(6.5f), mouseControlOn(false)
 {
-	
+	targetOffset = { 0, 7, 8 };
 }
 
 FirstPersonView::~FirstPersonView()
@@ -23,9 +23,7 @@ void FirstPersonView::Update()
 	if (rotDamping > 0.0f)
 	{
 		if (target->rotation.GetY() != destRot)
-		{
 			destRot = LERP(destRot, target->rotation.GetY(), rotDamping * DELTA);
-		}
 
 		matRotation = XMMatrixRotationY(destRot + XM_PI);
 	}
@@ -36,14 +34,13 @@ void FirstPersonView::Update()
 	}
 
 	destPos = XMVector3TransformCoord(tempPos.data, matRotation);
-
 	destPos += target->position;
 	destPos.SetY(destPos.GetY() + height);
 
-	position = XMVectorLerp(position.data, destPos.data, moveDamping * DELTA);
+	float moveDampingDelta = moveDamping * DELTA;
+	position = XMVectorLerp(position.data, destPos.data, 1 < moveDampingDelta ? 1 : moveDampingDelta);
 
 	Vector3 tempOffset = XMVector3TransformCoord(targetOffset.data, matRotation);
-	// 이거 터지는 이유를 모르겠네 왜 nan이 들어가지
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
 
 	MouseControl();

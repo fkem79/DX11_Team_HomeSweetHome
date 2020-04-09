@@ -3,43 +3,24 @@
 
 MapScene::MapScene()
 {
-	
+	player = new Player();
+
 	belle = new Belle();
-	playerHaed = new PlayerHead();
-	playerLHand = new PlayerLHand();
-
-	//doorWall = new DoorWall();
-
-	playerHaed->GetTransform()->position = { 10.0f, 0.0f, 15.0f };
-	playerHaed->GetTransform()->rotation = { 0, 180.0f, 0 };
-	//playerLHand->GetTransform()->SetParent(&playerHaed->GetTransform()->GetWorld());
-	//playerLHand->GetTransform()->position = { 5.0f, 10.0f, 5.0f };
-
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };
-	//doorWall->GetTransform()->position = { 40.0f, 0.0f, 50.0f };
-
-	//	CAMERA->SetTarget(belle->GetTransform());
-	CAMERA->SetTarget(playerHaed->GetTransform());
-	//CAMERA->SetTarget(playerLHand->GetTransform());
+	
 }
 
 MapScene::~MapScene()
 {
+	delete player;
 	delete belle;
-	delete playerHaed;
-	delete playerLHand;
+	
 }
 
 void MapScene::Update()
 {
+	player->Update();
 	belle->Update();
-	//doorWall->Update();
-
-	playerHaed->Update();
-	playerLHand->Update();
-
-
-	//playerLHand->GetTransform()->UpdateWorld();
 }
 
 void MapScene::PreRender()
@@ -48,13 +29,22 @@ void MapScene::PreRender()
 
 void MapScene::Render()
 {
+	player->Render();
 	belle->Render();
-
-	playerHaed->Render();
-	//	playerLHand->Render();
-	//doorWall->Render();
 }
 
 void MapScene::PostRender()
 {
+	ImGui::Separator();
+
+	ImGui::BeginChildFrame(1, ImVec2(400, 100));
+	ImGui::BeginChild("g1", ImVec2(400, 100), false);
+
+	player->PostRender();
+	ImGui::Separator();
+	ImGui::Text("Belle Pos X %f, Y %f, Z %f", belle->GetTransform()->position.GetX(),
+		belle->GetTransform()->position.GetY(), belle->GetTransform()->position.GetZ());
+
+	ImGui::EndChild();
+	ImGui::EndChildFrame();
 }

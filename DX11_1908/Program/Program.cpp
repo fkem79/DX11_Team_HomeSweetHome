@@ -32,8 +32,8 @@ Program::Program()
 	//scenes.push_back(new RenderTargetScene());
 	//scenes.push_back(new ShadowScene());
 	//scenes.push_back(new LightScene());
-	scenes.push_back(new AStarScene());
-	//scenes.push_back(new MapScene());
+	//scenes.push_back(new AStarScene());
+	scenes.push_back(new MapScene());
 }
 
 Program::~Program()

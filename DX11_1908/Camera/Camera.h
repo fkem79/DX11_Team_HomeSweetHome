@@ -15,6 +15,10 @@ protected:
 	Matrix matView;
 
 	Vector3 oldPos;
+
+	Transform* target;
+	Vector3 targetOffset;
+
 public:
 	Camera();
 
@@ -27,6 +31,7 @@ public:
 	virtual void SetTarget(Transform* value) {}
 
 	Ray GetRay();
-
 	Matrix GetView() { return matView; }
+	Transform* GetTargetTransform() { return target; }
+	Vector3 GetTargetOffset() { return targetOffset; }
 };

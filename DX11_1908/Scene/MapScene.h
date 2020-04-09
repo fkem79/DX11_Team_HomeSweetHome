@@ -3,10 +3,7 @@ class MapScene : public Scene
 {
 private:
 	Belle* belle;
-	PlayerHead* playerHaed;
-	PlayerLHand* playerLHand;
-
-	DoorWall* doorWall;
+	Player* player;
 
 public:
 	MapScene();

@@ -82,7 +82,7 @@ public:
 	{
 		data.direction = Float3(0, -1, 0);
 		data.specExp = 64.0f;
-		data.ambient = Float4(0.5f, 0.0f, 0.5f, 1.0f);
+		data.ambient = Float4(1.0f, 1.0f, 1.0f, 1.0f);
 		data.ambientFloor = Float4(0.0f, 0.5f, 0.0f, 1.0f);
 	}
 };

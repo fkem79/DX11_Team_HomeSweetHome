@@ -6,8 +6,6 @@ private:
 	float distance;
 	float height;
 
-	Vector3 targetOffset;	
-
 	Vector3 destPos;
 	float destRot;
 
@@ -18,8 +16,6 @@ private:
 	float rotSpeed;
 
 	float zoomSpeed;
-
-	Transform* target;
 
 public:
 	FollowCam();

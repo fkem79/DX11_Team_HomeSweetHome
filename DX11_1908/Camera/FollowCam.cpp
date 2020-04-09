@@ -2,9 +2,9 @@
 #include "FollowCam.h"
 
 FollowCam::FollowCam()
-	: distance(0), height(0), targetOffset(0, 5, 5), moveDamping(5),
-	rotDamping(50), rotY(0), zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), target(nullptr)
+	: distance(0), height(0), moveDamping(5),rotDamping(50), rotY(0), zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0)
 {
+	targetOffset = {0, 5, 5};
 }
 
 FollowCam::~FollowCam()

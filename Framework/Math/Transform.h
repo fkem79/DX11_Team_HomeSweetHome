@@ -39,4 +39,5 @@ public:
 
 	//Matrix GetWorld() { return XMMatrixTranspose(world); }		
 	Matrix GetWorld() { return world; }
+	Matrix* GetWorldPointer() { return &world; }
 };
