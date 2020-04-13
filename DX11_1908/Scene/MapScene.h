@@ -14,4 +14,5 @@ public:
 	virtual void Render() override;
 	virtual void PostRender() override;
 
+	void GizmoTest();
 };
