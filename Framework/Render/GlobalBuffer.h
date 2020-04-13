@@ -29,6 +29,9 @@ public:
 	{
 		data.projection = XMMatrixTranspose(value);
 	}
+
+	Matrix* GetView() { return &data.view; }
+	Matrix* GetProjection() { return &data.projection; }
 };
 
 class WorldBuffer : public ConstBuffer

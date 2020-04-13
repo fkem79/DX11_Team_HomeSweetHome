@@ -53,7 +53,7 @@ void MapScene::PostRender()
 
 void MapScene::GizmoTest()
 {
-	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::ROTATE);
+	static ImGuizmo::OPERATION mCurrentGizmoOperation(ImGuizmo::TRANSLATE);
 	static ImGuizmo::MODE mCurrentGizmoMode(ImGuizmo::WORLD);
 
 	if (KEYPRESS('1'))
@@ -83,6 +83,13 @@ void MapScene::GizmoTest()
 	ImGuizmo::RecomposeMatrixFromComponents(belle->GetTransform()->position.data.m128_f32, 
 		belle->GetTransform()->rotation.data.m128_f32,
 		belle->GetTransform()->scale.data.m128_f32, belle->GetTransform()->GetWorld().r[0].m128_f32);
-
 	
+	ImGuizmo::Manipulate(VP->GetView()->r->m128_f32, VP->GetProjection()->r->m128_f32,
+		mCurrentGizmoOperation, mCurrentGizmoMode, belle->GetTransform()->GetWorld().r[0].m128_f32,
+		nullptr, nullptr, nullptr);
+
+	//
+	//ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation,
+	//	mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, boundSizing ? bounds : NULL,
+	//  boundSizingSnap ? boundsSnap : NULL);
 }
