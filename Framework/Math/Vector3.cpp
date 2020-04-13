@@ -60,7 +60,7 @@ float Vector3::GetZ()
 }
 
 Vector3 Vector3::operator+(const Vector3& value) const
-{		
+{
 	return Vector3(data + value.data);
 }
 

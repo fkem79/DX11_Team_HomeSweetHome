@@ -31,8 +31,6 @@ public:
 	Vector3 GetUp();
 	Vector3 GetForward();
 
-	//void SetUp(Vector3 value) { up = value; }
-
 	Vector3 GetWorldPosition();
 
 	void SetWorldBuffer(UINT slot = 1);

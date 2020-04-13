@@ -10,6 +10,8 @@ Camera::Camera()
 
 	Move();
 	Rotation();
+
+	//mouseState = g_mouse->GetState();
 }
 
 void Camera::Update()

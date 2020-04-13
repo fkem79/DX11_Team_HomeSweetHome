@@ -21,13 +21,18 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "Camera/Camera.h"
 #include "Camera/FreeCam.h"
 #include "Camera/FollowCam.h"
+#include "Camera/FixityCam.h"
 #include "Camera/FirstPersonView.h"
 
 #include "Environment/Environment.h"
+#include "Environment/Frustum.h"
 
 #include "Objects/Landscape/Terrain.h"
 #include "Objects/Landscape/TerrainEditor.h"
 #include "Objects/Landscape/CubeSky.h"
+#include "Objects/Landscape/TerrainData.h"
+#include "Objects/Landscape/QuadTreeTerrain.h"
+#include "Objects/Landscape/Scattering.h"
 
 #include "Objects/UI/Render2D.h"
 
@@ -41,6 +46,9 @@ extern std::unique_ptr<Mouse> g_mouse;
 
 #include "Objects/Sphere.h"
 #include "Objects/Shadow.h"
+#include "Objects/Reflection.h"
+#include "Objects/Refraction.h"
+#include "Objects/Water.h"
 
 #include "AStar/Node.h"
 #include "AStar/Heap.h"

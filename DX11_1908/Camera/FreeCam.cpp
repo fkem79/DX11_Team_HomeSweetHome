@@ -29,9 +29,11 @@ void FreeCam::Update()
 
 	{//Rotation
 		Vector3 value = MOUSEPOS - oldPos;
+	
 
 		if (KEYPRESS(VK_RBUTTON))
 		{
+
 			rotation.SetX(rotation.GetX() + value.GetY() * rotSpeed);
 			rotation.SetY(rotation.GetY() + value.GetX() * rotSpeed);
 
@@ -40,8 +42,9 @@ void FreeCam::Update()
 
 		oldPos = MOUSEPOS;
 	}
-	
+
 	oldPos = MOUSEPOS;
+	
 	View();
 	
 }

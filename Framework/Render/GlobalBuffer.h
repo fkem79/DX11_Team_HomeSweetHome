@@ -29,9 +29,6 @@ public:
 	{
 		data.projection = XMMatrixTranspose(value);
 	}
-
-	Matrix* GetView() { return &data.view; }
-	Matrix* GetProjection() { return &data.projection; }
 };
 
 class WorldBuffer : public ConstBuffer
@@ -85,8 +82,8 @@ public:
 	{
 		data.direction = Float3(0, -1, 0);
 		data.specExp = 64.0f;
-		data.ambient = Float4(1.0f, 1.0f, 1.0f, 1.0f);
-		data.ambientFloor = Float4(0.0f, 0.5f, 0.0f, 1.0f);
+		data.ambient = Float4(0.1f, 0.1f, 0.1f, 1.0f);
+		data.ambientFloor = Float4(0.1f, 0.1f, 0.1f, 1.0f);
 	}
 };
 
@@ -102,6 +99,21 @@ public:
 	{
 		for (int& i : data.indices)
 			i = 0;
+	}
+};
+
+class FloatBuffer : public ConstBuffer
+{
+public:
+	struct Data
+	{
+		float indices[4];
+	}data;
+
+	FloatBuffer() : ConstBuffer(&data, sizeof(Data))
+	{
+		for (float& i : data.indices)
+			i = 0.0f;
 	}
 };
 
@@ -186,5 +198,25 @@ public:
 	{
 		data.lights[data.lightCount] = light;
 		data.lightCount++;
+	}
+};
+
+class BoneBuffer : public ConstBuffer
+{
+public:
+	struct Data
+	{
+		Matrix transforms[MAX_MODEL_BONE];
+
+		UINT index;
+		float padding[3];
+	}data;
+
+	BoneBuffer() : ConstBuffer(&data, sizeof(Data))
+	{
+		for (UINT i = 0; i < MAX_MODEL_BONE; i++)
+			data.transforms[i] = XMMatrixIdentity();
+
+		data.index = 0;
 	}
 };

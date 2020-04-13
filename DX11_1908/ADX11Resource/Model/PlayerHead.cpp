@@ -147,9 +147,9 @@ void PlayerHead::ReadData()
 void PlayerHead::MouseControl()
 {
 	//Vector3 val = MOUSEPOS - oldMousePos;
-	auto mouse_state = g_mouse->GetState();
+	auto mouseState = g_mouse->GetState();
 
-	Vector3 val = Vector3(mouse_state.x, mouse_state.y, 0);
+	Vector3 val = Vector3(mouseState.x, mouseState.y, 0);
 
 	if (val.GetX() > 0.0f)
 	{

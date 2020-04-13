@@ -60,8 +60,8 @@ void FirstPersonView::PostRender()
 
 void FirstPersonView::MouseControl()
 {
-	auto mouse_state = g_mouse->GetState();
-	Vector3 val = Vector3(mouse_state.x, mouse_state.y, 0);
+	auto mouseState = g_mouse->GetState();
+	Vector3 val = Vector3(mouseState.x, mouseState.y, 0);
 
 	if (!mouseControlOn)
 		return;

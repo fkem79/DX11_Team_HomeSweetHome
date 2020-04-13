@@ -36,6 +36,7 @@
     <ClInclude Include="Model\ModelMesh.h" />
     <ClInclude Include="Model\ModelMeshPart.h" />
     <ClInclude Include="Model\ModelRender.h" />
+    <ClInclude Include="Model\ModelSingle.h" />
     <ClInclude Include="Pch.h" />
     <ClInclude Include="Framework.h" />
     <ClInclude Include="Render\Buffer.h" />
@@ -81,6 +82,7 @@
     <ClCompile Include="Model\ModelMesh.cpp" />
     <ClCompile Include="Model\ModelMeshPart.cpp" />
     <ClCompile Include="Model\ModelRender.cpp" />
+    <ClCompile Include="Model\ModelSingle.cpp" />
     <ClCompile Include="Render\Buffer.cpp" />
     <ClCompile Include="Render\ComputShader.cpp" />
     <ClCompile Include="Render\ConstBuffer.cpp" />

@@ -15,10 +15,13 @@
 #include "Scene/ShadowScene.h"
 #include "Scene/LightScene.h"
 #include "Scene/AStarScene.h"
+#include "Scene/ModelTestScene.h"
 #include "Scene/MapScene.h"
+
 
 Program::Program()
 {
+	LIGHT->data.ambient = { 1.0f, 1.0f, 1.0f, 0.0f };
 	//scenes.push_back(new TutorialScene());
 	//scenes.push_back(new GridScene());
 	//scenes.push_back(new LandscapeScene());
@@ -34,6 +37,8 @@ Program::Program()
 	//scenes.push_back(new LightScene());
 	//scenes.push_back(new AStarScene());
 	scenes.push_back(new MapScene());
+	//scenes.push_back(new ModelTestScene());
+	
 }
 
 Program::~Program()

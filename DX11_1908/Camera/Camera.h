@@ -18,7 +18,7 @@ protected:
 
 	Transform* target;
 	Vector3 targetOffset;
-
+	
 public:
 	Camera();
 
@@ -32,6 +32,8 @@ public:
 
 	Ray GetRay();
 	Matrix GetView() { return matView; }
+	Matrix* GetCamView() { return &matView; }
+	Matrix* GetCamRotation() { return &matRotation; }
 	Transform* GetTargetTransform() { return target; }
 	Vector3 GetTargetOffset() { return targetOffset; }
 };

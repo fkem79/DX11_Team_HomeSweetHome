@@ -7,7 +7,9 @@ MapScene::MapScene()
 
 	belle = new Belle();
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };
-	
+
+	tile1 = new ModelSingle("tile_big01");
+	tile1->rotation = { 1.0, 0, 0 };
 }
 
 MapScene::~MapScene()
@@ -15,12 +17,15 @@ MapScene::~MapScene()
 	delete player;
 	delete belle;
 	
+	delete tile1;
 }
 
 void MapScene::Update()
 {
 	player->Update();
 	belle->Update();
+
+	tile1->Update();
 }
 
 void MapScene::PreRender()
@@ -31,6 +36,7 @@ void MapScene::Render()
 {
 	player->Render();
 	belle->Render();
+	tile1->Render();
 }
 
 void MapScene::PostRender()
@@ -48,7 +54,12 @@ void MapScene::PostRender()
 	ImGui::EndChild();
 	ImGui::EndChildFrame();
 
-	GizmoTest();
+	ImGui::InputFloat3("Tr", tile1->position.data.m128_f32, 3);
+	ImGui::InputFloat3("Rt", tile1->rotation.data.m128_f32, 3);
+	ImGui::InputFloat3("Sc", tile1->scale.data.m128_f32, 3);
+	
+	// º¸·ù...
+	//GizmoTest(); 
 }
 
 void MapScene::GizmoTest()
@@ -84,9 +95,12 @@ void MapScene::GizmoTest()
 		belle->GetTransform()->rotation.data.m128_f32,
 		belle->GetTransform()->scale.data.m128_f32, belle->GetTransform()->GetWorld().r[0].m128_f32);
 	
-	ImGuizmo::Manipulate(VP->GetView()->r->m128_f32, VP->GetProjection()->r->m128_f32,
-		mCurrentGizmoOperation, mCurrentGizmoMode, belle->GetTransform()->GetWorld().r[0].m128_f32,
-		nullptr, nullptr, nullptr);
+	ImGuizmo::DrawCube(CAMERA->GetCamView()->r->m128_f32, CAMERA->GetCamRotation()->r->m128_f32, objectMatrix);
+	//ImGui::CaptureMouseFromApp();
+	//ImGuizmo::DrawCube(cameraView, cameraProjection, objectMatrix);
+	//ImGuizmo::Manipulate(VP->GetView()->r->m128_f32, VP->GetProjection()->r->m128_f32,
+	//	mCurrentGizmoOperation, mCurrentGizmoMode, belle->GetTransform()->GetWorld().r[0].m128_f32,
+		//nullptr, nullptr, nullptr);
 
 	//
 	//ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation,

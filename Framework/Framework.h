@@ -6,6 +6,10 @@
 #define WIN_WIDTH 1280
 #define WIN_HEIGHT 720
 
+#define MAX_MODEL_BONE 300
+#define MAX_MODEL_KEY 600
+#define MAX_MODEL_INSTANCE 500
+
 #ifdef NDEBUG
 	#define V(hr) hr
 #else
@@ -75,14 +79,11 @@ const XMVECTORF32 kRight = { 1, 0, 0 };
 #include "Converter/Types.h"
 #include "Converter/ModelReader.h"
 
-#define MAX_MODEL_BONE 300
-#define MAX_MODEL_KEY 600
-#define MAX_MODEL_INSTANCE 500
-
 #include "Model/ModelMeshPart.h"
 #include "Model/ModelMesh.h"
 #include "Model/ModelClip.h"
 #include "Model/Model.h"
+#include "Model/ModelSingle.h"
 #include "Model/ModelRender.h"
 #include "Model/ModelAnimator.h"
 
