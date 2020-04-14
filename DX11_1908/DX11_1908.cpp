@@ -46,8 +46,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     Device::Create(hWnd);    
     
+    IMGUI_CHECKVERSION();
     ImGui::CreateContext();
-    ImGui::StyleColorsDark();
+    // Imgui_impl_dx11랑 imgui_impl_win32가 저희 거랑 doking모드 버전이랑 달라서 바꿨습니다
+    // 업데이트가 살짝 덜 된 버전으로 하고 있었던 것 같습니다. 
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_DockingEnable;           // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_ViewportsEnable;
+#if 1
+    io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
+    io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI
+#endif
+    
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+    
+    //ImGui::StyleColorsDark();
+    ImGui::StyleColorsClassic();
 
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX11_Init(DEVICE, DC);
@@ -89,6 +110,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             program->PostRender();           
            
             ImGui::Render();
+            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+            {
+                ImGui::UpdatePlatformWindows();
+                ImGui::RenderPlatformWindowsDefault();
+            }
             ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
 
             Device::Get()->Present();

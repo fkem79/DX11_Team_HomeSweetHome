@@ -9,7 +9,8 @@ MapScene::MapScene()
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };
 
 	tile1 = new ModelSingle("tile_big01");
-	tile1->rotation = { 1.0, 0, 0 };
+	tile1->position = { 0,1,0 };
+	tile1->rotation = { 1.6, 0, 0 };
 }
 
 MapScene::~MapScene()

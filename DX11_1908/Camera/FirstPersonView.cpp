@@ -44,12 +44,15 @@ void FirstPersonView::Update()
 	matView = XMMatrixLookAtLH(position.data, (target->position + tempOffset).data, up.data);
 
 	MouseControl();
+
+	if (KEYUP(VK_F1))
+		mouseControlOn = !mouseControlOn;
 }
 
 void FirstPersonView::PostRender()
 {
 	ImGui::SliderFloat3("TargetOffset", (float*)&targetOffset, -20.0f, 20.0f);	
-	ImGui::Checkbox("mouseControlOn", &mouseControlOn);
+	ImGui::Checkbox("mouseControlOn(checkBox or F1 Key)", &mouseControlOn);
 
 	if(mouseControlOn)
 		g_mouse->SetMode(Mouse::MODE_RELATIVE);
