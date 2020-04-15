@@ -2,6 +2,7 @@
 #include "MapScene.h"
 
 MapScene::MapScene()
+	:mapToolWindow(false), totalObjTestX(0.0f)
 {
 	player = new Player();
 
@@ -19,6 +20,9 @@ MapScene::~MapScene()
 	delete belle;
 	
 	delete tile1;
+
+	for (ModelSingle* ms : totalObj)
+		delete ms;
 }
 
 void MapScene::Update()
@@ -27,6 +31,9 @@ void MapScene::Update()
 	belle->Update();
 
 	tile1->Update();
+
+	for (ModelSingle* ms : totalObj)
+		ms->Update();
 }
 
 void MapScene::PreRender()
@@ -38,10 +45,14 @@ void MapScene::Render()
 	player->Render();
 	belle->Render();
 	tile1->Render();
+
+	for (ModelSingle* ms : totalObj)
+		ms->Render();
 }
 
 void MapScene::PostRender()
 {
+	ImGuiSaveLoadTest();
 	ImGui::Separator();
 
 	ImGui::BeginChildFrame(1, ImVec2(400, 100));
@@ -61,6 +72,7 @@ void MapScene::PostRender()
 	
 	// º¸·ù...
 	//GizmoTest(); 
+
 }
 
 void MapScene::GizmoTest()
@@ -107,4 +119,87 @@ void MapScene::GizmoTest()
 	//ImGuizmo::Manipulate(cameraView, cameraProjection, mCurrentGizmoOperation,
 	//	mCurrentGizmoMode, matrix, NULL, useSnap ? &snap[0] : NULL, boundSizing ? bounds : NULL,
 	//  boundSizingSnap ? boundsSnap : NULL);
+}
+
+
+void MapScene::ImGuiSaveLoadTest()
+{
+	if (ImGui::BeginMainMenuBar())
+	{
+		if (ImGui::BeginMenu("File"))
+		{
+			if (ImGui::MenuItem("MapToolWindow", "Maptool Window") )
+			{
+				mapToolWindow = true;
+			}
+			if (ImGui::MenuItem("test", "test")) { /* do something */ }
+
+			ImGui::EndMenu();
+		}
+	}
+	ImGui::EndMainMenuBar();
+
+
+	if (mapToolWindow)
+	{
+		ImGui::Begin("MapTool Window (test Version)", &mapToolWindow); 
+		
+		if (ImGui::Button("Add"))
+		{
+			ModelSingle* model = new ModelSingle("fan");
+			model->scale *= 0.1f;
+			model->rotation = { 1.6f, 0, 0 };
+			model->position = { totalObjTestX, 1, 0 };
+			totalObj.push_back(model);
+			
+			totalObjTestX += 10.0f;
+		}
+		if (ImGui::Button("Save"))
+		{
+			BinaryWriter writer(L"TextData/objMap.map");
+
+			vector<ObjData> datas;
+			for (ModelSingle* model : totalObj)
+			{
+				ObjData objData;
+				objData.Position = model->position;
+				objData.Rotation = model->rotation;
+				objData.Scale = model->scale;
+
+				datas.push_back(objData);
+			}
+
+			writer.UInt(datas.size());
+			writer.Byte(datas.data(), sizeof(ObjData) * datas.size());
+		}
+		if (ImGui::Button("Load"))
+		{
+			BinaryReader reader(L"TextData/objMap.map");
+
+			UINT size = reader.UInt();
+
+			vector<ObjData> datas(size);
+			void* temp = (void*)datas.data();
+			reader.Byte(&temp, sizeof(ObjData) * size);
+
+			for (ModelSingle* ms : totalObj)
+				delete ms;
+
+			totalObj.clear();
+
+			for (UINT i = 0; i < size; i++)
+			{
+				ModelSingle* model = new ModelSingle("fan");
+				model->scale *= datas[i].Scale;
+				model->rotation = datas[i].Rotation;
+				model->position = datas[i].Position;
+				totalObj.push_back(model);
+			}
+			totalObjTestX -= 10.0f;
+		}
+
+		if (ImGui::Button("Close"))
+			mapToolWindow = false;
+		ImGui::End();
+	}
 }
