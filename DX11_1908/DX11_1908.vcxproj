@@ -288,6 +288,7 @@
     <ClInclude Include="Scene\ScatteringScene.h" />
     <ClInclude Include="Scene\Scene.h" />
     <ClInclude Include="Scene\ShadowScene.h" />
+    <ClInclude Include="Scene\StartScene.h" />
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Scene\WaterScene.h" />
     <ClInclude Include="targetver.h" />
@@ -353,6 +354,7 @@
     <ClCompile Include="Scene\RenderTargetScene.cpp" />
     <ClCompile Include="Scene\ScatteringScene.cpp" />
     <ClCompile Include="Scene\ShadowScene.cpp" />
+    <ClCompile Include="Scene\StartScene.cpp" />
     <ClCompile Include="Scene\TutorialScene.cpp" />
     <ClCompile Include="Scene\WaterScene.cpp" />
   </ItemGroup>
