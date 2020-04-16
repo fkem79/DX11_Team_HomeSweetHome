@@ -43,6 +43,7 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "ADX11Resource/Model/Player.h"
 
 #include "ADX11Resource/Object/DoorWall.h"
+#include "ADX11Resource/Object/ObjectCreateManager.h"
 
 #include "Objects/Sphere.h"
 #include "Objects/Shadow.h"

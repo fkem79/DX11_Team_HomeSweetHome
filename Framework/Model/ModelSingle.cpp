@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 ModelSingle::ModelSingle(string name)
-	:check(false)
+	:check(false), modelName(name), boxRenderCheck(true), modelNum(0)
 {
 	Export(name);
 
@@ -11,12 +11,11 @@ ModelSingle::ModelSingle(string name)
 
 	model->SetShader(L"ModelSingle");
 
-	Float3 min = { 0, -15, -30 };
-	Float3 max = { 30, 15, 30 };
+	Float3 min = { -40, -40, -40 };
+	Float3 max = { 40, 40, 40 };
 
-	coll = new BoxCollider(
-		min, max
-	);
+	coll = new BoxCollider(min, max);
+	coll->position = { 0,0,-45 };
 }
 
 ModelSingle::~ModelSingle()
@@ -35,7 +34,8 @@ void ModelSingle::Update()
 
 void ModelSingle::Render()
 {
-	coll->Render();
+	if(boxRenderCheck)
+		coll->Render();
 
 	worldBuffer->SetVSBuffer(1);
 
@@ -45,8 +45,8 @@ void ModelSingle::Render()
 
 void ModelSingle::PostRender()
 {
-	if (check)
-	{
+	//if (check)
+	/*{
 		ImGui::Text("CollBox");
 		ImGui::InputFloat3("Position", coll->position.data.m128_f32, 3);
 		ImGui::InputFloat3("Scale", coll->scale.data.m128_f32, 3);
@@ -58,7 +58,7 @@ void ModelSingle::PostRender()
 
 		ImGui::InputFloat3("Min", coll->GetMinBox().data.m128_f32, 3);
 		ImGui::InputFloat3("Max", coll->GetMaxBox().data.m128_f32, 3);
-	}
+	}*/
 }
 
 void ModelSingle::Export(string name)
