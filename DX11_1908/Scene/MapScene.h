@@ -5,6 +5,9 @@ struct ObjData
 	Float3 Position;
 	Float3 Rotation;
 	Float3 Scale;
+
+	Float3 min;
+	Float3 max;
 };
 
 
@@ -25,6 +28,7 @@ private:
 	  0.f, 0.f, 0.f, 1.f };
 
 	bool mapToolWindow;
+	bool check;
 
 public:
 

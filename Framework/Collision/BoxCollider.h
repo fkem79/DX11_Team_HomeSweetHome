@@ -28,6 +28,9 @@ public:
 	Vector3 GetMin();
 	Vector3 GetMax();
 
+	Vector3& GetMinBox() { return minBox; }
+	Vector3& GetMaxBox() { return maxBox; }
+
 	Obb GetObb();
 
 	bool IsBoxCollision(BoxCollider* collider);

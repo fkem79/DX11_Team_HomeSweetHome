@@ -2,7 +2,7 @@
 #include "MapScene.h"
 
 MapScene::MapScene()
-	:mapToolWindow(false), totalObjTestX(0.0f)
+	:mapToolWindow(false), totalObjTestX(0.0f), check(false)
 {
 	player = new Player();
 
@@ -18,7 +18,7 @@ MapScene::~MapScene()
 {
 	delete player;
 	delete belle;
-	
+
 	delete tile1;
 
 	for (ModelSingle* ms : totalObj)
@@ -34,6 +34,17 @@ void MapScene::Update()
 
 	for (ModelSingle* ms : totalObj)
 		ms->Update();
+
+	if (KEYPRESS(VK_LBUTTON))
+	{
+		Ray ray = CAMERA->GetRay();
+
+		for (ModelSingle* ms : totalObj)
+			if (ms->GetCollBox()->IsCollision(ray))
+			{
+				ms->SetCheck(!check);
+			}
+	}
 }
 
 void MapScene::PreRender()
@@ -53,6 +64,7 @@ void MapScene::Render()
 void MapScene::PostRender()
 {
 	ImGuiSaveLoadTest();
+
 	ImGui::Separator();
 
 	ImGui::BeginChildFrame(1, ImVec2(400, 100));
@@ -69,10 +81,11 @@ void MapScene::PostRender()
 	ImGui::InputFloat3("Tr", tile1->position.data.m128_f32, 3);
 	ImGui::InputFloat3("Rt", tile1->rotation.data.m128_f32, 3);
 	ImGui::InputFloat3("Sc", tile1->scale.data.m128_f32, 3);
-	
+
 	// º¸·ù...
 	//GizmoTest(); 
-
+	for (ModelSingle* temp : totalObj)
+		temp->PostRender();
 }
 
 void MapScene::GizmoTest()
@@ -95,19 +108,19 @@ void MapScene::GizmoTest()
 	ImGui::SameLine();
 	if (ImGui::RadioButton("Scale", mCurrentGizmoOperation == ImGuizmo::SCALE))
 		mCurrentGizmoOperation = ImGuizmo::SCALE;
-	
+
 	// Belle·Î test
 	ImGuizmo::DecomposeMatrixToComponents(belle->GetTransform()->GetWorld().r[0].m128_f32,
-		belle->GetTransform()->position.data.m128_f32, 
-		belle->GetTransform()->rotation.data.m128_f32, 
+		belle->GetTransform()->position.data.m128_f32,
+		belle->GetTransform()->rotation.data.m128_f32,
 		belle->GetTransform()->scale.data.m128_f32);
 	ImGui::InputFloat3("Tr", belle->GetTransform()->position.data.m128_f32, 3);
 	ImGui::InputFloat3("Rt", belle->GetTransform()->rotation.data.m128_f32, 3);
 	ImGui::InputFloat3("Sc", belle->GetTransform()->scale.data.m128_f32, 3);
-	ImGuizmo::RecomposeMatrixFromComponents(belle->GetTransform()->position.data.m128_f32, 
+	ImGuizmo::RecomposeMatrixFromComponents(belle->GetTransform()->position.data.m128_f32,
 		belle->GetTransform()->rotation.data.m128_f32,
 		belle->GetTransform()->scale.data.m128_f32, belle->GetTransform()->GetWorld().r[0].m128_f32);
-	
+
 	ImGuizmo::DrawCube(CAMERA->GetCamView()->r->m128_f32, CAMERA->GetCamRotation()->r->m128_f32, objectMatrix);
 	//ImGui::CaptureMouseFromApp();
 	//ImGuizmo::DrawCube(cameraView, cameraProjection, objectMatrix);
@@ -128,7 +141,7 @@ void MapScene::ImGuiSaveLoadTest()
 	{
 		if (ImGui::BeginMenu("File"))
 		{
-			if (ImGui::MenuItem("MapToolWindow", "Maptool Window") )
+			if (ImGui::MenuItem("MapToolWindow", "Maptool Window"))
 			{
 				mapToolWindow = true;
 			}
@@ -142,18 +155,19 @@ void MapScene::ImGuiSaveLoadTest()
 
 	if (mapToolWindow)
 	{
-		ImGui::Begin("MapTool Window (test Version)", &mapToolWindow); 
-		
+		ImGui::Begin("MapTool Window (test Version)", &mapToolWindow);
+
 		if (ImGui::Button("Add"))
 		{
 			ModelSingle* model = new ModelSingle("fan");
 			model->scale *= 0.1f;
 			model->rotation = { 1.6f, 0, 0 };
-			model->position = { totalObjTestX, 1, 0 };
+			model->position = { totalObjTestX, 1, 10 };
 			totalObj.push_back(model);
-			
+
 			totalObjTestX += 10.0f;
 		}
+
 		if (ImGui::Button("Save"))
 		{
 			BinaryWriter writer(L"TextData/objMap.map");
@@ -165,6 +179,8 @@ void MapScene::ImGuiSaveLoadTest()
 				objData.Position = model->position;
 				objData.Rotation = model->rotation;
 				objData.Scale = model->scale;
+				objData.min = model->GetCollBox()->GetMin();
+				objData.max = model->GetCollBox()->GetMax();
 
 				datas.push_back(objData);
 			}
@@ -193,6 +209,8 @@ void MapScene::ImGuiSaveLoadTest()
 				model->scale *= datas[i].Scale;
 				model->rotation = datas[i].Rotation;
 				model->position = datas[i].Position;
+				model->GetCollBox()->GetMinBox() = datas[i].min;
+				model->GetCollBox()->GetMaxBox() = datas[i].max;
 				totalObj.push_back(model);
 			}
 			totalObjTestX -= 10.0f;
