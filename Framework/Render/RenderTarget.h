@@ -8,7 +8,7 @@ private:
 	ID3D11RenderTargetView* rtv;	
 
 public:
-	RenderTarget(UINT width = WIN_WIDTH, UINT height = WIN_HEIGHT);
+	RenderTarget(UINT width = Device::Get()->GetWidth(), UINT height = Device::Get()->GetHeight());
 	~RenderTarget();
 
 	void Set(DepthStencil* depthStencil);

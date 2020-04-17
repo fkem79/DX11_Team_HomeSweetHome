@@ -12,10 +12,10 @@ Environment::Environment()
 	CreatePerspective();	
     CreateSamplerState();
 
-    mainCamera = new FreeCam();
-    mainCamera->position = Vector3(0, 0, -3);    
+    //mainCamera = new FreeCam();
+    //mainCamera->position = Vector3(0, 0, -3);    
    // mainCamera = new FollowCam();
-   //mainCamera = new FirstPersonView();
+    mainCamera = new FirstPersonView();
 }
 
 Environment::~Environment()
@@ -31,8 +31,8 @@ Environment::~Environment()
 void Environment::CreateViewport()
 {
     D3D11_VIEWPORT vp;
-    vp.Width = WIN_WIDTH;
-    vp.Height = WIN_HEIGHT;
+    vp.Width = Device::Get()->GetWidth();
+    vp.Height = Device::Get()->GetHeight();
     vp.MinDepth = 0.0f;
     vp.MaxDepth = 1.0f;
     vp.TopLeftX = 0;
@@ -43,7 +43,7 @@ void Environment::CreateViewport()
 void Environment::CreatePerspective()
 {
     projection = XMMatrixPerspectiveFovLH(XM_PIDIV4,
-        WIN_WIDTH / (float)WIN_HEIGHT, 0.1f, 1000.0f);
+        Device::Get()->GetWidth() / (float)Device::Get()->GetHeight(), 0.1f, 1000.0f);
 
     viewProjection->SetProjection(projection);
 }

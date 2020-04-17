@@ -8,7 +8,7 @@ private:
 	ID3D11ShaderResourceView* srv;
 
 public:
-	DepthStencil(UINT width = WIN_WIDTH, UINT height = WIN_HEIGHT);
+	DepthStencil(UINT width = Device::Get()->GetWidth(), UINT height = Device::Get()->GetHeight());
 	~DepthStencil();
 
 	ID3D11DepthStencilView*& GetDSV() { return dsv; }

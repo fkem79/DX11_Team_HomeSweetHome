@@ -12,8 +12,6 @@ StartScene::~StartScene()
 void StartScene::Update()
 {
 	render2D->Update();
-
-	//SOUND->Play("bgm");
 }
 
 void StartScene::PreRender()
@@ -37,12 +35,16 @@ void StartScene::Begin()
 {
 	Texture2D();
 
-	//SOUND->Add("bgm", "Sounds/MUS_House_SafeZoneMusic.OGG", true);
+	SOUND->Add("StartScene_bgm", "Sounds/A_PretaChasing01.OGG", true);
+
+	SOUND->Play("StartScene_bgm");
 }
 
 void StartScene::End()
 {
 	delete render2D;
+
+	SOUND->Stop("StartScene_bgm");
 }
 
 void StartScene::Start()
@@ -60,11 +62,11 @@ void StartScene::Texture2D()
 	render2D = new Render2D();
 	Texture* texture = Texture::Add(L"Textures/start.jpg");
 
-	render2D->scale.SetX(WIN_WIDTH);
-	render2D->scale.SetY(WIN_HEIGHT);
+	render2D->scale.SetX(Device::Get()->GetWidth());
+	render2D->scale.SetY(Device::Get()->GetHeight());
 
-	render2D->position.SetX(WIN_WIDTH * 0.5f);
-	render2D->position.SetY(WIN_HEIGHT * 0.5f);
+	render2D->position.SetX(Device::Get()->GetWidth() * 0.5f);
+	render2D->position.SetY(Device::Get()->GetHeight() * 0.5f);
 
 	ComputeShader* shader = new ComputeShader(L"Texture2D");
 	shader->Set();

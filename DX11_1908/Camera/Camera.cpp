@@ -50,7 +50,7 @@ void Camera::PostRender()
 
 Ray Camera::GetRay()
 {
-	Float2 screenSize = Float2(WIN_WIDTH, WIN_HEIGHT);
+	Float2 screenSize = Float2(Device::Get()->GetWidth(), Device::Get()->GetHeight());
 
 	Vector3 mousePos = MOUSEPOS;
 

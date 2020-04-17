@@ -5,7 +5,7 @@ Render2D::Render2D(wstring shaderFile)
 	shader = Shader::Add(shaderFile);
 
 	view = XMMatrixIdentity();
-	orthographic = XMMatrixOrthographicOffCenterLH(0, WIN_WIDTH, 0, WIN_HEIGHT, -1, 1);
+	orthographic = XMMatrixOrthographicOffCenterLH(0, Device::Get()->GetWidth(), 0, Device::Get()->GetHeight(), -1, 1);
 
 	depthState = new DepthStencilState();
 	depthState->DepthEnable(false);

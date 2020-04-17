@@ -39,12 +39,12 @@
 #include <Assimp/scene.h>
 #include <Assimp/postprocess.h>
 
-//FMOD
-//#include "FMOD/inc/fmod.hpp"
-
-//#pragma comment(lib, "Framework/FMOD/lib/x86/fmod_vc.lib")
 #pragma comment(lib, "Assimp/assimp-vc142-mtd.lib")
 
+//FMOD
+#include "inc/fmod.hpp"
+
+#pragma comment(lib, "Framework/lib/fmod_vc.lib")
 
 using namespace DirectX;
 using namespace std;
