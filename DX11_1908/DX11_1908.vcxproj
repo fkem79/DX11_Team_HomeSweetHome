@@ -240,6 +240,7 @@
     <ClInclude Include="AStar\AStar.h" />
     <ClInclude Include="AStar\Heap.h" />
     <ClInclude Include="AStar\Node.h" />
+    <ClInclude Include="Button\Button.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FirstPersonView.h" />
     <ClInclude Include="Camera\FixityCam.h" />

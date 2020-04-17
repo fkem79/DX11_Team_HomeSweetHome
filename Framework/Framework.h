@@ -39,6 +39,8 @@ typedef XMFLOAT4X4 Float4x4;
 typedef XMCOLOR Color;
 
 typedef function<void()> Event;
+typedef function<void(int)> EventInt;
+typedef function<void(void*)> EventVoid;
 
 const XMVECTORF32 kForward = { 0, 0, 1 };
 const XMVECTORF32 kUp = { 0, 1, 0 };

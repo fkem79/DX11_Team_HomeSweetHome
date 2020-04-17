@@ -163,6 +163,8 @@
     <ClInclude Include="Scene\TutorialScene.h" />
     <ClInclude Include="Scene\WaterScene.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="Button\Button.h" />
+
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11_1908.rc" />

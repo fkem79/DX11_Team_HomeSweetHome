@@ -3,7 +3,6 @@ class StartScene : public Scene
 {
 private:
 	Render2D* render2D;
-
 public:
 	StartScene();
 	~StartScene();
