@@ -21,7 +21,7 @@ Program::~Program()
 
 void Program::Update()
 {
-	//SOUND->Update();
+	SOUND->Update();
 
 	SCENE->Update();
 
