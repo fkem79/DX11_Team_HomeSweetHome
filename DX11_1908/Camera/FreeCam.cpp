@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 FreeCam::FreeCam()
-	: moveSpeed(20), rotSpeed(0.005f)
+	: moveSpeed(20.0f), rotSpeed(1.5f)
 {	
 }
 
@@ -32,8 +32,8 @@ void FreeCam::Update()
 
 		if (KEYPRESS(VK_RBUTTON))
 		{
-			rotation.SetX(rotation.GetX() + value.GetY() * rotSpeed);
-			rotation.SetY(rotation.GetY() + value.GetX() * rotSpeed);
+			rotation.SetX(rotation.GetX() + value.GetY() * rotSpeed * DELTA);
+			rotation.SetY(rotation.GetY() + value.GetX() * rotSpeed * DELTA);
 
 			Rotation();
 		}
