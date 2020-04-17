@@ -86,9 +86,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     //ImGui::StyleColorsDark();
     ImGui::StyleColorsClassic();
 
-
-
-
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
     LoadStringW(hInstance, IDC_DX111908, szWindowClass, MAX_LOADSTRING);
