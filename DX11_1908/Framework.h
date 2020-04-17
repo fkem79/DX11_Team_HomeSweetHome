@@ -56,5 +56,7 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "AStar/Heap.h"
 #include "AStar/AStar.h"
 
+#include "Button/Button.h"
+
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"

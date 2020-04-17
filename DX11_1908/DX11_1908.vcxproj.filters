@@ -1,436 +1,173 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="소스 파일">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="헤더 파일">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="리소스 파일">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="targetver.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Resource.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="DX11_1908.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Framework.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Program\Program.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\Scene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\TutorialScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\GridScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Sphere.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\LandscapeScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Environment\Environment.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\Camera.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\FreeCam.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Landscape\Terrain.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Landscape\TerrainEditor.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ModelScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Model\Kaya.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\BillboardScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Billboard.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Particle\Rain.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Particle\Particle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ParticleScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Particle\Spark.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Particle\Snow.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Landscape\CubeSky.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\InstancingScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\InstancingModelScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ComputeScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\UI\Render2D.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\CollisionScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\RenderTargetScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\UI\RadialBlur.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ShadowScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Shadow.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\LightScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\AStarScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\FollowCam.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AStar\Node.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AStar\AStar.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="AStar\Heap.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ADX11Resource\Model\Belle.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ADX11Resource\Model\PlayerHead.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ADX11Resource\Model\PlayerLHand.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\FirstPersonView.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\MapScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ADX11Resource\Object\DoorWall.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="ADX11Resource\Model\Player.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Reflection.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Refraction.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Water.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Landscape\QuadTreeTerrain.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Landscape\Scattering.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Objects\Landscape\TerrainData.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera\FixityCam.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Environment\Frustum.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\FrustumScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ModelTestScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ReflectionScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\ScatteringScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\WaterScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\StartScene.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene\SceneManager.h">
-    <ClInclude Include="ADX11Resource\Object\ObjectCreateManager.h">
-      <Filter>헤더 파일</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="DX11_1908.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Program\Program.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Framework.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\TutorialScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\GridScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Sphere.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\LandscapeScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Environment\Environment.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\Camera.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\FreeCam.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Landscape\Terrain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Landscape\TerrainEditor.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ModelScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Model\Kaya.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\BillboardScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Billboard.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Particle\Particle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Particle\Rain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ParticleScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Particle\Spark.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Particle\Snow.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Landscape\CubeSky.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\InstancingScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\InstancingModelScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ComputeScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\UI\Render2D.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\CollisionScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\RenderTargetScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\UI\RadialBlur.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ShadowScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Shadow.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\LightScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\AStarScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\FollowCam.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AStar\Node.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AStar\Heap.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="AStar\AStar.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ADX11Resource\Model\Belle.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ADX11Resource\Model\PlayerHead.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ADX11Resource\Model\PlayerLHand.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\FirstPersonView.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\MapScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ADX11Resource\Object\DoorWall.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="ADX11Resource\Model\Player.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Reflection.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Refraction.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Water.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Landscape\QuadTreeTerrain.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Landscape\Scattering.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Objects\Landscape\TerrainData.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera\FixityCam.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Environment\Frustum.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\FrustumScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ModelTestScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ReflectionScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\ScatteringScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\WaterScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene\StartScene.cpp">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-
-    <ClCompile Include="Scene\SceneManager.cpp">
-    <ClCompile Include="ADX11Resource\Object\ObjectCreateManager.cpp">
-
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ResourceCompile Include="DX11_1908.rc">
-      <Filter>리소스 파일</Filter>
-    </ResourceCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="small.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-    <Image Include="DX11_1908.ico">
-      <Filter>리소스 파일</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Shaders\Tutorial.hlsl" />
+    <FxCompile Include="Shaders\Billboard.hlsl" />
+    <FxCompile Include="Shaders\ByteAddress.hlsl" />
+    <FxCompile Include="Shaders\Collider.hlsl" />
+    <FxCompile Include="Shaders\CubeSky.hlsl" />
     <FxCompile Include="Shaders\Diffuse.hlsl" />
+    <FxCompile Include="Shaders\GeometryBillboard.hlsl" />
     <FxCompile Include="Shaders\Grid.hlsl" />
-    <FxCompile Include="Shaders\Specular.hlsl" />
-    <FxCompile Include="Shaders\NormalMapping.hlsl" />
-    <FxCompile Include="Shaders\Terrain.hlsl" />
-    <FxCompile Include="Shaders\TerrainBrush.hlsl" />
-    <FxCompile Include="Shaders\Splatting.hlsl" />
+    <FxCompile Include="Shaders\Instancing.hlsl" />
+    <FxCompile Include="Shaders\Intersection.hlsl" />
+    <FxCompile Include="Shaders\Lighting.hlsl" />
     <FxCompile Include="Shaders\Model.hlsl" />
     <FxCompile Include="Shaders\ModelAnimation.hlsl" />
-    <FxCompile Include="Shaders\Billboard.hlsl" />
-    <FxCompile Include="Shaders\GeometryBillboard.hlsl" />
-    <FxCompile Include="Shaders\Rain.hlsl" />
-    <FxCompile Include="Shaders\Spark.hlsl" />
-    <FxCompile Include="Shaders\Snow.hlsl" />
-    <FxCompile Include="Shaders\CubeSky.hlsl" />
-    <FxCompile Include="Shaders\Instancing.hlsl" />
-    <FxCompile Include="Shaders\ModelInstancing.hlsl" />
     <FxCompile Include="Shaders\ModelAnimationInstancing.hlsl" />
-    <FxCompile Include="Shaders\ByteAddress.hlsl" />
-    <FxCompile Include="Shaders\Intersection.hlsl" />
-    <FxCompile Include="Shaders\Render2D.hlsl" />
-    <FxCompile Include="Shaders\Texture2D.hlsl" />
-    <FxCompile Include="Shaders\Collider.hlsl" />
-    <FxCompile Include="Shaders\RadialBlur.hlsl" />
+    <FxCompile Include="Shaders\ModelInstancing.hlsl" />
     <FxCompile Include="Shaders\MRT.hlsl" />
+    <FxCompile Include="Shaders\NormalMapping.hlsl" />
+    <FxCompile Include="Shaders\RadialBlur.hlsl" />
+    <FxCompile Include="Shaders\Rain.hlsl" />
+    <FxCompile Include="Shaders\Render2D.hlsl" />
     <FxCompile Include="Shaders\ShadowDepth.hlsl" />
-    <FxCompile Include="Shaders\Lighting.hlsl" />
+    <FxCompile Include="Shaders\Snow.hlsl" />
+    <FxCompile Include="Shaders\Spark.hlsl" />
+    <FxCompile Include="Shaders\Specular.hlsl" />
+    <FxCompile Include="Shaders\Splatting.hlsl" />
+    <FxCompile Include="Shaders\Terrain.hlsl" />
+    <FxCompile Include="Shaders\TerrainBrush.hlsl" />
+    <FxCompile Include="Shaders\Texture2D.hlsl" />
+    <FxCompile Include="Shaders\Tutorial.hlsl" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ADX11Resource\Model\Belle.cpp" />
+    <ClCompile Include="ADX11Resource\Model\Player.cpp" />
+    <ClCompile Include="ADX11Resource\Model\PlayerHead.cpp" />
+    <ClCompile Include="ADX11Resource\Model\PlayerLHand.cpp" />
+    <ClCompile Include="ADX11Resource\Object\DoorWall.cpp" />
+    <ClCompile Include="ADX11Resource\Object\ObjectCreateManager.cpp" />
+    <ClCompile Include="AStar\AStar.cpp" />
+    <ClCompile Include="AStar\Heap.cpp" />
+    <ClCompile Include="AStar\Node.cpp" />
+    <ClCompile Include="Camera\Camera.cpp" />
+    <ClCompile Include="Camera\FirstPersonView.cpp" />
+    <ClCompile Include="Camera\FixityCam.cpp" />
+    <ClCompile Include="Camera\FollowCam.cpp" />
+    <ClCompile Include="Camera\FreeCam.cpp" />
+    <ClCompile Include="DX11_1908.cpp" />
+    <ClCompile Include="Environment\Environment.cpp" />
+    <ClCompile Include="Environment\Frustum.cpp" />
+    <ClCompile Include="Objects\Billboard.cpp" />
+    <ClCompile Include="Objects\Landscape\CubeSky.cpp" />
+    <ClCompile Include="Objects\Landscape\QuadTreeTerrain.cpp" />
+    <ClCompile Include="Objects\Landscape\Scattering.cpp" />
+    <ClCompile Include="Objects\Landscape\TerrainData.cpp" />
+    <ClCompile Include="Objects\Landscape\TerrainEditor.cpp" />
+    <ClCompile Include="Objects\Model\Kaya.cpp" />
+    <ClCompile Include="Objects\Particle\Particle.cpp" />
+    <ClCompile Include="Objects\Particle\Rain.cpp" />
+    <ClCompile Include="Objects\Particle\Snow.cpp" />
+    <ClCompile Include="Objects\Particle\Spark.cpp" />
+    <ClCompile Include="Objects\Reflection.cpp" />
+    <ClCompile Include="Objects\Refraction.cpp" />
+    <ClCompile Include="Objects\Shadow.cpp" />
+    <ClCompile Include="Objects\Sphere.cpp" />
+    <ClCompile Include="Objects\Landscape\Terrain.cpp" />
+    <ClCompile Include="Objects\UI\RadialBlur.cpp" />
+    <ClCompile Include="Objects\UI\Render2D.cpp" />
+    <ClCompile Include="Objects\Water.cpp" />
+    <ClCompile Include="Program\Program.cpp" />
+    <ClCompile Include="Framework.cpp" />
+    <ClCompile Include="Scene\AStarScene.cpp" />
+    <ClCompile Include="Scene\BillboardScene.cpp" />
+    <ClCompile Include="Scene\CollisionScene.cpp" />
+    <ClCompile Include="Scene\ComputeScene.cpp" />
+    <ClCompile Include="Scene\FrustumScene.cpp" />
+    <ClCompile Include="Scene\GridScene.cpp" />
+    <ClCompile Include="Scene\InstancingModelScene.cpp" />
+    <ClCompile Include="Scene\InstancingScene.cpp" />
+    <ClCompile Include="Scene\LandscapeScene.cpp" />
+    <ClCompile Include="Scene\LightScene.cpp" />
+    <ClCompile Include="Scene\MapScene.cpp" />
+    <ClCompile Include="Scene\ModelScene.cpp" />
+    <ClCompile Include="Scene\ModelTestScene.cpp" />
+    <ClCompile Include="Scene\ParticleScene.cpp" />
+    <ClCompile Include="Scene\ReflectionScene.cpp" />
+    <ClCompile Include="Scene\RenderTargetScene.cpp" />
+    <ClCompile Include="Scene\ScatteringScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
+    <ClCompile Include="Scene\ShadowScene.cpp" />
+    <ClCompile Include="Scene\StartScene.cpp" />
+    <ClCompile Include="Scene\TutorialScene.cpp" />
+    <ClCompile Include="Scene\WaterScene.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ADX11Resource\Model\Belle.h" />
+    <ClInclude Include="ADX11Resource\Model\Player.h" />
+    <ClInclude Include="ADX11Resource\Model\PlayerHead.h" />
+    <ClInclude Include="ADX11Resource\Model\PlayerLHand.h" />
+    <ClInclude Include="ADX11Resource\Object\DoorWall.h" />
+    <ClInclude Include="ADX11Resource\Object\ObjectCreateManager.h" />
+    <ClInclude Include="AStar\AStar.h" />
+    <ClInclude Include="AStar\Heap.h" />
+    <ClInclude Include="AStar\Node.h" />
+    <ClInclude Include="Camera\Camera.h" />
+    <ClInclude Include="Camera\FirstPersonView.h" />
+    <ClInclude Include="Camera\FixityCam.h" />
+    <ClInclude Include="Camera\FollowCam.h" />
+    <ClInclude Include="Camera\FreeCam.h" />
+    <ClInclude Include="DX11_1908.h" />
+    <ClInclude Include="Environment\Environment.h" />
+    <ClInclude Include="Environment\Frustum.h" />
+    <ClInclude Include="Framework.h" />
+    <ClInclude Include="Objects\Billboard.h" />
+    <ClInclude Include="Objects\Landscape\CubeSky.h" />
+    <ClInclude Include="Objects\Landscape\QuadTreeTerrain.h" />
+    <ClInclude Include="Objects\Landscape\Scattering.h" />
+    <ClInclude Include="Objects\Landscape\TerrainData.h" />
+    <ClInclude Include="Objects\Landscape\TerrainEditor.h" />
+    <ClInclude Include="Objects\Model\Kaya.h" />
+    <ClInclude Include="Objects\Particle\Particle.h" />
+    <ClInclude Include="Objects\Particle\Rain.h" />
+    <ClInclude Include="Objects\Particle\Snow.h" />
+    <ClInclude Include="Objects\Particle\Spark.h" />
+    <ClInclude Include="Objects\Reflection.h" />
+    <ClInclude Include="Objects\Refraction.h" />
+    <ClInclude Include="Objects\Shadow.h" />
+    <ClInclude Include="Objects\Sphere.h" />
+    <ClInclude Include="Objects\Landscape\Terrain.h" />
+    <ClInclude Include="Objects\UI\RadialBlur.h" />
+    <ClInclude Include="Objects\UI\Render2D.h" />
+    <ClInclude Include="Objects\Water.h" />
+    <ClInclude Include="Program\Program.h" />
+    <ClInclude Include="Resource.h" />
+    <ClInclude Include="Scene\AStarScene.h" />
+    <ClInclude Include="Scene\BillboardScene.h" />
+    <ClInclude Include="Scene\CollisionScene.h" />
+    <ClInclude Include="Scene\ComputeScene.h" />
+    <ClInclude Include="Scene\FrustumScene.h" />
+    <ClInclude Include="Scene\GridScene.h" />
+    <ClInclude Include="Scene\InstancingModelScene.h" />
+    <ClInclude Include="Scene\InstancingScene.h" />
+    <ClInclude Include="Scene\LandscapeScene.h" />
+    <ClInclude Include="Scene\LightScene.h" />
+    <ClInclude Include="Scene\MapScene.h" />
+    <ClInclude Include="Scene\ModelScene.h" />
+    <ClInclude Include="Scene\ModelTestScene.h" />
+    <ClInclude Include="Scene\ParticleScene.h" />
+    <ClInclude Include="Scene\ReflectionScene.h" />
+    <ClInclude Include="Scene\RenderTargetScene.h" />
+    <ClInclude Include="Scene\ScatteringScene.h" />
+    <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
+    <ClInclude Include="Scene\ShadowScene.h" />
+    <ClInclude Include="Scene\StartScene.h" />
+    <ClInclude Include="Scene\TutorialScene.h" />
+    <ClInclude Include="Scene\WaterScene.h" />
+    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Button\Button.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="DX11_1908.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="DX11_1908.ico" />
+    <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
     <None Include="Shaders\Header.hlsli" />
     <None Include="Shaders\Render.hlsli" />
-    <None Include="packages.config" />
   </ItemGroup>
 </Project>
