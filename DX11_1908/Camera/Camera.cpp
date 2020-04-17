@@ -29,7 +29,7 @@ void Camera::Rotation()
 
 	matRotation = rotX * rotY;
 		
-	
+
 	forward = XMVector3TransformNormal(kForward, matRotation);	
 	up = XMVector3TransformNormal(kUp, matRotation);	
 	right = XMVector3TransformNormal(kRight, matRotation);

@@ -63,11 +63,11 @@ void FirstPersonView::PostRender()
 
 void FirstPersonView::MouseControl()
 {
-	auto mouseState = g_mouse->GetState();
-	Vector3 val = Vector3(mouseState.x, mouseState.y, 0);
-
 	if (!mouseControlOn)
 		return;
+
+	auto mouseState = g_mouse->GetState();
+	Vector3 val = Vector3(mouseState.x, mouseState.y, 0);
 
 	if (val.GetY() > 0.0f)
 		targetOffset.SetY(targetOffset.GetY() - (targetOffset.GetY() * targetOffsetYSpeed * DELTA));

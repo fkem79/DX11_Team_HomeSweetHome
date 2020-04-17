@@ -247,23 +247,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         }
         break;
     case WM_INPUT:
+        break;
     case WM_MOUSEMOVE:
+    {
         Keyboard::Get()->SetMouse(LOWORD(lParam), HIWORD(lParam));
+    }
+        break;
+
     case WM_LBUTTONDOWN:
+        break;
     case WM_LBUTTONUP:
+        break;
     case WM_RBUTTONDOWN:
+        break;
     case WM_RBUTTONUP:
+        break;
     case WM_MBUTTONDOWN:
+        break;
     case WM_MBUTTONUP:
+        break;
     case WM_MOUSEWHEEL:
     {
         short value = (short)HIWORD(wParam);
         Keyboard::Get()->SetWheel((float)value);
     }
+        break;
     case WM_XBUTTONDOWN:
+        break;
     case WM_XBUTTONUP:
+        break;
     case WM_MOUSEHOVER:
+    {
         Mouse::ProcessMessage(message, wParam, lParam);
+    }
         break;
     case WM_COMMAND:
         {

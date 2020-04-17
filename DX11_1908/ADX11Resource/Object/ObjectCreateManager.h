@@ -17,7 +17,7 @@ struct ObjData
 class ObjectCreateManager
 {
 private:
-	vector<UINT> objNumbers;
+
 	vector<string> objNames;
 
 	vector<ModelSingle*> totalObj;

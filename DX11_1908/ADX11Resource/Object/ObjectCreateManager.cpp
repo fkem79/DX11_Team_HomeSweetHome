@@ -4,10 +4,6 @@
 ObjectCreateManager::ObjectCreateManager()
 	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), fileCheck(true), curObjNum(100), objNum(0)
 {
-	objNumbers.push_back(1);
-	objNumbers.push_back(2);
-	objNumbers.push_back(3);
-
 	objNames.push_back("fan");
 	objNames.push_back("desk");
 	objNames.push_back("closet");
@@ -151,7 +147,10 @@ void ObjectCreateManager::ObjectCreateWindow()
 
 				totalObj.push_back(model);
 			}
-			totalObjTestX -= 10.0f;
+			totalObjTestX = totalObj.size() * 10.0f;
+
+			curObjNum = 100;
+			objNum = totalObj.size();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Close"))
@@ -177,9 +176,8 @@ void ObjectCreateManager::ObjectCreateWindow()
 				model->position = { totalObjTestX, 1, 10 };
 				totalObj.push_back(model);
 
-				totalObjTestX += 10.0f;
+				totalObjTestX = totalObj.size() * 10.0f;
 				addNameWindow = false;
-				
 			}
 		}
 
