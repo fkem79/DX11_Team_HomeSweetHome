@@ -14,18 +14,18 @@ RenderTargetScene::RenderTargetScene()
 	depthStencil = new DepthStencil();
 
 	render2D = new Render2D(L"MRT");
-	render2D->scale = Vector3(WIN_WIDTH, WIN_HEIGHT, 1.0f);
-	render2D->position = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f, 0.0f);
+	render2D->scale = Vector3(Device::Get()->GetWidth(), Device::Get()->GetHeight(), 1.0f);
+	render2D->position = Vector3(Device::Get()->GetWidth() * 0.5f, Device::Get()->GetHeight() * 0.5f, 0.0f);
 	render2D->SetSRV(renderTarget->GetSRV());
 
 	targetTexture = new Render2D();
-	targetTexture->scale = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f, 1.0f);
-	targetTexture->position = Vector3(WIN_WIDTH * 0.25f, WIN_HEIGHT * 0.25f, 0.0f);
+	targetTexture->scale = Vector3(Device::Get()->GetWidth() * 0.5f, Device::Get()->GetHeight() * 0.5f, 1.0f);
+	targetTexture->position = Vector3(Device::Get()->GetWidth() * 0.25f, Device::Get()->GetHeight() * 0.25f, 0.0f);
 	targetTexture->SetSRV(mrt[0]->GetSRV());
 
 	radialBlur = new RadialBlur();
-	radialBlur ->scale = Vector3(WIN_WIDTH * 0.5f, WIN_HEIGHT * 0.5f, 1.0f);
-	radialBlur ->position = Vector3(WIN_WIDTH * 0.75f, WIN_HEIGHT * 0.25f, 0.0f);
+	radialBlur ->scale = Vector3(Device::Get()->GetWidth() * 0.5f, Device::Get()->GetHeight() * 0.5f, 1.0f);
+	radialBlur ->position = Vector3(Device::Get()->GetWidth() * 0.75f, Device::Get()->GetHeight() * 0.25f, 0.0f);
 	radialBlur ->SetSRV(mrt[1]->GetSRV());
 }
 

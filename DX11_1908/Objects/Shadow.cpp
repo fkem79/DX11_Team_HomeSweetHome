@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 Shadow::Shadow()
-	: width(WIN_WIDTH), height(WIN_HEIGHT), radius(50)
+	: width(Device::Get()->GetWidth()), height(Device::Get()->GetHeight()), radius(50)
 {
 	depthTarget = new RenderTarget(width, height);
 	depthStencil = new DepthStencil(width, height);

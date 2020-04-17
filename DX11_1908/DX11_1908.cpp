@@ -8,6 +8,8 @@
 #define MAX_LOADSTRING 100
 
 // 전역 변수:
+Program* program = nullptr;
+
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 HWND hWnd;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
@@ -19,6 +21,38 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+void Step()
+{
+    ImGuiIO& io = ImGui::GetIO();
+
+    Keyboard::Get()->Update();
+    Timer::Get()->Update();
+
+    program->Update();
+
+    program->PreRender();
+
+    Device::Get()->SetRenderTarget();
+
+    Device::Get()->Clear();
+    ImGui_ImplDX11_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
+
+    program->Render();
+    program->PostRender();
+
+    ImGui::Render();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        ImGui::UpdatePlatformWindows();
+        ImGui::RenderPlatformWindowsDefault();
+    }
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
+
+    Device::Get()->Present();
+}
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -28,6 +62,32 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: 여기에 코드를 입력합니다.
+    //IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    // Imgui_impl_dx11랑 imgui_impl_win32가 저희 거랑 doking모드 버전이랑 달라서 바꿨습니다
+    // 업데이트가 살짝 덜 된 버전으로 하고 있었던 것 같습니다. 
+    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
+    io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_DockingEnable;           // Enable Docking
+    io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_ViewportsEnable;
+#if 1
+    io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
+    io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI
+#endif
+
+
+    ImGuiStyle& style = ImGui::GetStyle();
+    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
+    {
+        style.WindowRounding = 0.0f;
+        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
+    }
+
+    //ImGui::StyleColorsDark();
+    ImGui::StyleColorsClassic();
+
+
+
 
     // 전역 문자열을 초기화합니다.
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -44,31 +104,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     MSG msg = {};
     
-    Device::Create(hWnd);    
-    
-    IMGUI_CHECKVERSION();
-    ImGui::CreateContext();
-    // Imgui_impl_dx11랑 imgui_impl_win32가 저희 거랑 doking모드 버전이랑 달라서 바꿨습니다
-    // 업데이트가 살짝 덜 된 버전으로 하고 있었던 것 같습니다. 
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
-    io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
-    io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_DockingEnable;           // Enable Docking
-    io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_ViewportsEnable;
-#if 1
-    io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleFonts;     // FIXME-DPI: THIS CURRENTLY DOESN'T WORK AS EXPECTED. DON'T USE IN USER APP!
-    io.ConfigFlags |= ImGuiConfigFlags_DpiEnableScaleViewports; // FIXME-DPI
-#endif
-    
-
-    ImGuiStyle& style = ImGui::GetStyle();
-    if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-    {
-        style.WindowRounding = 0.0f;
-        style.Colors[ImGuiCol_WindowBg].w = 1.0f;
-    }
-    
-    //ImGui::StyleColorsDark();
-    ImGui::StyleColorsClassic();
+    Device::Create(hWnd);
 
     ImGui_ImplWin32_Init(hWnd);
     ImGui_ImplDX11_Init(DEVICE, DC);
@@ -80,7 +116,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Environment::Create();
 
-    Program* program = new Program();
+    program = new Program();
+
 
     while (msg.message != WM_QUIT)
     {
@@ -93,35 +130,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             }
         }
         else
-        {            
-            Keyboard::Get()->Update();
-            Timer::Get()->Update();
-
-            program->Update();
-
-            program->PreRender();
-
-            Device::Get()->SetRenderTarget();
-
-            Device::Get()->Clear();
-            ImGui_ImplDX11_NewFrame();
-            ImGui_ImplWin32_NewFrame();
-            ImGui::NewFrame();
-
-            program->Render();
-            program->PostRender();           
-           
-            ImGui::Render();
-            if (io.ConfigFlags & ImGuiConfigFlags_ViewportsEnable)
-            {
-                ImGui::UpdatePlatformWindows();
-                ImGui::RenderPlatformWindowsDefault();
-            }
-            ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
-
-            Device::Get()->Present();
+        {
+            Step();
         }
     }
+
     delete program;
     
     Shader::Delete();
@@ -283,19 +296,32 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     //    break;
     case WM_PAINT:
         {
-            PAINTSTRUCT ps;
-            HDC hdc = BeginPaint(hWnd, &ps);
-            // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
-            EndPaint(hWnd, &ps);
+            if (program != nullptr)
+                Step();
+        }
+        break;
+    case WM_SIZE:
+        {
+            if (Device::Get() == nullptr)
+                break;
+            
+            if (wParam != SIZE_MINIMIZED)
+            {
+                RECT rc;
+                GetClientRect(hWnd, &rc);
+                UINT width = rc.right;
+                UINT height = rc.bottom;
+
+                Device::Get()->Resize(width, height);
+            }
         }
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
-    default:
-        return DefWindowProc(hWnd, message, wParam, lParam);
+    default:;
     }
-    return 0;
+    return DefWindowProc(hWnd, message, wParam, lParam);
 }
 
 // 정보 대화 상자의 메시지 처리기입니다.

@@ -21,11 +21,31 @@ Device::~Device()
 	depthStencilView->Release();
 }
 
+void Device::Resize(UINT width, UINT height)
+{
+    this->width = width;
+    this->height = height;
+
+    if (renderTargetView != nullptr)
+    {
+        renderTargetView->Release();
+        renderTargetView = nullptr;
+    }
+    if (depthStencilView != nullptr)
+    {
+        depthStencilView->Release();
+        depthStencilView = nullptr;
+        depthStencil->Release();
+        depthStencil = nullptr;
+    }
+
+    GetSwapChain()->ResizeBuffers(1, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0);
+
+    CreateBackBuffer();
+}
+
 void Device::CreateDeviceAndSwapChain()
 {
-    UINT width = WIN_WIDTH;
-    UINT height = WIN_HEIGHT;
-
     IDXGIFactory1* factory;
     CreateDXGIFactory1(__uuidof(IDXGIFactory1), (void**)&factory);
 
@@ -95,8 +115,8 @@ void Device::CreateBackBuffer()
     backBuffer->Release();
 
     D3D11_TEXTURE2D_DESC descDepth = {};
-    descDepth.Width = WIN_WIDTH;
-    descDepth.Height = WIN_HEIGHT;
+    descDepth.Width = width;
+    descDepth.Height = height;
     descDepth.MipLevels = 1;
     descDepth.ArraySize = 1;
     descDepth.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;

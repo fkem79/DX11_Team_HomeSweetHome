@@ -62,11 +62,11 @@ void StartScene::Texture2D()
 	render2D = new Render2D();
 	Texture* texture = Texture::Add(L"Textures/start.jpg");
 
-	render2D->scale.SetX(WIN_WIDTH);
-	render2D->scale.SetY(WIN_HEIGHT);
+	render2D->scale.SetX(Device::Get()->GetWidth());
+	render2D->scale.SetY(Device::Get()->GetHeight());
 
-	render2D->position.SetX(WIN_WIDTH * 0.5f);
-	render2D->position.SetY(WIN_HEIGHT * 0.5f);
+	render2D->position.SetX(Device::Get()->GetWidth() * 0.5f);
+	render2D->position.SetY(Device::Get()->GetHeight() * 0.5f);
 
 	ComputeShader* shader = new ComputeShader(L"Texture2D");
 	shader->Set();
