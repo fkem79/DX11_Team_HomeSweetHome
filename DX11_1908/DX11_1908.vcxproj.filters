@@ -198,6 +198,7 @@
     <ClInclude Include="Scene\StartScene.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Scene\SceneManager.h">
     <ClInclude Include="ADX11Resource\Object\ObjectCreateManager.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
@@ -377,7 +378,10 @@
     <ClCompile Include="Scene\StartScene.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+
+    <ClCompile Include="Scene\SceneManager.cpp">
     <ClCompile Include="ADX11Resource\Object\ObjectCreateManager.cpp">
+
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

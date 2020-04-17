@@ -288,6 +288,7 @@
     <ClInclude Include="Scene\RenderTargetScene.h" />
     <ClInclude Include="Scene\ScatteringScene.h" />
     <ClInclude Include="Scene\Scene.h" />
+    <ClInclude Include="Scene\SceneManager.h" />
     <ClInclude Include="Scene\ShadowScene.h" />
     <ClInclude Include="Scene\StartScene.h" />
     <ClInclude Include="Scene\TutorialScene.h" />
@@ -355,6 +356,7 @@
     <ClCompile Include="Scene\ReflectionScene.cpp" />
     <ClCompile Include="Scene\RenderTargetScene.cpp" />
     <ClCompile Include="Scene\ScatteringScene.cpp" />
+    <ClCompile Include="Scene\SceneManager.cpp" />
     <ClCompile Include="Scene\ShadowScene.cpp" />
     <ClCompile Include="Scene\StartScene.cpp" />
     <ClCompile Include="Scene\TutorialScene.cpp" />

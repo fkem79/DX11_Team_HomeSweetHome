@@ -75,6 +75,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
     Keyboard::Create();
     Timer::Create();
+    SceneManager::Create();
+   // SoundManager::Create();
 
     Environment::Create();
 
@@ -124,6 +126,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     
     Shader::Delete();
     Texture::Delete();
+
+    SceneManager::Delete();
+    //SoundManager::Delete();
 
     Environment::Delete();
 

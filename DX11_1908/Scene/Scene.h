@@ -10,4 +10,7 @@ public:
 	virtual void PreRender() = 0;
 	virtual void Render() = 0;
 	virtual void PostRender() = 0;
+
+	virtual void Begin() {}
+	virtual void End() {}
 };

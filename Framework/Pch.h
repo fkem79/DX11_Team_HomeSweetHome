@@ -39,6 +39,10 @@
 #include <Assimp/scene.h>
 #include <Assimp/postprocess.h>
 
+//FMOD
+//#include "FMOD/inc/fmod.hpp"
+
+//#pragma comment(lib, "Framework/FMOD/lib/x86/fmod_vc.lib")
 #pragma comment(lib, "Assimp/assimp-vc142-mtd.lib")
 
 
