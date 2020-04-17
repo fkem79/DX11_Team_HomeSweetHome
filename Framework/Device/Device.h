@@ -16,6 +16,9 @@ private:
 
 	bool isVsync;
 
+	UINT width = WIN_WIDTH;
+	UINT height = WIN_HEIGHT;
+
 	static Device* instance;	
 
 	Device(HWND hWnd);
@@ -25,6 +28,8 @@ public:
 	static Device* Get() { return instance; }
 	static void Create(HWND hWnd) { instance = new Device(hWnd); }
 	static void Delete() { delete instance; }
+
+	void Resize(UINT width, UINT height);
 
 	void CreateDeviceAndSwapChain();
 	void CreateBackBuffer();
@@ -37,5 +42,10 @@ public:
 
 	ID3D11Device* GetDevice() { return device; }
 	ID3D11DeviceContext* GetContext() { return context; }
+	IDXGISwapChain* GetSwapChain() { return swapChain; }
+
 	bool* Vsync() { return &isVsync; }
+
+	const UINT& GetWidth() const { return width; }
+	const UINT& GetHeight() const { return height; }
 };

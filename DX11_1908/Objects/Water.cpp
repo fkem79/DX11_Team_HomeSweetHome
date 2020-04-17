@@ -2,7 +2,7 @@
 #include "Water.h"
 
 Water::Water(float radius)
-	: radius(radius), width(WIN_WIDTH), height(WIN_HEIGHT)
+	: radius(radius), width(Device::Get()->GetWidth()), height(Device::Get()->GetHeight())
 {
 	material = new Material(L"Water");
 
