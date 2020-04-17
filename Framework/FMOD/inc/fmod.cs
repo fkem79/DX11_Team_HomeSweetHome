@@ -1,6 +1,6 @@
 /* ======================================================================================== */
 /* FMOD Core API - C# wrapper.                                                              */
-/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2019.                               */
+/* Copyright (c), Firelight Technologies Pty, Ltd. 2004-2020.                               */
 /*                                                                                          */
 /* For more detail visit:                                                                   */
 /* https://fmod.com/resources/documentation-api?version=2.0&page=core-api.html              */
@@ -19,7 +19,7 @@ namespace FMOD
     */
     public class VERSION
     {
-        public const int    number = 0x00020002;
+        public const int    number = 0x00020100;
 #if (UNITY_IPHONE || UNITY_TVOS || UNITY_SWITCH || UNITY_WEBGL) && !UNITY_EDITOR
         public const string dll    = "__Internal";
 #elif (UNITY_PS4) && DEVELOPMENT_BUILD
@@ -29,7 +29,7 @@ namespace FMOD
 #elif (UNITY_PSP2) && !UNITY_EDITOR
         public const string dll    = "libfmodstudio";
 /* Linux defines moved before the Windows define, otherwise Linux Editor tries to use Win lib when selected as build target.*/
-#elif (UNITY_EDITOR_LINUX) || ((UNITY_STANDALONE_LINUX || UNITY_ANDROID || UNITY_XBOXONE) && DEVELOPMENT_BUILD)
+#elif (UNITY_EDITOR_LINUX) || ((UNITY_STANDALONE_LINUX || UNITY_ANDROID || UNITY_XBOXONE || UNITY_STADIA) && DEVELOPMENT_BUILD)
         public const string dll    = "fmodL";
 #elif (UNITY_EDITOR_OSX || UNITY_EDITOR_WIN) || ((UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN) && DEVELOPMENT_BUILD)
         public const string dll    = "fmodstudioL";
@@ -191,12 +191,13 @@ namespace FMOD
         ALSA,            /* Linux                - Advanced Linux Sound Architecture.   (Default on Linux if PulseAudio isn't available) */
         COREAUDIO,       /* Mac / iOS            - Core Audio.                          (Default on Mac and iOS) */
         AUDIOTRACK,      /* Android              - Java Audio Track.                    (Default on Android 2.2 and below) */
-        OPENSL,          /* Android              - OpenSL ES.                           (Default on Android 2.3 and above) */
+        OPENSL,          /* Android              - OpenSL ES.                           (Default on Android 2.3 up to 7.1) */
         AUDIOOUT,        /* PS4                  - Audio Out.                           (Default on PS4) */
         AUDIO3D,         /* PS4                  - Audio3D. */
         WEBAUDIO,        /* Web Browser          - JavaScript webaudio output.          (Default on JavaScript) */
         NNAUDIO,         /* Switch               - nn::audio.                           (Default on Switch) */
         WINSONIC,        /* Win10 / Xbox One     - Windows Sonic. */
+        AAUDIO,          /* Android              - AAudio                               (Default on Android 8.0 and above) */
 
         MAX,             /* Maximum number of output types supported. */
     }
@@ -256,6 +257,7 @@ namespace FMOD
      
     public enum SPEAKER : int
     {
+        NONE = -1,         /* No speaker */
         FRONT_LEFT,        /* The front left speaker */
         FRONT_RIGHT,       /* The front right speaker */
         FRONT_CENTER,      /* The front center speaker */
@@ -339,6 +341,7 @@ namespace FMOD
         PREFER_DOLBY_DOWNMIX       = 0x00080000, /* When using FMOD_SPEAKERMODE_5POINT1 with a stereo output device, use the Dolby Pro Logic II downmix algorithm instead of the default stereo downmix algorithm. */
         THREAD_UNSAFE              = 0x00100000, /* Disables thread safety for API calls. Only use this if FMOD low level is being called from a single thread, and if Studio API is not being used! */
         PROFILE_METER_ALL          = 0x00200000, /* Slower, but adds level metering for every single DSP unit in the graph.  Use DSP::setMeteringEnabled to turn meters off individually. */
+        MEMORY_TRACKING            = 0x00400000, /* Enable detailed memory allocation tracking. Only useful when using the Studio API. */
     }
 
     public enum SOUND_TYPE : int
@@ -367,6 +370,7 @@ namespace FMOD
         MEDIA_FOUNDATION,/* Windows Store Application built in system codecs */
         MEDIACODEC,      /* Android MediaCodec */
         FADPCM,          /* FMOD Adaptive Differential Pulse Code Modulation */
+        OPUS,            /* Opus */
 
         MAX,             /* Maximum number of sound types supported. */
     }
@@ -513,23 +517,23 @@ namespace FMOD
     /*
         FMOD Callbacks
     */
-    public delegate RESULT DEBUG_CALLBACK           (DEBUG_FLAGS flags, StringWrapper file, int line, StringWrapper func, StringWrapper message);
+    public delegate RESULT DEBUG_CALLBACK           (DEBUG_FLAGS flags, IntPtr file, int line, IntPtr func, IntPtr message);
     public delegate RESULT SYSTEM_CALLBACK          (IntPtr system, SYSTEM_CALLBACK_TYPE type, IntPtr commanddata1, IntPtr commanddata2, IntPtr userdata);
-    public delegate RESULT CHANNELCONTROL_CALLBACK(IntPtr channelcontrol, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE callbacktype, IntPtr commanddata1, IntPtr commanddata2);
+    public delegate RESULT CHANNELCONTROL_CALLBACK  (IntPtr channelcontrol, CHANNELCONTROL_TYPE controltype, CHANNELCONTROL_CALLBACK_TYPE callbacktype, IntPtr commanddata1, IntPtr commanddata2);
     public delegate RESULT SOUND_NONBLOCK_CALLBACK  (IntPtr sound, RESULT result);
     public delegate RESULT SOUND_PCMREAD_CALLBACK   (IntPtr sound, IntPtr data, uint datalen);
     public delegate RESULT SOUND_PCMSETPOS_CALLBACK (IntPtr sound, int subsound, uint position, TIMEUNIT postype);
-    public delegate RESULT FILE_OPEN_CALLBACK       (StringWrapper name, ref uint filesize, ref IntPtr handle, IntPtr userdata);
+    public delegate RESULT FILE_OPEN_CALLBACK       (IntPtr name, ref uint filesize, ref IntPtr handle, IntPtr userdata);
     public delegate RESULT FILE_CLOSE_CALLBACK      (IntPtr handle, IntPtr userdata);
     public delegate RESULT FILE_READ_CALLBACK       (IntPtr handle, IntPtr buffer, uint sizebytes, ref uint bytesread, IntPtr userdata);
     public delegate RESULT FILE_SEEK_CALLBACK       (IntPtr handle, uint pos, IntPtr userdata);
     public delegate RESULT FILE_ASYNCREAD_CALLBACK  (IntPtr info, IntPtr userdata);
     public delegate RESULT FILE_ASYNCCANCEL_CALLBACK(IntPtr info, IntPtr userdata);
     public delegate RESULT FILE_ASYNCDONE_FUNC      (IntPtr info, RESULT result);
-    public delegate IntPtr MEMORY_ALLOC_CALLBACK    (uint size, MEMORY_TYPE type, StringWrapper sourcestr);
-    public delegate IntPtr MEMORY_REALLOC_CALLBACK  (IntPtr ptr, uint size, MEMORY_TYPE type, StringWrapper sourcestr);
-    public delegate void   MEMORY_FREE_CALLBACK     (IntPtr ptr, MEMORY_TYPE type, StringWrapper sourcestr);
-    public delegate float  CB_3D_ROLLOFF_CALLBACK      (IntPtr channelcontrol, float distance);
+    public delegate IntPtr MEMORY_ALLOC_CALLBACK    (uint size, MEMORY_TYPE type, IntPtr sourcestr);
+    public delegate IntPtr MEMORY_REALLOC_CALLBACK  (IntPtr ptr, uint size, MEMORY_TYPE type, IntPtr sourcestr);
+    public delegate void   MEMORY_FREE_CALLBACK     (IntPtr ptr, MEMORY_TYPE type, IntPtr sourcestr);
+    public delegate float  CB_3D_ROLLOFF_CALLBACK   (IntPtr channelcontrol, float distance);
 
     public enum DSP_RESAMPLER : int
     {
@@ -741,11 +745,7 @@ namespace FMOD
         public float               distanceFilterCenterFreq;   /* [r/w] Optional. Specify 0 to ignore. For use with FMOD_INIT_DISTANCE_FILTERING.  The default center frequency in Hz for the distance filtering effect. Default = 1500.0. */
         public int                 reverb3Dinstance;           /* [r/w] Optional. Specify 0 to ignore. Out of 0 to 3, 3d reverb spheres will create a phyical reverb unit on this instance slot.  See FMOD_REVERB_PROPERTIES. */
         public int                 DSPBufferPoolSize;          /* [r/w] Optional. Specify 0 to ignore. Number of buffers in DSP buffer pool.  Each buffer will be DSPBlockSize * sizeof(float) * SpeakerModeChannelCount.  ie 7.1 @ 1024 DSP block size = 8 * 1024 * 4 = 32kb.  Default = 8. */
-        public uint                stackSizeStream;            /* [r/w] Optional. Specify 0 to ignore. Specify the stack size for the FMOD Stream thread in bytes.  Useful for custom codecs that use excess stack.  Default 49,152 (48kb) */
-        public uint                stackSizeNonBlocking;       /* [r/w] Optional. Specify 0 to ignore. Specify the stack size for the FMOD_NONBLOCKING loading thread.  Useful for custom codecs that use excess stack.  Default 65,536 (64kb) */
-        public uint                stackSizeMixer;             /* [r/w] Optional. Specify 0 to ignore. Specify the stack size for the FMOD mixer thread.  Useful for custom dsps that use excess stack.  Default 49,152 (48kb) */
         public DSP_RESAMPLER       resamplerMethod;            /* [r/w] Optional. Specify 0 to ignore. Resampling method used with fmod's software mixer.  See FMOD_DSP_RESAMPLER for details on methods. */
-        public uint                commandQueueSize;           /* [r/w] Optional. Specify 0 to ignore. Specify the command queue size for thread safe processing.  Default 2048 (2kb) */
         public uint                randomSeed;                 /* [r/w] Optional. Specify 0 to ignore. Seed value that FMOD will use to initialize its internal random number generators. */
     }
 
@@ -754,6 +754,110 @@ namespace FMOD
     {
         CONNECTED = 0x00000001, /* Device is currently plugged in. */
         DEFAULT   = 0x00000002, /* Device is the users preferred choice. */
+    }
+
+    public enum THREAD_PRIORITY : int
+    {
+        /* Platform specific priority range */
+        PLATFORM_MIN        = -32 * 1024,
+        PLATFORM_MAX        =  32 * 1024,
+
+        /* Platform agnostic priorities, maps internally to platform specific value */
+        DEFAULT             = PLATFORM_MIN - 1,
+        LOW                 = PLATFORM_MIN - 2,
+        MEDIUM              = PLATFORM_MIN - 3,
+        HIGH                = PLATFORM_MIN - 4,
+        VERY_HIGH           = PLATFORM_MIN - 5,
+        EXTREME             = PLATFORM_MIN - 6,
+        CRITICAL            = PLATFORM_MIN - 7,
+        
+        /* Thread defaults */
+        MIXER               = EXTREME,
+        FEEDER              = CRITICAL,
+        STREAM              = VERY_HIGH,
+        FILE                = HIGH,
+        NONBLOCKING         = HIGH,
+        RECORD              = HIGH,
+        GEOMETRY            = LOW,
+        PROFILER            = MEDIUM,
+        STUDIO_UPDATE       = MEDIUM,
+        STUDIO_LOAD_BANK    = MEDIUM,
+        STUDIO_LOAD_SAMPLE  = MEDIUM
+    }
+
+    public enum THREAD_STACK_SIZE : uint
+    {
+        DEFAULT             = 0,
+        MIXER               = 80  * 1024,
+        FEEDER              = 16  * 1024,
+        STREAM              = 96  * 1024,
+        FILE                = 48  * 1024,
+        NONBLOCKING         = 112 * 1024,
+        RECORD              = 16  * 1024,
+        GEOMETRY            = 48  * 1024,
+        PROFILER            = 128 * 1024,
+        STUDIO_UPDATE       = 96  * 1024,
+        STUDIO_LOAD_BANK    = 96  * 1024,
+        STUDIO_LOAD_SAMPLE  = 96  * 1024
+    }
+
+    [Flags]
+    public enum THREAD_AFFINITY : ulong
+    {
+        /* Platform agnostic thread groupings */
+        GROUP_DEFAULT       = 0x8000000000000000,
+        GROUP_A             = 0x8000000000000001,
+        GROUP_B             = 0x8000000000000002,
+        GROUP_C             = 0x8000000000000003,
+        
+        /* Thread defaults */
+        MIXER               = GROUP_A,
+        FEEDER              = GROUP_C,
+        STREAM              = GROUP_C,
+        FILE                = GROUP_C,
+        NONBLOCKING         = GROUP_C,
+        RECORD              = GROUP_C,
+        GEOMETRY            = GROUP_C,
+        PROFILER            = GROUP_C,
+        STUDIO_UPDATE       = GROUP_B,
+        STUDIO_LOAD_BANK    = GROUP_C,
+        STUDIO_LOAD_SAMPLE  = GROUP_C,
+                
+        /* Core mask, valid up to 1 << 62 */
+        CORE_ALL            = 0,
+        CORE_0              = 1 << 0,
+        CORE_1              = 1 << 1,
+        CORE_2              = 1 << 2,
+        CORE_3              = 1 << 3,
+        CORE_4              = 1 << 4,
+        CORE_5              = 1 << 5,
+        CORE_6              = 1 << 6,
+        CORE_7              = 1 << 7,
+        CORE_8              = 1 << 8,
+        CORE_9              = 1 << 9,
+        CORE_10             = 1 << 10,
+        CORE_11             = 1 << 11,
+        CORE_12             = 1 << 12,
+        CORE_13             = 1 << 13,
+        CORE_14             = 1 << 14,
+        CORE_15             = 1 << 15
+    }
+
+    public enum THREAD_TYPE : int
+    {
+        MIXER,
+        FEEDER,
+        STREAM,
+        FILE,
+        NONBLOCKING,
+        RECORD,
+        GEOMETRY,
+        PROFILER,
+        STUDIO_UPDATE,
+        STUDIO_LOAD_BANK,
+        STUDIO_LOAD_SAMPLE,
+
+        MAX
     }
 
     /*
@@ -808,6 +912,19 @@ namespace FMOD
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_Debug_Initialize(DEBUG_FLAGS flags, DEBUG_MODE mode, DEBUG_CALLBACK callback, byte[] filename);
 
+        #endregion
+    }
+
+    public struct Thread
+    {
+        public static RESULT SetAttributes(THREAD_TYPE type, THREAD_AFFINITY affinity = THREAD_AFFINITY.GROUP_DEFAULT, THREAD_PRIORITY priority = THREAD_PRIORITY.DEFAULT, THREAD_STACK_SIZE stacksize = THREAD_STACK_SIZE.DEFAULT)
+        {
+            return FMOD5_Thread_SetAttributes(type, affinity, priority, stacksize);
+        }
+
+        #region importfunctions
+        [DllImport(VERSION.dll)]
+        private static extern RESULT FMOD5_Thread_SetAttributes(THREAD_TYPE type, THREAD_AFFINITY affinity, THREAD_PRIORITY priority, THREAD_STACK_SIZE stacksize);
         #endregion
     }
 
@@ -1514,6 +1631,7 @@ namespace FMOD
 
         public IntPtr handle;
 
+        public System(IntPtr ptr)   { this.handle = ptr; }
         public bool hasHandle()     { return this.handle != IntPtr.Zero; }
         public void clearHandle()   { this.handle = IntPtr.Zero; }
 
@@ -1831,6 +1949,7 @@ namespace FMOD
 
         public IntPtr handle;
 
+        public Sound(IntPtr ptr)    { this.handle = ptr; }
         public bool hasHandle()     { return this.handle != IntPtr.Zero; }
         public void clearHandle()   { this.handle = IntPtr.Zero; }
 
@@ -2408,6 +2527,7 @@ namespace FMOD
 
         public IntPtr handle;
 
+        public Channel(IntPtr ptr)  { this.handle = ptr; }
         public bool hasHandle()     { return this.handle != IntPtr.Zero; }
         public void clearHandle()   { this.handle = IntPtr.Zero; }
 
@@ -2879,8 +2999,9 @@ namespace FMOD
 
         public IntPtr handle;
 
-        public bool hasHandle()     { return this.handle != IntPtr.Zero; }
-        public void clearHandle()   { this.handle = IntPtr.Zero; }
+        public ChannelGroup(IntPtr ptr) { this.handle = ptr; }
+        public bool hasHandle()         { return this.handle != IntPtr.Zero; }
+        public void clearHandle()       { this.handle = IntPtr.Zero; }
 
         #endregion
     }
@@ -3016,8 +3137,9 @@ namespace FMOD
 
         public IntPtr handle;
 
-        public bool hasHandle()     { return this.handle != IntPtr.Zero; }
-        public void clearHandle()   { this.handle = IntPtr.Zero; }
+        public SoundGroup(IntPtr ptr) { this.handle = ptr; }
+        public bool hasHandle()       { return this.handle != IntPtr.Zero; }
+        public void clearHandle()     { this.handle = IntPtr.Zero; }
 
         #endregion
     }
@@ -3151,7 +3273,14 @@ namespace FMOD
         }
         public RESULT getParameterInfo(int index, out DSP_PARAMETER_DESC desc)
         {
-            return FMOD5_DSP_GetParameterInfo(this.handle, index, out desc);
+            IntPtr descPtr;
+            RESULT result = FMOD5_DSP_GetParameterInfo(this.handle, index, out descPtr);
+            #if (UNITY_2017_4_OR_NEWER) && !NET_4_6
+            desc = (DSP_PARAMETER_DESC)Marshal.PtrToStructure(descPtr, typeof(DSP_PARAMETER_DESC));
+            #else
+            desc = Marshal.PtrToStructure<DSP_PARAMETER_DESC>(descPtr);
+            #endif // (UNITY_2017_4_OR_NEWER) && !NET_4_6
+            return result;
         }
         public RESULT getDataParameterIndex(int datatype, out int index)
         {
@@ -3286,7 +3415,7 @@ namespace FMOD
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_DSP_GetNumParameters          (IntPtr dsp, out int numparams);
         [DllImport(VERSION.dll)]
-        private static extern RESULT FMOD5_DSP_GetParameterInfo          (IntPtr dsp, int index, out DSP_PARAMETER_DESC desc);
+        private static extern RESULT FMOD5_DSP_GetParameterInfo          (IntPtr dsp, int index, out IntPtr desc);
         [DllImport(VERSION.dll)]
         private static extern RESULT FMOD5_DSP_GetDataParameterIndex     (IntPtr dsp, int datatype, out int index);
         [DllImport(VERSION.dll)]
@@ -3319,6 +3448,7 @@ namespace FMOD
 
         public IntPtr handle;
 
+        public DSP(IntPtr ptr)      { this.handle = ptr; }
         public bool hasHandle()     { return this.handle != IntPtr.Zero; }
         public void clearHandle()   { this.handle = IntPtr.Zero; }
 
@@ -3394,8 +3524,9 @@ namespace FMOD
 
         public IntPtr handle;
 
-        public bool hasHandle()     { return this.handle != IntPtr.Zero; }
-        public void clearHandle()   { this.handle = IntPtr.Zero; }
+        public DSPConnection(IntPtr ptr) { this.handle = ptr; }
+        public bool hasHandle()          { return this.handle != IntPtr.Zero; }
+        public void clearHandle()        { this.handle = IntPtr.Zero; }
 
         #endregion
     }
@@ -3539,6 +3670,7 @@ namespace FMOD
 
         public IntPtr handle;
 
+        public Geometry(IntPtr ptr) { this.handle = ptr; }
         public bool hasHandle()     { return this.handle != IntPtr.Zero; }
         public void clearHandle()   { this.handle = IntPtr.Zero; }
 
@@ -3616,6 +3748,7 @@ namespace FMOD
 
         public IntPtr handle;
 
+        public Reverb3D(IntPtr ptr) { this.handle = ptr; }
         public bool hasHandle()     { return this.handle != IntPtr.Zero; }
         public void clearHandle()   { this.handle = IntPtr.Zero; }
 
@@ -3627,6 +3760,11 @@ namespace FMOD
     public struct StringWrapper
     {
         IntPtr nativeUtf8Ptr;
+
+        public StringWrapper(IntPtr ptr)
+        {
+            nativeUtf8Ptr = ptr;
+        }
 
         public static implicit operator string(StringWrapper fstring)
         {

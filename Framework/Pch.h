@@ -42,9 +42,21 @@
 #pragma comment(lib, "Assimp/assimp-vc142-mtd.lib")
 
 //FMOD
-#include "inc/fmod.hpp"
+#include "FMOD/inc/fmod.hpp"
 
-#pragma comment(lib, "Framework/lib/fmod_vc.lib")
+#ifdef _WIN32 
+	#ifdef _DEBUG
+		#pragma comment(lib, "Framework/FMOD/lib/x86/fmodL_vc.lib")
+	#else
+		#pragma comment(lib, "Framework/FMOD/lib/x86/fmod_vc.lib")
+	#endif
+#elif _WIN64
+	#ifdef _DEBUG
+	#pragma comment(lib, "Framework/FMOD/lib/x64/fmodL_vc.lib")
+	#else
+	#pragma comment(lib, "Framework/FMOD/lib/x64/fmod_vc.lib")
+	#endif
+#endif
 
 using namespace DirectX;
 using namespace std;
