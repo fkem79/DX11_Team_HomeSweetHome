@@ -3,6 +3,7 @@
 class FrustumScene : public Scene
 {
 private:
+	Frustum* frustum;
 	/*
 	vector<Sphere*> spheres;
 	UINT drawCount;
