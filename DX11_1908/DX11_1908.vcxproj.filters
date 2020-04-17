@@ -29,6 +29,13 @@
     <FxCompile Include="Shaders\TerrainBrush.hlsl" />
     <FxCompile Include="Shaders\Texture2D.hlsl" />
     <FxCompile Include="Shaders\Tutorial.hlsl" />
+    <FxCompile Include="Shaders\EnvironmentMapping.hlsl" />
+    <FxCompile Include="Shaders\ModelSingle.hlsl" />
+    <FxCompile Include="Shaders\Reflection.hlsl" />
+    <FxCompile Include="Shaders\Refraction.hlsl" />
+    <FxCompile Include="Shaders\ScatteringTarget.hlsl" />
+    <FxCompile Include="Shaders\Scattering.hlsl" />
+    <FxCompile Include="Shaders\Water.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ADX11Resource\Model\Belle.cpp" />
@@ -157,6 +164,7 @@
     <ClInclude Include="Scene\WaterScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Button\Button.h" />
+
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11_1908.rc" />
