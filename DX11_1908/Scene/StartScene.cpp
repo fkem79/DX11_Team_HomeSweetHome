@@ -12,8 +12,6 @@ StartScene::~StartScene()
 void StartScene::Update()
 {
 	render2D->Update();
-
-	//SOUND->Play("bgm");
 }
 
 void StartScene::PreRender()
@@ -37,12 +35,16 @@ void StartScene::Begin()
 {
 	Texture2D();
 
-	//SOUND->Add("bgm", "Sounds/MUS_House_SafeZoneMusic.OGG", true);
+	SOUND->Add("StartScene_bgm", "Sounds/A_PretaChasing01.OGG", true);
+
+	SOUND->Play("StartScene_bgm");
 }
 
 void StartScene::End()
 {
 	delete render2D;
+
+	SOUND->Stop("StartScene_bgm");
 }
 
 void StartScene::Start()
