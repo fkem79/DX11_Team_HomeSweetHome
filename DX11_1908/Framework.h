@@ -6,6 +6,7 @@
 #define VP Environment::Get()->GetVP()
 #define CAMERA Environment::Get()->MainCamera()
 #define LIGHT Environment::Get()->GetLight()
+#define SCENE SceneManager::Get()
 
 #include <windows.h>
 
@@ -55,3 +56,4 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "AStar/AStar.h"
 
 #include "Scene/Scene.h"
+#include "Scene/SceneManager.h"

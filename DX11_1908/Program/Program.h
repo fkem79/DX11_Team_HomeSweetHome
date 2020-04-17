@@ -3,7 +3,7 @@
 class Program
 {
 private:
-	vector<Scene*> scenes;
+
 
 public:
 	Program();

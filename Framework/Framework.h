@@ -26,6 +26,7 @@
 #define KEYUP(k) Keyboard::Get()->Up(k)
 
 #define MOUSEPOS Keyboard::Get()->GetMouse()
+#define SOUND SoundManager::Get()
 
 #define LERP(s, e, t) (s + (e - s)*t)
 
@@ -54,6 +55,7 @@ const XMVECTORF32 kRight = { 1, 0, 0 };
 #include "Utility/Keyboard.h"
 #include "Utility/Timer.h"
 #include "Utility/Xml.h"
+#include "Utility/SoundManager.h"
 
 #include "Render/Shader.h"
 #include "Render/ComputShader.h"
