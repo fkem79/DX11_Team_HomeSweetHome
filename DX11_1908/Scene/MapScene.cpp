@@ -31,9 +31,7 @@ void MapScene::Update()
 	belle->Update();
 
 	tile1->Update();
-
 	ocm->Update();
-
 }
 
 void MapScene::PreRender()
@@ -44,9 +42,9 @@ void MapScene::Render()
 {
 	player->Render();
 	belle->Render();
-	ocm->Render();
-	tile1->Render();
 	
+	tile1->Render();
+	ocm->Render();
 }
 
 void MapScene::PostRender()

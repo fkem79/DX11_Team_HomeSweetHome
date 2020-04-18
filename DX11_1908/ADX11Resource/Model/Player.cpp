@@ -53,29 +53,17 @@ void Player::CharAndCamSet()
 	if (CAMERA->GetTargetTransform() == nullptr)
 		return;
 
-	float val = CAMERA->GetTargetOffset().GetY() - oldYPos;
+	//float val = CAMERA->GetTargetOffset().GetY() - oldYPos;
+	float val = CAMERA->GetTargetOffset().GetY();
 
-	//if (CAMERA->GetTargetOffset().GetY() > 7.0f)
-	if (val > 0.0f)
+	if (val > 7.0f)
 	{
-		//leftHand->GetTransform()->position.SetY(leftHand->GetTransform()->position.GetY() + 10.0f * DELTA);
-		//leftHand->GetTransform()->rotation.SetX(leftHand->GetTransform()->rotation.GetX() + 10.0f * DELTA);
-		leftHand->GetTransform()->rotation.SetX(3.0f);
-
-		if (leftHand->GetTransform()->rotation.GetX() > 5.0f)
-			leftHand->GetTransform()->rotation.SetX(5.0f);
-	}
-	//else if (CAMERA->GetTargetOffset().GetY() < 7.0f)
-	else if (val < 0.0f)
-	{
-		//leftHand->GetTransform()->position.SetY(leftHand->GetTransform()->position.GetY() - 10.0f * DELTA);
-		//leftHand->GetTransform()->rotation.SetX(leftHand->GetTransform()->rotation.GetX() - 10.0f * DELTA);
-		leftHand->GetTransform()->rotation.SetX(-1.0f);
-
-		if (leftHand->GetTransform()->rotation.GetX() < -5.0f)
-			leftHand->GetTransform()->rotation.SetX(-5.0f);
+		float cur = val/ 13.0f;
+		//leftHand->GetTransform()->rotation.SetX(cur);
+		//leftHand->GetTransform()->rotation.SetY(-cur);
+		leftHand->GetTransform()->position.SetY(160.0f+cur);
 	}
 
-	oldYPos = CAMERA->GetTargetOffset().GetY();
+	//oldYPos = CAMERA->GetTargetOffset().GetY();
 		
 }

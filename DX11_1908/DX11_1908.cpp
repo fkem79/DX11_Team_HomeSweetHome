@@ -239,21 +239,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_CREATE:
         {
             g_mouse->SetWindow(hWnd);
-        }
+        }   
         break;
     case WM_ACTIVATEAPP:
+        {
+             Mouse::ProcessMessage(message, wParam, lParam);
+        }
+        break;
+    case WM_INPUT:
         {
             Mouse::ProcessMessage(message, wParam, lParam);
         }
         break;
-    case WM_INPUT:
-        break;
     case WM_MOUSEMOVE:
     {
+        Mouse::ProcessMessage(message, wParam, lParam);
         Keyboard::Get()->SetMouse(LOWORD(lParam), HIWORD(lParam));
-    }
+    }  
         break;
-
     case WM_LBUTTONDOWN:
         break;
     case WM_LBUTTONUP:
@@ -277,9 +280,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_XBUTTONUP:
         break;
     case WM_MOUSEHOVER:
-    {
         Mouse::ProcessMessage(message, wParam, lParam);
-    }
         break;
     case WM_COMMAND:
         {

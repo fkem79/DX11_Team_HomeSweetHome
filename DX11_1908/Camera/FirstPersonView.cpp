@@ -1,8 +1,8 @@
 #include "Framework.h"
 #include "FirstPersonView.h"
 
-FirstPersonView::FirstPersonView()	
-	: distance(0.0f), height(9.0f), moveDamping(130.0f),rotDamping(50), rotY(0),
+FirstPersonView::FirstPersonView()
+	: distance(0.0f), height(9.0f), moveDamping(130.0f), rotDamping(50), rotY(0),
 	zoomSpeed(0.1f), destPos(0, 0, 0), destRot(0), targetOffsetYSpeed(7.0f),
 	mouseRotSpeed(5.0f), dashMouseRotSpeed(6.5f), mouseControlOn(false)
 {
@@ -51,10 +51,10 @@ void FirstPersonView::Update()
 
 void FirstPersonView::PostRender()
 {
-	ImGui::SliderFloat3("TargetOffset", (float*)&targetOffset, -20.0f, 20.0f);	
+	ImGui::SliderFloat3("TargetOffset", (float*)&targetOffset, -20.0f, 20.0f);
 	ImGui::Checkbox("mouseControlOn(checkBox or F1 Key)", &mouseControlOn);
 
-	if(mouseControlOn)
+	if (mouseControlOn)
 		g_mouse->SetMode(Mouse::MODE_RELATIVE);
 	else
 		g_mouse->SetMode(Mouse::MODE_ABSOLUTE);
@@ -63,11 +63,11 @@ void FirstPersonView::PostRender()
 
 void FirstPersonView::MouseControl()
 {
-	if (!mouseControlOn)
-		return;
-
 	auto mouseState = g_mouse->GetState();
 	Vector3 val = Vector3(mouseState.x, mouseState.y, 0);
+
+	if (!mouseControlOn)
+		return;
 
 	if (val.GetY() > 0.0f)
 		targetOffset.SetY(targetOffset.GetY() - (targetOffset.GetY() * targetOffsetYSpeed * DELTA));
