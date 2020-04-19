@@ -2,11 +2,12 @@
 #include "ObjectCreateManager.h"
 
 ObjectCreateManager::ObjectCreateManager()
-	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), fileCheck(true), curObjNum(100), objNum(0)
+	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), fileCheck(true), allObjBoxRenderOn(true),
+	curObjNum(100), objNum(0)
 {
-	objNames.push_back("fan");
-	objNames.push_back("desk");
-	objNames.push_back("closet");
+	// curObjNum : 현재 내가 선택하고 있는 오브젝트 넘버
+	// objNum : 전체 오브젝트 개수
+	AddNames();
 }
 
 ObjectCreateManager::~ObjectCreateManager()
@@ -40,7 +41,15 @@ void ObjectCreateManager::Update()
 	}
 
 	for (ModelSingle* obj : totalObj)
+	{
+		if(!allObjBoxRenderOn)
+			obj->SetBoxRenderCheck(false);
+		else
+			obj->SetBoxRenderCheck(true);
+		
 		obj->Update();
+	}
+		
 }
 
 void ObjectCreateManager::Render()
@@ -85,6 +94,44 @@ void ObjectCreateManager::ObjectCreateWindow()
 		if (ImGui::Button("Add"))
 		{
 			addNameWindow = true;
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Same Add"))
+		{
+			string temp = curStr;
+
+			if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
+			{
+				ModelSingle* model = new ModelSingle(temp);
+				model->SetModelNum(++objNum);
+				model->scale *= 0.1f;
+				model->rotation = { 1.6f, 0, 0 };
+				model->position = { totalObjTestX, 1, 10 };
+				totalObj.push_back(model);
+
+				totalObjTestX = totalObj.size() * 10.0f;
+				addNameWindow = false;
+			}
+		}
+		ImGui::SameLine();
+		if (ImGui::Button("Copy"))
+		{
+			UINT num = curObjNum - 1;
+
+			ModelSingle* model = new ModelSingle(totalObj[num]->GetModelName());
+			model->SetModelNum(++objNum);
+			model->scale *= totalObj[num]->scale;
+			model->rotation = totalObj[num]->rotation;
+			model->position = { totalObj[num]->position.x+10, totalObj[num]->position.y,  totalObj[num]->position.z };
+
+			model->GetCollBox()->position = totalObj[num]->GetCollBox()->position;
+			model->GetCollBox()->rotation = totalObj[num]->GetCollBox()->rotation;
+			model->GetCollBox()->scale = totalObj[num]->GetCollBox()->scale;
+
+			totalObj.push_back(model);
+
+			totalObjTestX = totalObj.size() * 10.0f;
+			//addNameWindow = false;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Save"))
@@ -147,14 +194,18 @@ void ObjectCreateManager::ObjectCreateWindow()
 
 				totalObj.push_back(model);
 			}
-			totalObjTestX = totalObj.size() * 10.0f;
-
-			curObjNum = 100;
+			
+			curObjNum = totalObj.size();
 			objNum = totalObj.size();
+			strcpy_s(curStr, totalObj[totalObj.size() - 1]->GetModelName().c_str());
+			totalObjTestX = totalObj.size() * 10.0f;
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Close"))
 			mapToolWindow = false;
+
+		ImGui::Checkbox("Object Box Render OnOff", &allObjBoxRenderOn);
+
 		ImGui::End();
 	}
 
@@ -231,4 +282,21 @@ UINT ObjectCreateManager::FindNameNum(string fineName)
 
 		count++;
 	}
+}
+
+void ObjectCreateManager::AddNames()
+{
+	// 스트링을 저장하면 주소를 저장하기에 이름 부분은 바이너리로 빼지 못해서 따로 저장하고 위치만 가져와서 사용
+
+	// object
+	objNames.push_back("fan");
+	objNames.push_back("desk");
+	objNames.push_back("closet");
+	// Wall
+	objNames.push_back("plainWall01");
+	objNames.push_back("plainWall02");
+	objNames.push_back("plainWall03");
+	objNames.push_back("plainWall04");
+	objNames.push_back("plainWall05");
+	
 }

@@ -66,7 +66,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     ImGui::CreateContext();
     // Imgui_impl_dx11랑 imgui_impl_win32가 저희 거랑 doking모드 버전이랑 달라서 바꿨습니다
     // 업데이트가 살짝 덜 된 버전으로 하고 있었던 것 같습니다. 
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
+    ImGuiIO& io = ImGui::GetIO(); //(void)io;
+
+    //io.Fonts->AddFontFromFileTTF("NotoSansCJKjp-Medium.otf", 20.0f, NULL, io.Fonts->GetGlyphRangesJapanese());
+   // io.Fonts->AddFontFromFileTTF("../../misc/fonts/Roboto-Medium.ttf", 16.0f);
+    //io.Fonts->AddFontFromFileTTF("C:\\Windows\\Fonts\\designhouseOTFLight.otf", 18.0f, NULL, io.Fonts->GetGlyphRangesKorean());
+
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
     io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_DockingEnable;           // Enable Docking
     io.ConfigFlags |= ImGuiConfigFlags_::ImGuiConfigFlags_ViewportsEnable;

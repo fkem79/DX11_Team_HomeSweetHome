@@ -15,4 +15,6 @@ public:
 	void PostRender();
 
 	void CharAndCamSet();
+
+	PlayerHead* GetPlayerHead() { return head; }
 };

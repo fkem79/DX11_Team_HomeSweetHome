@@ -35,6 +35,8 @@ private:
 	bool check;
 	bool fileCheck;
 
+	bool allObjBoxRenderOn;
+
 public:
 	ObjectCreateManager();
 	~ObjectCreateManager();
@@ -49,4 +51,6 @@ public:
 	void ObjectSettingWindow();
 
 	UINT FindNameNum(string fineName);
+
+	void AddNames();
 };

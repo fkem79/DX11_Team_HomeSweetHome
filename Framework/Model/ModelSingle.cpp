@@ -10,6 +10,7 @@ ModelSingle::ModelSingle(string name)
 	model->ReadMesh(name + "/" + name);
 
 	model->SetShader(L"ModelSingle");
+	//model->SetShader(L"ModelInstancing");
 
 	Float3 min = { -40, -40, -40 };
 	Float3 max = { 40, 40, 40 };
