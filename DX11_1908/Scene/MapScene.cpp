@@ -11,8 +11,8 @@ MapScene::MapScene()
 
 	tile1 = new ModelSingle("tile_big01");
 	tile1->position = { 0,1,0 };
-	tile1->rotation = { 1.6, 0, 0 };
-	tile1->scale *= 0.2f;
+	tile1->rotation = { 1.58, 0, 0 };
+	tile1->scale *= 0.5f;
 	tile1->SetBoxRenderCheck(false);
 
 	tile2 = new ModelSingle("tile_big02");
@@ -76,6 +76,10 @@ void MapScene::PostRender()
 	ImGui::InputFloat3("Tr", tile1->position.data.m128_f32, 3);
 	ImGui::InputFloat3("Rt", tile1->rotation.data.m128_f32, 3);
 	ImGui::InputFloat3("Sc", tile1->scale.data.m128_f32, 3);
+
+	ImGui::InputFloat3("Tr1", belle->GetTransform()->position.data.m128_f32, 3);
+	ImGui::InputFloat3("Rt1", belle->GetTransform()->rotation.data.m128_f32, 3);
+	ImGui::InputFloat3("Sc1", belle->GetTransform()->scale.data.m128_f32, 3);
 
 	ocm->PostRender();
 }

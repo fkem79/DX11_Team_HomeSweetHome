@@ -1,5 +1,5 @@
 #pragma once
-
+/*
 struct ObjData
 {
 	UINT objNum;
@@ -13,17 +13,30 @@ struct ObjData
 	Float3 collRot;
 	Float3 collScale;
 };
+*/
+struct ObjData
+{
+	string objName;
+	UINT objNum;
+
+	Float3 Position;
+	Float3 Rotation;
+	Float3 Scale;
+
+	Float3 collPos;
+	Float3 collRot;
+	Float3 collScale;
+};
+
 
 class ObjectCreateManager
 {
 private:
-
-	vector<string> objNames;
-
 	vector<ModelSingle*> totalObj;
+	vector<UINT> emptyNums;
 	
 	UINT curObjNum;
-	UINT objNum;
+	UINT totalObjNum;
 
 	char curStr[20];
 
@@ -41,7 +54,6 @@ public:
 	ObjectCreateManager();
 	~ObjectCreateManager();
 
-	void AddObject(ModelSingle* addObj);
 	void Update();
 	void Render();
 
@@ -50,7 +62,11 @@ public:
 	void ObjectCreateWindow();
 	void ObjectSettingWindow();
 
-	UINT FindNameNum(string fineName);
+	void MapToolAddWindow();
+	void MapToolSameAdd();
+	void MapToolCopy();
+	void MapToolDelete();
+	void MapToolSave();
+	void MapToolLoad();
 
-	void AddNames();
 };
