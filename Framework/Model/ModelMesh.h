@@ -64,4 +64,8 @@ public:
 	void SetShader(Shader* shader) { material->SetShader(shader); }
 
 	Material* GetMaterial() { return material; }
+
+	ModelVertex* GetModelVertexInfo() { return vertices; }
+	UINT GetMeshVertexCount() { return vertexCount; }
+	VertexBuffer* GetMeshVertexBuffer() { return vertexBuffer; }
 };

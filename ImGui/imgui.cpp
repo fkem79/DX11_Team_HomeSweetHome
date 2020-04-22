@@ -1588,17 +1588,17 @@ ImU32 ImHashStr(const char* data_p, size_t data_size, ImU32 seed)
 // Default file functions
 #ifndef IMGUI_DISABLE_DEFAULT_FILE_FUNCTIONS
 
-ImFileHandle ImFileOpen(const char* filename, const char* mode)
+ImFileHandle ImFileOpen(const char* filename, const char* shaderMode)
 {
 #if defined(_WIN32) && !defined(IMGUI_DISABLE_WIN32_FUNCTIONS) && !defined(__CYGWIN__) && !defined(__GNUC__)
     // We need a fopen() wrapper because MSVC/Windows fopen doesn't handle UTF-8 filenames.
     // Previously we used ImTextCountCharsFromUtf8/ImTextStrFromUtf8 here but we now need to support ImWchar16 and ImWchar32!
     const int filename_wsize = ::MultiByteToWideChar(CP_UTF8, 0, filename, -1, NULL, 0);
-    const int mode_wsize = ::MultiByteToWideChar(CP_UTF8, 0, mode, -1, NULL, 0);
+    const int mode_wsize = ::MultiByteToWideChar(CP_UTF8, 0, shaderMode, -1, NULL, 0);
     ImVector<ImWchar> buf;
     buf.resize(filename_wsize + mode_wsize);
     ::MultiByteToWideChar(CP_UTF8, 0, filename, -1, (wchar_t*)&buf[0], filename_wsize);
-    ::MultiByteToWideChar(CP_UTF8, 0, mode, -1, (wchar_t*)&buf[filename_wsize], mode_wsize);
+    ::MultiByteToWideChar(CP_UTF8, 0, shaderMode, -1, (wchar_t*)&buf[filename_wsize], mode_wsize);
     return ::_wfopen((const wchar_t*)&buf[0], (const wchar_t*)&buf[filename_wsize]);
 #else
     return fopen(filename, mode);
@@ -1615,14 +1615,14 @@ ImU64   ImFileWrite(const void* data, ImU64 sz, ImU64 count, ImFileHandle f)    
 // Helper: Load file content into memory
 // Memory allocated with IM_ALLOC(), must be freed by user using IM_FREE() == ImGui::MemFree()
 // This can't really be used with "rt" because fseek size won't match read size.
-void*   ImFileLoadToMemory(const char* filename, const char* mode, size_t* out_file_size, int padding_bytes)
+void*   ImFileLoadToMemory(const char* filename, const char* shaderMode, size_t* out_file_size, int padding_bytes)
 {
-    IM_ASSERT(filename && mode);
+    IM_ASSERT(filename && shaderMode);
     if (out_file_size)
         *out_file_size = 0;
 
     ImFileHandle f;
-    if ((f = ImFileOpen(filename, mode)) == NULL)
+    if ((f = ImFileOpen(filename, shaderMode)) == NULL)
         return NULL;
 
     size_t file_size = (size_t)ImFileGetSize(f);
@@ -9111,37 +9111,37 @@ static ImVec2 ImGui::NavCalcPreferredRefPos()
     }
 }
 
-float ImGui::GetNavInputAmount(ImGuiNavInput n, ImGuiInputReadMode mode)
+float ImGui::GetNavInputAmount(ImGuiNavInput n, ImGuiInputReadMode shaderMode)
 {
     ImGuiContext& g = *GImGui;
-    if (mode == ImGuiInputReadMode_Down)
+    if (shaderMode == ImGuiInputReadMode_Down)
         return g.IO.NavInputs[n];                         // Instant, read analog input (0.0f..1.0f, as provided by user)
 
     const float t = g.IO.NavInputsDownDuration[n];
-    if (t < 0.0f && mode == ImGuiInputReadMode_Released)  // Return 1.0f when just released, no repeat, ignore analog input.
+    if (t < 0.0f && shaderMode == ImGuiInputReadMode_Released)  // Return 1.0f when just released, no repeat, ignore analog input.
         return (g.IO.NavInputsDownDurationPrev[n] >= 0.0f ? 1.0f : 0.0f);
     if (t < 0.0f)
         return 0.0f;
-    if (mode == ImGuiInputReadMode_Pressed)               // Return 1.0f when just pressed, no repeat, ignore analog input.
+    if (shaderMode == ImGuiInputReadMode_Pressed)               // Return 1.0f when just pressed, no repeat, ignore analog input.
         return (t == 0.0f) ? 1.0f : 0.0f;
-    if (mode == ImGuiInputReadMode_Repeat)
+    if (shaderMode == ImGuiInputReadMode_Repeat)
         return (float)CalcTypematicRepeatAmount(t - g.IO.DeltaTime, t, g.IO.KeyRepeatDelay * 0.72f, g.IO.KeyRepeatRate * 0.80f);
-    if (mode == ImGuiInputReadMode_RepeatSlow)
+    if (shaderMode == ImGuiInputReadMode_RepeatSlow)
         return (float)CalcTypematicRepeatAmount(t - g.IO.DeltaTime, t, g.IO.KeyRepeatDelay * 1.25f, g.IO.KeyRepeatRate * 2.00f);
-    if (mode == ImGuiInputReadMode_RepeatFast)
+    if (shaderMode == ImGuiInputReadMode_RepeatFast)
         return (float)CalcTypematicRepeatAmount(t - g.IO.DeltaTime, t, g.IO.KeyRepeatDelay * 0.72f, g.IO.KeyRepeatRate * 0.30f);
     return 0.0f;
 }
 
-ImVec2 ImGui::GetNavInputAmount2d(ImGuiNavDirSourceFlags dir_sources, ImGuiInputReadMode mode, float slow_factor, float fast_factor)
+ImVec2 ImGui::GetNavInputAmount2d(ImGuiNavDirSourceFlags dir_sources, ImGuiInputReadMode shaderMode, float slow_factor, float fast_factor)
 {
     ImVec2 delta(0.0f, 0.0f);
     if (dir_sources & ImGuiNavDirSourceFlags_Keyboard)
-        delta += ImVec2(GetNavInputAmount(ImGuiNavInput_KeyRight_, mode)   - GetNavInputAmount(ImGuiNavInput_KeyLeft_,   mode), GetNavInputAmount(ImGuiNavInput_KeyDown_,   mode) - GetNavInputAmount(ImGuiNavInput_KeyUp_,   mode));
+        delta += ImVec2(GetNavInputAmount(ImGuiNavInput_KeyRight_, shaderMode)   - GetNavInputAmount(ImGuiNavInput_KeyLeft_,   shaderMode), GetNavInputAmount(ImGuiNavInput_KeyDown_,   shaderMode) - GetNavInputAmount(ImGuiNavInput_KeyUp_,   shaderMode));
     if (dir_sources & ImGuiNavDirSourceFlags_PadDPad)
-        delta += ImVec2(GetNavInputAmount(ImGuiNavInput_DpadRight, mode)   - GetNavInputAmount(ImGuiNavInput_DpadLeft,   mode), GetNavInputAmount(ImGuiNavInput_DpadDown,   mode) - GetNavInputAmount(ImGuiNavInput_DpadUp,   mode));
+        delta += ImVec2(GetNavInputAmount(ImGuiNavInput_DpadRight, shaderMode)   - GetNavInputAmount(ImGuiNavInput_DpadLeft,   shaderMode), GetNavInputAmount(ImGuiNavInput_DpadDown,   shaderMode) - GetNavInputAmount(ImGuiNavInput_DpadUp,   shaderMode));
     if (dir_sources & ImGuiNavDirSourceFlags_PadLStick)
-        delta += ImVec2(GetNavInputAmount(ImGuiNavInput_LStickRight, mode) - GetNavInputAmount(ImGuiNavInput_LStickLeft, mode), GetNavInputAmount(ImGuiNavInput_LStickDown, mode) - GetNavInputAmount(ImGuiNavInput_LStickUp, mode));
+        delta += ImVec2(GetNavInputAmount(ImGuiNavInput_LStickRight, shaderMode) - GetNavInputAmount(ImGuiNavInput_LStickLeft, shaderMode), GetNavInputAmount(ImGuiNavInput_LStickDown, shaderMode) - GetNavInputAmount(ImGuiNavInput_LStickUp, shaderMode));
     if (slow_factor != 0.0f && IsNavInputDown(ImGuiNavInput_TweakSlow))
         delta *= slow_factor;
     if (fast_factor != 0.0f && IsNavInputDown(ImGuiNavInput_TweakFast))

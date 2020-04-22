@@ -35,6 +35,7 @@ VertexBuffer::VertexBuffer(void* data, UINT stride, UINT count, bool isCpuWrite,
     initData.pSysMem = data;
 
     V(DEVICE->CreateBuffer(&bd, &initData, &buffer));
+    
 }
 
 VertexBuffer::~VertexBuffer()

@@ -36,6 +36,10 @@ public:
 	vector<ModelBone*>* GetBones() { return &bones; }
 	vector<ModelMesh*>* GetMeshes() { return &meshes; }
 	vector<ModelClip*>* GetClips() { return &clips; }
+
+	UINT GetModelMeshSize() { return meshes.size(); }
+//	UINT GetModelMeshVetexCount() { return meshes[0]->GetMeshVertexCount(); }
+//	UINT GetModelMeshVetexCount1() { return meshes[1]->GetMeshVertexCount(); }
 		
 	Material* MaterialByName(string name) { return materials[name]; }
 	ModelClip* ClipByIndex(UINT index) { return clips[index]; }

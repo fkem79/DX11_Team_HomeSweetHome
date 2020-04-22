@@ -24,7 +24,7 @@ extern "C"
 */
 FMOD_RESULT F_API FMOD_Memory_Initialize           (void *poolmem, int poollen, FMOD_MEMORY_ALLOC_CALLBACK useralloc, FMOD_MEMORY_REALLOC_CALLBACK userrealloc, FMOD_MEMORY_FREE_CALLBACK userfree, FMOD_MEMORY_TYPE memtypeflags);
 FMOD_RESULT F_API FMOD_Memory_GetStats             (int *currentalloced, int *maxalloced, FMOD_BOOL blocking);
-FMOD_RESULT F_API FMOD_Debug_Initialize            (FMOD_DEBUG_FLAGS flags, FMOD_DEBUG_MODE mode, FMOD_DEBUG_CALLBACK callback, const char *filename);
+FMOD_RESULT F_API FMOD_Debug_Initialize            (FMOD_DEBUG_FLAGS flags, FMOD_DEBUG_MODE shaderMode, FMOD_DEBUG_CALLBACK callback, const char *filename);
 FMOD_RESULT F_API FMOD_File_SetDiskBusy            (int busy);
 FMOD_RESULT F_API FMOD_File_GetDiskBusy            (int *busy);
 FMOD_RESULT F_API FMOD_Thread_SetAttributes        (FMOD_THREAD_TYPE type, FMOD_THREAD_AFFINITY affinity, FMOD_THREAD_PRIORITY priority, FMOD_THREAD_STACK_SIZE stacksize);
@@ -95,7 +95,7 @@ FMOD_RESULT F_API FMOD_System_Set3DRolloffCallback      (FMOD_SYSTEM *system, FM
 FMOD_RESULT F_API FMOD_System_MixerSuspend              (FMOD_SYSTEM *system);
 FMOD_RESULT F_API FMOD_System_MixerResume               (FMOD_SYSTEM *system);
 FMOD_RESULT F_API FMOD_System_GetDefaultMixMatrix       (FMOD_SYSTEM *system, FMOD_SPEAKERMODE sourcespeakermode, FMOD_SPEAKERMODE targetspeakermode, float *matrix, int matrixhop);
-FMOD_RESULT F_API FMOD_System_GetSpeakerModeChannels    (FMOD_SYSTEM *system, FMOD_SPEAKERMODE mode, int *channels);
+FMOD_RESULT F_API FMOD_System_GetSpeakerModeChannels    (FMOD_SYSTEM *system, FMOD_SPEAKERMODE shaderMode, int *channels);
 
 /* System information functions. */
 FMOD_RESULT F_API FMOD_System_GetVersion                (FMOD_SYSTEM *system, unsigned int *version);
@@ -105,8 +105,8 @@ FMOD_RESULT F_API FMOD_System_GetCPUUsage               (FMOD_SYSTEM *system, fl
 FMOD_RESULT F_API FMOD_System_GetFileUsage              (FMOD_SYSTEM *system, long long *sampleBytesRead, long long *streamBytesRead, long long *otherBytesRead);
 
 /* Sound/DSP/Channel/FX creation and retrieval. */
-FMOD_RESULT F_API FMOD_System_CreateSound               (FMOD_SYSTEM *system, const char *name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO *exinfo, FMOD_SOUND **sound);
-FMOD_RESULT F_API FMOD_System_CreateStream              (FMOD_SYSTEM *system, const char *name_or_data, FMOD_MODE mode, FMOD_CREATESOUNDEXINFO *exinfo, FMOD_SOUND **sound);
+FMOD_RESULT F_API FMOD_System_CreateSound               (FMOD_SYSTEM *system, const char *name_or_data, FMOD_MODE shaderMode, FMOD_CREATESOUNDEXINFO *exinfo, FMOD_SOUND **sound);
+FMOD_RESULT F_API FMOD_System_CreateStream              (FMOD_SYSTEM *system, const char *name_or_data, FMOD_MODE shaderMode, FMOD_CREATESOUNDEXINFO *exinfo, FMOD_SOUND **sound);
 FMOD_RESULT F_API FMOD_System_CreateDSP                 (FMOD_SYSTEM *system, const FMOD_DSP_DESCRIPTION *description, FMOD_DSP **dsp);
 FMOD_RESULT F_API FMOD_System_CreateDSPByType           (FMOD_SYSTEM *system, FMOD_DSP_TYPE type, FMOD_DSP **dsp);
 FMOD_RESULT F_API FMOD_System_CreateChannelGroup        (FMOD_SYSTEM *system, const char *name, FMOD_CHANNELGROUP **channelgroup);
@@ -204,8 +204,8 @@ FMOD_RESULT F_API FMOD_Sound_DeleteSyncPoint            (FMOD_SOUND *sound, FMOD
      Functions also in Channel class but here they are the 'default' to save having to change it in Channel all the time.
 */
 
-FMOD_RESULT F_API FMOD_Sound_SetMode                    (FMOD_SOUND *sound, FMOD_MODE mode);
-FMOD_RESULT F_API FMOD_Sound_GetMode                    (FMOD_SOUND *sound, FMOD_MODE *mode);
+FMOD_RESULT F_API FMOD_Sound_SetMode                    (FMOD_SOUND *sound, FMOD_MODE shaderMode);
+FMOD_RESULT F_API FMOD_Sound_GetMode                    (FMOD_SOUND *sound, FMOD_MODE *shaderMode);
 FMOD_RESULT F_API FMOD_Sound_SetLoopCount               (FMOD_SOUND *sound, int loopcount);
 FMOD_RESULT F_API FMOD_Sound_GetLoopCount               (FMOD_SOUND *sound, int *loopcount);
 FMOD_RESULT F_API FMOD_Sound_SetLoopPoints              (FMOD_SOUND *sound, unsigned int loopstart, FMOD_TIMEUNIT loopstarttype, unsigned int loopend, FMOD_TIMEUNIT loopendtype);
@@ -254,8 +254,8 @@ FMOD_RESULT F_API FMOD_Channel_SetReverbProperties      (FMOD_CHANNEL *channel, 
 FMOD_RESULT F_API FMOD_Channel_GetReverbProperties      (FMOD_CHANNEL *channel, int instance, float *wet);
 FMOD_RESULT F_API FMOD_Channel_SetLowPassGain           (FMOD_CHANNEL *channel, float gain);
 FMOD_RESULT F_API FMOD_Channel_GetLowPassGain           (FMOD_CHANNEL *channel, float *gain);
-FMOD_RESULT F_API FMOD_Channel_SetMode                  (FMOD_CHANNEL *channel, FMOD_MODE mode);
-FMOD_RESULT F_API FMOD_Channel_GetMode                  (FMOD_CHANNEL *channel, FMOD_MODE *mode);
+FMOD_RESULT F_API FMOD_Channel_SetMode                  (FMOD_CHANNEL *channel, FMOD_MODE shaderMode);
+FMOD_RESULT F_API FMOD_Channel_GetMode                  (FMOD_CHANNEL *channel, FMOD_MODE *shaderMode);
 FMOD_RESULT F_API FMOD_Channel_SetCallback              (FMOD_CHANNEL *channel, FMOD_CHANNELCONTROL_CALLBACK callback);
 FMOD_RESULT F_API FMOD_Channel_IsPlaying                (FMOD_CHANNEL *channel, FMOD_BOOL *isplaying);
 
@@ -375,8 +375,8 @@ FMOD_RESULT F_API FMOD_ChannelGroup_SetReverbProperties (FMOD_CHANNELGROUP *chan
 FMOD_RESULT F_API FMOD_ChannelGroup_GetReverbProperties (FMOD_CHANNELGROUP *channelgroup, int instance, float *wet);
 FMOD_RESULT F_API FMOD_ChannelGroup_SetLowPassGain      (FMOD_CHANNELGROUP *channelgroup, float gain);
 FMOD_RESULT F_API FMOD_ChannelGroup_GetLowPassGain      (FMOD_CHANNELGROUP *channelgroup, float *gain);
-FMOD_RESULT F_API FMOD_ChannelGroup_SetMode             (FMOD_CHANNELGROUP *channelgroup, FMOD_MODE mode);
-FMOD_RESULT F_API FMOD_ChannelGroup_GetMode             (FMOD_CHANNELGROUP *channelgroup, FMOD_MODE *mode);
+FMOD_RESULT F_API FMOD_ChannelGroup_SetMode             (FMOD_CHANNELGROUP *channelgroup, FMOD_MODE shaderMode);
+FMOD_RESULT F_API FMOD_ChannelGroup_GetMode             (FMOD_CHANNELGROUP *channelgroup, FMOD_MODE *shaderMode);
 FMOD_RESULT F_API FMOD_ChannelGroup_SetCallback         (FMOD_CHANNELGROUP *channelgroup, FMOD_CHANNELCONTROL_CALLBACK callback);
 FMOD_RESULT F_API FMOD_ChannelGroup_IsPlaying           (FMOD_CHANNELGROUP *channelgroup, FMOD_BOOL *isplaying);
 

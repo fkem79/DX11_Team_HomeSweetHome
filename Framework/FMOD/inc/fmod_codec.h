@@ -67,7 +67,7 @@ struct FMOD_CODEC_WAVEFORMAT
     unsigned int       pcmblocksize;
     int                loopstart;
     int                loopend;
-    FMOD_MODE          mode;
+    FMOD_MODE          shaderMode;
     FMOD_CHANNELMASK   channelmask;
     FMOD_CHANNELORDER  channelorder;
     float              peakvolume;

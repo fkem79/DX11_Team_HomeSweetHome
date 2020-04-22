@@ -65,6 +65,8 @@ void ModelMesh::Render(UINT drawCount)
 	IASetPT();
 
 	DC->DrawIndexedInstanced(indexCount, drawCount, 0, 0, 0);
+
+	
 }
 /*
 void ModelMesh::Render()

@@ -2,8 +2,8 @@
 #include "ObjectCreateManager.h"
 
 ObjectCreateManager::ObjectCreateManager()
-	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), fileCheck(true), allObjBoxRenderOn(true),
-	curObjNum(1000), totalObjNum(0)
+	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
+	fileCheck(true), allObjBoxRenderOn(true),curObjNum(1000), totalObjNum(0), shaderMode(1)
 {
 	
 }
@@ -44,6 +44,7 @@ void ObjectCreateManager::Update()
 		
 		obj->Update();
 	}
+
 }
 
 void ObjectCreateManager::Render()
@@ -106,11 +107,13 @@ void ObjectCreateManager::ObjectCreateWindow()
 		ImGui::SameLine();
 		if (ImGui::Button("Save"))
 		{
+			saveNameWindow = true;
 			MapToolSave();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Load"))
 		{
+			loadNameWindow = true;
 			MapToolLoad();
 		}
 		ImGui::SameLine();
@@ -127,31 +130,43 @@ void ObjectCreateManager::ObjectCreateWindow()
 	{
 		MapToolAddWindow();
 	}
+
+	if (saveNameWindow)
+	{
+		MapToolSave();
+	}
+
+	if (loadNameWindow)
+	{
+		MapToolLoad();
+	}
 }
 
 void ObjectCreateManager::ObjectSettingWindow()
 {
-	if (curObjNum == 1000)
-		return;
 
 	UINT num = curObjNum;
 	{
 		ImGui::BeginChildFrame(1, ImVec2(400, 200));
 		ImGui::BeginChild("g1", ImVec2(400, 200), false);
 
-		ImGui::Text("Name : %s objNum : %d", totalObj[num]->GetModelName().c_str(), totalObj[num]->GetModelNum());
+		if (curObjNum != 1000)
+		{
+			ImGui::Text("Name : %s objNum : %d Shader : %s",
+				totalObj[num]->GetModelName().c_str(), totalObj[num]->GetModelNum(), totalObj[num]->GetShaderName().c_str());
 
-		ImGui::Separator();
+			ImGui::Separator();
 
-		ImGui::Text("Obj");
-		ImGui::InputFloat3("Obj Position", totalObj[num]->position.data.m128_f32, 3);
-		ImGui::InputFloat3("Obj Scale", totalObj[num]->scale.data.m128_f32, 3);
-		ImGui::InputFloat3("Obj Rotation", totalObj[num]->rotation.data.m128_f32, 3);
-
-		ImGui::Text("CollBox");
-		ImGui::InputFloat3("Position", totalObj[num]->GetCollBox()->position.data.m128_f32, 3);
-		ImGui::InputFloat3("Scale", totalObj[num]->GetCollBox()->scale.data.m128_f32, 3);
-		ImGui::InputFloat3("Rotation", totalObj[num]->GetCollBox()->rotation.data.m128_f32, 3);
+			ImGui::Text("Obj");
+			ImGui::InputFloat3("Obj Position", totalObj[num]->position.data.m128_f32, 3);
+			ImGui::InputFloat3("Obj Scale", totalObj[num]->scale.data.m128_f32, 3);
+			ImGui::InputFloat3("Obj Rotation", totalObj[num]->rotation.data.m128_f32, 3);
+		}
+		else
+		{
+			ImGui::Text("Select Object or Add Object");
+			ImGui::Text("Not Obj");
+		}
 
 		ImGui::EndChild();
 		ImGui::EndChildFrame();
@@ -162,15 +177,22 @@ void ObjectCreateManager::ObjectSettingWindow()
 void ObjectCreateManager::MapToolAddWindow()
 {
 	ImGui::Begin("Add file Name", &addNameWindow);
-	ImGui::InputText(" ", curStr, 20);
+	ImGui::InputText(" ", curFileName, 20);
 	ImGui::SameLine();
 	if (ImGui::Button("OK"))
 	{
-		string temp = curStr;
+		string temp = curFileName;
 
 		if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
 		{
-			ModelSingle* model = new ModelSingle(temp);
+			string shader;
+
+			if (shaderMode ==1)
+				shader = "ModelSingle";
+			else if(shaderMode ==2)
+				shader = "ModelInstancing";
+
+			ModelSingle* model = new ModelSingle(temp, shader);
 			model->SetModelNum(totalObjNum++);
 			model->scale *= 0.1f;
 			model->rotation = { 1.6f, 0, 0 };
@@ -181,7 +203,15 @@ void ObjectCreateManager::MapToolAddWindow()
 			addNameWindow = false;
 		}
 	}
+	ImGui::BeginChildFrame(2, ImVec2(150, 100));
+	ImGui::BeginChild("box1", ImVec2(150, 100), false);
+	
+	ImGui::RadioButton("ModelSingle", &shaderMode, 1);
+	ImGui::RadioButton("ModelInstancing", &shaderMode, 2);
 
+	ImGui::EndChild();
+	ImGui::EndChildFrame();
+	ImGui::SameLine();
 	if (!fileCheck)
 		ImGui::Text("Not Exist");
 
@@ -193,7 +223,7 @@ void ObjectCreateManager::MapToolAddWindow()
 
 void ObjectCreateManager::MapToolSameAdd()
 {
-	string temp = curStr;
+	string temp = curFileName;
 
 	if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
 	{
@@ -213,7 +243,7 @@ void ObjectCreateManager::MapToolCopy()
 {
 	UINT num = curObjNum;
 
-	ModelSingle* model = new ModelSingle(totalObj[num]->GetModelName());
+	ModelSingle* model = new ModelSingle(totalObj[num]->GetModelName(), totalObj[num]->GetShaderName());
 	model->SetModelNum(totalObjNum++);
 	model->scale *= totalObj[num]->scale;
 	model->rotation = totalObj[num]->rotation;
@@ -245,90 +275,121 @@ void ObjectCreateManager::MapToolDelete()
 
 void ObjectCreateManager::MapToolSave()
 {
-	BinaryWriter writer(L"TextData/ObjectMapData.map");
+	ImGui::Begin("save data name", &saveNameWindow);
 
-	vector<ObjData> datas;
+	ImGui::Text("Ex) mapData");
+	ImGui::InputText(" ", saveLoadName, 20);
+	ImGui::SameLine();
 
-	for (ModelSingle* model : totalObj)
+	if (ImGui::Button("SAVE"))
 	{
-		ObjData objData;
+		//BinaryWriter writer(L"TextData/ObjectMapData.map");
+		string tempName = saveLoadName;
+		BinaryWriter writer("TextData/" + tempName+ ".map");
 
-		objData.objName = model->GetModelName();
-		objData.objNum = model->GetModelNum();
+		vector<ObjData> datas;
 
-		objData.Position = model->position;
-		objData.Rotation = model->rotation;
-		objData.Scale = model->scale;
+		for (ModelSingle* model : totalObj)
+		{
+			ObjData objData;
 
-		objData.collPos = model->GetCollBox()->position;
-		objData.collRot = model->GetCollBox()->rotation;
-		objData.collScale = model->GetCollBox()->scale;
+			objData.objName = model->GetModelName();
+			objData.objNum = model->GetModelNum();
+			objData.objShader = model->GetShaderName();
 
-		datas.push_back(objData);
+			objData.Position = model->position;
+			objData.Rotation = model->rotation;
+			objData.Scale = model->scale;
+
+			datas.push_back(objData);
+		}
+
+		writer.UInt(datas.size());
+
+		for (ObjData data : datas)
+		{
+			writer.String(data.objName);
+			writer.UInt(data.objNum);
+			writer.String(data.objShader);
+
+			writer.Float(data.Position.x);
+			writer.Float(data.Position.y);
+			writer.Float(data.Position.z);
+
+			writer.Float(data.Rotation.x);
+			writer.Float(data.Rotation.y);
+			writer.Float(data.Rotation.z);
+
+			writer.Float(data.Scale.x);
+			writer.Float(data.Scale.y);
+			writer.Float(data.Scale.z);
+		}
+		saveNameWindow = false;
 	}
 
-	writer.UInt(datas.size());
+	if (ImGui::Button("Close"))
+		saveNameWindow = false;
 
-	for (ObjData data : datas)
-	{
-		writer.String(data.objName);
-		writer.UInt(data.objNum);
-
-		writer.Float(data.Position.x);
-		writer.Float(data.Position.y);
-		writer.Float(data.Position.z);
-
-		writer.Float(data.Rotation.x);
-		writer.Float(data.Rotation.y);
-		writer.Float(data.Rotation.z);
-
-		writer.Float(data.Scale.x);
-		writer.Float(data.Scale.y);
-		writer.Float(data.Scale.z);
-
-		writer.Float(data.collPos.x);
-		writer.Float(data.collPos.y);
-		writer.Float(data.collPos.z);
-
-		writer.Float(data.collRot.x);
-		writer.Float(data.collRot.y);
-		writer.Float(data.collRot.z);
-
-		writer.Float(data.collScale.x);
-		writer.Float(data.collScale.y);
-		writer.Float(data.collScale.z);
-	}
+	ImGui::End();
 }
 
 void ObjectCreateManager::MapToolLoad()
 {
-	BinaryReader reader(L"TextData/ObjectMapData.map");
+	ImGui::Begin("load data name", &loadNameWindow);
 
-	UINT size = reader.UInt();
+	ImGui::Text("Ex) mapData ");
+	ImGui::InputText(" ", saveLoadName, 20);
+	ImGui::SameLine();
 
-	for (ModelSingle* ms : totalObj)
-		delete ms;
-
-	totalObj.clear();
-
-	for (UINT i = 0; i < size; i++)
+	if (ImGui::Button("Load"))
 	{
-		ModelSingle* model = new ModelSingle(reader.String());
-		model->SetModelNum(reader.UInt());
+		string tempName = saveLoadName;
+		if (Path::ExistFile("TextData/"+ tempName +".map"))
+		{
+			BinaryReader reader("TextData/" + tempName + ".map");
 
-		model->position = { reader.Float(), reader.Float(), reader.Float() };
-		model->rotation = { reader.Float(), reader.Float(), reader.Float() };
-		model->scale = { reader.Float(), reader.Float(), reader.Float() };
+			UINT size = reader.UInt();
 
-		model->GetCollBox()->position = { reader.Float(), reader.Float(), reader.Float() };
-		model->GetCollBox()->rotation = { reader.Float(), reader.Float(), reader.Float() };
-		model->GetCollBox()->scale = { reader.Float(), reader.Float(), reader.Float() };
+			for (ModelSingle* ms : totalObj)
+				delete ms;
 
-		totalObj.push_back(model);
+			totalObj.clear();
+
+			for (UINT i = 0; i < size; i++)
+			{
+				string modelName = reader.String();
+				UINT modelNum = reader.UInt();
+				string shaderName = reader.String();
+
+				ModelSingle* model = new ModelSingle(modelName, shaderName);
+				model->SetModelNum(modelNum);
+
+				model->position = { reader.Float(), reader.Float(), reader.Float() };
+				model->rotation = { reader.Float(), reader.Float(), reader.Float() };
+				model->scale = { reader.Float(), reader.Float(), reader.Float() };
+
+				totalObj.push_back(model);
+			}
+
+			curObjNum = totalObj.size() - 1;
+			totalObjNum = totalObj.size();
+			strcpy_s(curFileName, totalObj[curObjNum]->GetModelName().c_str());
+			totalObjTestX = totalObj.size() * 10.0f;
+
+			loadNameWindow = false;
+		}
+		else
+			fileCheck = false;	
 	}
 
-	curObjNum = totalObj.size()-1;
-	totalObjNum = totalObj.size();
-	strcpy_s(curStr, totalObj[curObjNum]->GetModelName().c_str());
-	totalObjTestX = totalObj.size() * 10.0f;
+	if (!fileCheck)
+		ImGui::Text("Not Exist");
+
+	if (ImGui::Button("Close"))
+	{
+		loadNameWindow = false;
+		fileCheck = true;
+	}
+
+	ImGui::End();
 }

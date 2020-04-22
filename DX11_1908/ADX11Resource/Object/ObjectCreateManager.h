@@ -1,49 +1,37 @@
 #pragma once
-/*
-struct ObjData
-{
-	UINT objNum;
-	UINT objNameNum;
 
-	Float3 Position;
-	Float3 Rotation;
-	Float3 Scale;
-
-	Float3 collPos;
-	Float3 collRot;
-	Float3 collScale;
-};
-*/
 struct ObjData
 {
 	string objName;
 	UINT objNum;
+	string objShader;
 
 	Float3 Position;
 	Float3 Rotation;
 	Float3 Scale;
-
-	Float3 collPos;
-	Float3 collRot;
-	Float3 collScale;
 };
-
 
 class ObjectCreateManager
 {
 private:
+	
+	int shaderMode;
+
 	vector<ModelSingle*> totalObj;
-	vector<UINT> emptyNums;
+	vector<string> loadCompleteList;
 	
 	UINT curObjNum;
 	UINT totalObjNum;
 
-	char curStr[20];
+	char curFileName[20];
+	char saveLoadName[20];
 
 	float totalObjTestX;
 
 	bool mapToolWindow;
 	bool addNameWindow;
+	bool saveNameWindow;
+	bool loadNameWindow;
 
 	bool check;
 	bool fileCheck;
@@ -51,6 +39,7 @@ private:
 	bool allObjBoxRenderOn;
 
 public:
+
 	ObjectCreateManager();
 	~ObjectCreateManager();
 

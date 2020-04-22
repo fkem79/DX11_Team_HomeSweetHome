@@ -9,14 +9,26 @@ ModelSingle::ModelSingle(string name)
 	model->ReadMaterial(name + "/" + name);
 	model->ReadMesh(name + "/" + name);
 
+	shaderName = "ModelSingle";
 	model->SetShader(L"ModelSingle");
 	//model->SetShader(L"ModelInstancing");
 
-	Float3 min = { -40, -40, -40 };
-	Float3 max = { 40, 40, 40 };
+	CreateCollBox();
+}
 
-	coll = new BoxCollider(min, max);
-	coll->position = { 0,0,-45 };
+ModelSingle::ModelSingle(string name, string shaderName)
+	:check(false), modelName(name), boxRenderCheck(true), modelNum(0), shaderName(shaderName)
+{
+	Export(name);
+
+	model = new Model();
+	model->ReadMaterial(name + "/" + name);
+	model->ReadMesh(name + "/" + name);
+
+	model->SetShader(Path::ToWString(shaderName));
+	//model->SetShader(L"ModelInstancing");
+
+	CreateCollBox();
 }
 
 ModelSingle::~ModelSingle()
@@ -46,20 +58,6 @@ void ModelSingle::Render()
 
 void ModelSingle::PostRender()
 {
-	//if (check)
-	/*{
-		ImGui::Text("CollBox");
-		ImGui::InputFloat3("Position", coll->position.data.m128_f32, 3);
-		ImGui::InputFloat3("Scale", coll->scale.data.m128_f32, 3);
-		ImGui::InputFloat3("Rotation", coll->rotation.data.m128_f32, 3);
-
-		ImGui::InputFloat3("O Position", this->position.data.m128_f32, 3);
-		ImGui::InputFloat3("O Scale", this->scale.data.m128_f32, 3);
-		ImGui::InputFloat3("O Rotation", this->rotation.data.m128_f32, 3);
-
-		ImGui::InputFloat3("Min", coll->GetMinBox().data.m128_f32, 3);
-		ImGui::InputFloat3("Max", coll->GetMaxBox().data.m128_f32, 3);
-	}*/
 }
 
 void ModelSingle::Export(string name)
@@ -69,5 +67,36 @@ void ModelSingle::Export(string name)
 	reader->ExportMaterial(name + "/" + name);
 	reader->ExportMesh(name + "/" + name);
 	delete reader;
+}
+
+void ModelSingle::CreateCollBox()
+{
+	Float3 min = { 0, 0, 0 };
+	Float3 max = { 0, 0, 0 };	
+
+	for (ModelMesh* mesh : *model->GetMeshes())
+	{
+		for (int i = 0; i < mesh->GetMeshVertexCount(); i++)
+		{
+			ModelVertex* vertices = mesh->GetModelVertexInfo();
+
+			if (min.x > vertices[i].position.x)
+				min.x = vertices[i].position.x;
+			if (max.x < vertices[i].position.x)
+				max.x = vertices[i].position.x;
+
+			if (min.y > vertices[i].position.y)
+				min.y = vertices[i].position.y;
+			if (max.y < vertices[i].position.y)
+				max.y = vertices[i].position.y;
+
+			if (min.z > vertices[i].position.z)
+				min.z = vertices[i].position.z;
+			if (max.z < vertices[i].position.z)
+				max.z = vertices[i].position.z;
+		}
+	}
+
+	coll = new BoxCollider(min, max);
 }
 

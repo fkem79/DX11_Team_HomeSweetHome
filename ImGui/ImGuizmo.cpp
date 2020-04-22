@@ -871,13 +871,13 @@ namespace ImGuizmo
       return trf.w;
    }
 
-   static void ComputeContext(const float *view, const float *projection, float *matrix, MODE mode)
+   static void ComputeContext(const float *view, const float *projection, float *matrix, MODE shaderMode)
    {
-      gContext.mMode = mode;
+      gContext.mMode = shaderMode;
       gContext.mViewMat = *(matrix_t*)view;
       gContext.mProjectionMat = *(matrix_t*)projection;
 
-      if (mode == LOCAL)
+      if (shaderMode == LOCAL)
       {
          gContext.mModel = *(matrix_t*)matrix;
          gContext.mModel.OrthoNormalize();
@@ -1951,9 +1951,9 @@ namespace ImGuizmo
       mat.v.position.Set(translation[0], translation[1], translation[2], 1.f);
    }
 
-   void Manipulate(const float *view, const float *projection, OPERATION operation, MODE mode, float *matrix, float *deltaMatrix, float *snap, float *localBounds, float *boundsSnap)
+   void Manipulate(const float *view, const float *projection, OPERATION operation, MODE shaderMode, float *matrix, float *deltaMatrix, float *snap, float *localBounds, float *boundsSnap)
    {
-      ComputeContext(view, projection, matrix, mode);
+      ComputeContext(view, projection, matrix, shaderMode);
 
       // set delta to identity
       if (deltaMatrix)

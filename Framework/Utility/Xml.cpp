@@ -2116,13 +2116,13 @@ namespace Xml
 		return unk;
 	}
 
-	static FILE* callfopen(const char* filepath, const char* mode)
+	static FILE* callfopen(const char* filepath, const char* shaderMode)
 	{
 		TIXMLASSERT(filepath);
-		TIXMLASSERT(mode);
+		TIXMLASSERT(shaderMode);
 #if defined(_MSC_VER) && (_MSC_VER >= 1400 ) && (!defined WINCE)
 		FILE* fp = 0;
-		errno_t err = fopen_s(&fp, filepath, mode);
+		errno_t err = fopen_s(&fp, filepath, shaderMode);
 		if (err) {
 			return 0;
 		}

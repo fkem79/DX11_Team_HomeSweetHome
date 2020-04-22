@@ -13,7 +13,7 @@ Environment::Environment()
     CreateSamplerState();
 
     mainCamera = new FreeCam();
-    mainCamera->position = Vector3(0, 0, -3);    
+    mainCamera->position = Vector3(10, 10, -45);    
     //mainCamera = new FollowCam();
     //mainCamera = new FirstPersonView();
 }
