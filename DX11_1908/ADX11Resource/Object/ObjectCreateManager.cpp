@@ -170,7 +170,6 @@ void ObjectCreateManager::ObjectSettingWindow()
 
 		ImGui::EndChild();
 		ImGui::EndChildFrame();
-		
 	}
 }
 
@@ -195,7 +194,7 @@ void ObjectCreateManager::MapToolAddWindow()
 			ModelSingle* model = new ModelSingle(temp, shader);
 			model->SetModelNum(totalObjNum++);
 			model->scale *= 0.1f;
-			model->rotation = { 1.6f, 0, 0 };
+			model->rotation = { 1.57f, 0, 0 };
 			model->position = { totalObjTestX, 1, 10 };
 			totalObj.push_back(model);
 
@@ -230,7 +229,7 @@ void ObjectCreateManager::MapToolSameAdd()
 		ModelSingle* model = new ModelSingle(temp);
 		model->SetModelNum(totalObjNum++);
 		model->scale *= 0.1f;
-		model->rotation = { 1.6f, 0, 0 };
+		model->rotation = { 1.57f, 0, 0 };
 		model->position = { totalObjTestX, 1, 10 };
 		totalObj.push_back(model);
 
@@ -247,7 +246,7 @@ void ObjectCreateManager::MapToolCopy()
 	model->SetModelNum(totalObjNum++);
 	model->scale *= totalObj[num]->scale;
 	model->rotation = totalObj[num]->rotation;
-	model->position = { totalObj[num]->position.x + 10, totalObj[num]->position.y,  totalObj[num]->position.z };
+	model->position = { totalObj[num]->position.x, totalObj[num]->position.y, totalObj[num]->position.z };
 
 	model->GetCollBox()->position = totalObj[num]->GetCollBox()->position;
 	model->GetCollBox()->rotation = totalObj[num]->GetCollBox()->rotation;
@@ -256,6 +255,7 @@ void ObjectCreateManager::MapToolCopy()
 	totalObj.push_back(model);
 
 	totalObjTestX = totalObj.size() * 10.0f;
+	curObjNum++;
 }
 
 void ObjectCreateManager::MapToolDelete()
