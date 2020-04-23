@@ -336,7 +336,7 @@ void ObjectCreateManager::MapToolSave()
 void ObjectCreateManager::MapToolLoad()
 {
 	ImGui::Begin("load data name", &loadNameWindow);
-
+	
 	ImGui::Text("Ex) mapData ");
 	ImGui::InputText(" ", saveLoadName, 20);
 	ImGui::SameLine();

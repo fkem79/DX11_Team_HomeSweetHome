@@ -8,31 +8,4 @@
         <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
         <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
     </Material>
-    <Material>
-        <Name>MI_Bed02A</Name>
-        <DiffuseFile></DiffuseFile>
-        <SpecularFile></SpecularFile>
-        <NormalFile></NormalFile>
-        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
-        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
-        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
-    </Material>
-    <Material>
-        <Name>MI_Bed02A</Name>
-        <DiffuseFile>T_Bed02G_D.png</DiffuseFile>
-        <SpecularFile></SpecularFile>
-        <NormalFile></NormalFile>
-        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
-        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
-        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
-    </Material>
-    <Material>
-        <Name>MI_Bed02A</Name>
-        <DiffuseFile>T_Bed02D_D.png</DiffuseFile>
-        <SpecularFile></SpecularFile>
-        <NormalFile></NormalFile>
-        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
-        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
-        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
-    </Material>
 </Materials>
