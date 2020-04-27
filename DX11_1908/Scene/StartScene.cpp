@@ -24,7 +24,7 @@ void StartScene::PreRender()
 
 void StartScene::Render()
 {
-	render2D->Render();
+	render2D->Render();	//¹è°æ
 
 	start->Render();
 	if (!startgame)

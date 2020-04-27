@@ -23,8 +23,8 @@ void StartButton::Update()
 
 void StartButton::Render()
 {
-	render2D->Render();
 	button->Render();
+	render2D->Render();
 }
 
 void StartButton::Create()

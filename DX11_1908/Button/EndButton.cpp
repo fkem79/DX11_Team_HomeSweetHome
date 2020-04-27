@@ -23,8 +23,8 @@ void EndButton::Update()
 
 void EndButton::Render()
 {
-	render2D->Render();
 	button->Render();
+	render2D->Render();
 }
 
 void EndButton::Create()

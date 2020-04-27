@@ -47,6 +47,24 @@ void Button::Update()
 
 	if (coll->IsCollision(Mposition, check))
 	{
+		select = true;
+		if (check)
+		{
+			render2D->scale.SetX(140);
+			render2D->scale.SetY(50);
+
+			render2D->position.SetX(Device::Get()->GetWidth() * 0.25f);
+			render2D->position.SetY(Device::Get()->GetWidth() * 0.25f);
+		}
+		else
+		{
+			render2D->scale.SetX(90);
+			render2D->scale.SetY(20);
+
+			render2D->position.SetX(Device::Get()->GetWidth() * 0.25f);
+			render2D->position.SetY(Device::Get()->GetWidth() * 0.1f);
+		}
+
 		if (KEYDOWN(VK_LBUTTON))
 			state = DOWN;
 
@@ -65,13 +83,11 @@ void Button::Update()
 			}
 
 			state = OVER;
-			select = true;
 		}
 
 		if (state == DOWN)
 		{
 			//texture->scale = Vector3(texture->scale.GetX() * smallScale, texture->scale.GetY() * smallScale, 1);
-			select = true;
 		}
 		//else
 			//texture->scale = Vector3(140, 40, 1);
