@@ -25,6 +25,8 @@ public:
 	virtual bool IsCollision(Collider* collider) override;
 	virtual bool IsCollision(IN Ray ray, OUT float* distance = nullptr, OUT Vector3* contact = nullptr) override;
 
+	bool IsCollision(Float2 position, bool start = true);
+
 	Vector3 GetMin();
 	Vector3 GetMax();
 

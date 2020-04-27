@@ -21,4 +21,6 @@ public:
 	virtual void Render();
 
 	void SetSRV(ID3D11ShaderResourceView* value) { srv = value; }
-};
+	
+
+}; 

@@ -3,6 +3,10 @@ class StartScene : public Scene
 {
 private:
 	Render2D* render2D;
+	StartButton* start;
+	EndButton* end;
+
+	bool startgame;
 public:
 	StartScene();
 	~StartScene();

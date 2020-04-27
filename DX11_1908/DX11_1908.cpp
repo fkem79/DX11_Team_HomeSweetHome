@@ -12,6 +12,7 @@ Program* program = nullptr;
 
 HINSTANCE hInst;                                // 현재 인스턴스입니다.
 HWND hWnd;
+POINT M_position;
 WCHAR szTitle[MAX_LOADSTRING];                  // 제목 표시줄 텍스트입니다.
 WCHAR szWindowClass[MAX_LOADSTRING];            // 기본 창 클래스 이름입니다.
 
@@ -260,6 +261,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     {
         Mouse::ProcessMessage(message, wParam, lParam);
         Keyboard::Get()->SetMouse(LOWORD(lParam), HIWORD(lParam));
+        M_position.x = LOWORD(lParam);
+        M_position.y = HIWORD(lParam);
     }  
         break;
     case WM_LBUTTONDOWN:

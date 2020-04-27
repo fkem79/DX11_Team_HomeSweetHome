@@ -98,6 +98,9 @@
     <ClCompile Include="Scene\StartScene.cpp" />
     <ClCompile Include="Scene\TutorialScene.cpp" />
     <ClCompile Include="Scene\WaterScene.cpp" />
+    <ClCompile Include="Button\Button.cpp" />
+    <ClCompile Include="Button\StartButton.cpp" />
+    <ClCompile Include="Button\EndButton.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADX11Resource\Model\Belle.h" />
@@ -164,7 +167,8 @@
     <ClInclude Include="Scene\WaterScene.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="Button\Button.h" />
-
+    <ClInclude Include="Button\StartButton.h" />
+    <ClInclude Include="Button\EndButton.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11_1908.rc" />
