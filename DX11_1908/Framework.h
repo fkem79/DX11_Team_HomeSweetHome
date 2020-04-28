@@ -57,6 +57,10 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "AStar/AStar.h"
 
 #include "Button/Button.h"
+#include "Button/StartButton.h"
+#include "Button/EndButton.h"
 
 #include "Scene/Scene.h"
 #include "Scene/SceneManager.h"
+
+extern POINT M_position;

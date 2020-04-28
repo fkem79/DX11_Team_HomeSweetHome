@@ -241,6 +241,8 @@
     <ClInclude Include="AStar\Heap.h" />
     <ClInclude Include="AStar\Node.h" />
     <ClInclude Include="Button\Button.h" />
+    <ClInclude Include="Button\EndButton.h" />
+    <ClInclude Include="Button\StartButton.h" />
     <ClInclude Include="Camera\Camera.h" />
     <ClInclude Include="Camera\FirstPersonView.h" />
     <ClInclude Include="Camera\FixityCam.h" />
@@ -306,6 +308,9 @@
     <ClCompile Include="AStar\AStar.cpp" />
     <ClCompile Include="AStar\Heap.cpp" />
     <ClCompile Include="AStar\Node.cpp" />
+    <ClCompile Include="Button\Button.cpp" />
+    <ClCompile Include="Button\EndButton.cpp" />
+    <ClCompile Include="Button\StartButton.cpp" />
     <ClCompile Include="Camera\Camera.cpp" />
     <ClCompile Include="Camera\FirstPersonView.cpp" />
     <ClCompile Include="Camera\FixityCam.cpp" />
