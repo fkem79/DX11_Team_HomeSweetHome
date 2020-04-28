@@ -12,7 +12,7 @@ private:
 	string modelName;
 	string shaderName;
 
-	VertexBuffer* instanceBuffer;
+	//VertexBuffer* instanceBuffer;
 	Matrix worlds[MAX_MODEL_INSTANCE];
 
 	bool check;
