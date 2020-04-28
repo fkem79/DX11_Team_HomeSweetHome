@@ -20,13 +20,13 @@ private:
 	vector<ModelSingle*> totalObj;
 	vector<string> loadCompleteList;
 	
-	UINT curObjNum;
+	int curObjIndex;
 	UINT totalObjNum;
 
 	char curFileName[20];
 	char saveLoadName[20];
 
-	float totalObjTestX;
+	float addXPos, addZPos;
 
 	bool mapToolWindow;
 	bool addNameWindow;

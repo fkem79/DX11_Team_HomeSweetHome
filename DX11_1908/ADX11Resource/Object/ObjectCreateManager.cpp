@@ -2,8 +2,8 @@
 #include "ObjectCreateManager.h"
 
 ObjectCreateManager::ObjectCreateManager()
-	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
-	fileCheck(true), allObjBoxRenderOn(true),curObjNum(1000), totalObjNum(0), shaderMode(1)
+	:mapToolWindow(false), addXPos(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
+	fileCheck(true), allObjBoxRenderOn(true),curObjIndex(-1), totalObjNum(0), shaderMode(1)
 {
 	
 }
@@ -19,7 +19,18 @@ ObjectCreateManager::~ObjectCreateManager()
 void ObjectCreateManager::Update()
 {
 	if (totalObj.size() <= 0)
-		curObjNum = 1000;
+	{
+		addXPos = 10;
+		addZPos = 10;
+	}
+	else
+	{
+		addXPos = Random(totalObj[totalObj.size() - 1]->position.x - 5.0f, totalObj[totalObj.size() - 1]->position.x + 5.0f);
+		addZPos = Random(totalObj[totalObj.size() - 1]->position.z - 5.0f, totalObj[totalObj.size() - 1]->position.z + 5.0f);
+	}
+
+	if (totalObj.size() <= 0)
+		curObjIndex = -1;
 
 	if (KEYPRESS(VK_LBUTTON))
 	{
@@ -30,7 +41,7 @@ void ObjectCreateManager::Update()
 			if (ms->GetCollBox()->IsCollision(ray))
 			{
 				//ms->SetCheck(!check);
-				curObjNum = ms->GetModelNum();
+				curObjIndex = ms->GetModelNum();
 			}
 		}
 	}
@@ -144,13 +155,20 @@ void ObjectCreateManager::ObjectCreateWindow()
 
 void ObjectCreateManager::ObjectSettingWindow()
 {
-
-	UINT num = curObjNum;
+	ImGui::InputInt(" ", &curObjIndex, 5);
 	{
-		ImGui::BeginChildFrame(1, ImVec2(400, 200));
-		ImGui::BeginChild("g1", ImVec2(400, 200), false);
+		if (curObjIndex >= totalObj.size())
+			curObjIndex = totalObj.size() - 1;
+		else if (curObjIndex < 0)
+			curObjIndex = -1;
+	}
 
-		if (curObjNum != 1000)
+	UINT num = curObjIndex;
+	{
+		ImGui::BeginChildFrame(1, ImVec2(400, 150));
+		ImGui::BeginChild("g1", ImVec2(400, 150), false);
+
+		if (curObjIndex != -1)
 		{
 			ImGui::Text("Name : %s objNum : %d Shader : %s",
 				totalObj[num]->GetModelName().c_str(), totalObj[num]->GetModelNum(), totalObj[num]->GetShaderName().c_str());
@@ -195,10 +213,10 @@ void ObjectCreateManager::MapToolAddWindow()
 			model->SetModelNum(totalObjNum++);
 			model->scale *= 0.1f;
 			model->rotation = { 1.57f, 0, 0 };
-			model->position = { totalObjTestX, 1, 10 };
+			model->position = { addXPos , 1, addZPos };
 			totalObj.push_back(model);
 
-			totalObjTestX = totalObj.size() * 10.0f;
+			curObjIndex = totalObj.size() - 1;
 			addNameWindow = false;
 		}
 	}
@@ -230,17 +248,17 @@ void ObjectCreateManager::MapToolSameAdd()
 		model->SetModelNum(totalObjNum++);
 		model->scale *= 0.1f;
 		model->rotation = { 1.57f, 0, 0 };
-		model->position = { totalObjTestX, 1, 10 };
+		model->position = { addXPos, 1, 10 };
 		totalObj.push_back(model);
 
-		totalObjTestX = totalObj.size() * 10.0f;
+		addXPos = totalObj.size() * 10.0f;
 		addNameWindow = false;
 	}
 }
 
 void ObjectCreateManager::MapToolCopy()
 {
-	UINT num = curObjNum;
+	UINT num = curObjIndex;
 
 	ModelSingle* model = new ModelSingle(totalObj[num]->GetModelName(), totalObj[num]->GetShaderName());
 	model->SetModelNum(totalObjNum++);
@@ -253,19 +271,21 @@ void ObjectCreateManager::MapToolCopy()
 	model->GetCollBox()->scale = totalObj[num]->GetCollBox()->scale;
 
 	totalObj.push_back(model);
-
-	totalObjTestX = totalObj.size() * 10.0f;
-	curObjNum++;
+	curObjIndex = totalObj.size()-1;
 }
 
 void ObjectCreateManager::MapToolDelete()
 {
-	if (totalObj.size() <= 0)
+	if (totalObj.size() <= 0 || curObjIndex <0)
 		return;
 
-	UINT num = curObjNum;
-	totalObj.erase(totalObj.begin() + num);
-	curObjNum = 1000;
+	UINT num = curObjIndex;
+	auto obj = totalObj.begin() + num;
+
+	delete *obj;
+
+	totalObj.erase(obj);
+	curObjIndex = -1;
 	totalObjNum = totalObj.size();
 
 	UINT i = 0;
@@ -355,6 +375,8 @@ void ObjectCreateManager::MapToolLoad()
 
 			totalObj.clear();
 
+			totalObj.reserve(size);
+
 			for (UINT i = 0; i < size; i++)
 			{
 				string modelName = reader.String();
@@ -371,10 +393,10 @@ void ObjectCreateManager::MapToolLoad()
 				totalObj.push_back(model);
 			}
 
-			curObjNum = totalObj.size() - 1;
+			curObjIndex = totalObj.size() - 1;
 			totalObjNum = totalObj.size();
-			strcpy_s(curFileName, totalObj[curObjNum]->GetModelName().c_str());
-			totalObjTestX = totalObj.size() * 10.0f;
+			strcpy_s(curFileName, totalObj[curObjIndex]->GetModelName().c_str());
+			addXPos = totalObj.size() * 10.0f;
 
 			loadNameWindow = false;
 		}

@@ -5,8 +5,6 @@ class MapScene : public Scene
 private:
 	Belle* belle;
 	Player* player;
-	ModelSingle* tile1;
-	ModelSingle* tile2;
 	ObjectCreateManager* ocm;
 
 public:
