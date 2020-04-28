@@ -90,6 +90,32 @@ bool BoxCollider::IsCollision(IN Ray ray, OUT float* distance, OUT Vector3* cont
 	return true;
 }
 
+bool BoxCollider::IsCollision(Float2 position, bool start)
+{
+	if (start)
+	{
+		if (position.x > this->position.GetX() + 55 && position.x < this->position.GetX() * 2.2f)
+		{
+			if (position.y > this->position.GetY() + 100 && position.y < this->position.GetY() * 1.6f)
+			{
+				return true;
+			}
+		}
+	}
+	else
+	{
+		if (position.x > this->position.GetX() + 35 && position.x < this->position.GetX() + 135)
+		{
+			if (position.y > this->position.GetY() + 480 && position.y < this->position.GetY() + 500)
+			{
+				return true;
+			}
+		}
+	}
+
+	return false;
+}
+
 Vector3 BoxCollider::GetMin()
 {	
 	return XMVector3TransformCoord(minBox.data, world);
