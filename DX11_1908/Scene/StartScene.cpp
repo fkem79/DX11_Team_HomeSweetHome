@@ -2,6 +2,7 @@
 #include "StartScene.h"
 
 StartScene::StartScene()
+	:startgame(false)
 {
 }
 
@@ -12,6 +13,9 @@ StartScene::~StartScene()
 void StartScene::Update()
 {
 	render2D->Update();
+	start->Update();
+	if (!startgame)
+		end->Update();
 }
 
 void StartScene::PreRender()
@@ -20,20 +24,25 @@ void StartScene::PreRender()
 
 void StartScene::Render()
 {
-	render2D->Render();
+	render2D->Render();	//¹è°æ
+
+	start->Render();
+	if (!startgame)
+		end->Render();
 }
 
 void StartScene::PostRender()
 {
-	if (ImGui::Button("Start"))
-	{
-		Start();
-	}
 }
 
 void StartScene::Begin()
 {
 	Texture2D();
+
+	start = new StartButton();
+	start->SetEvent(bind(&StartScene::Start, this));
+	end = new EndButton();
+	end->SetEvent(bind(&StartScene::Exit, this));
 
 	SOUND->Add("StartScene_bgm", "Sounds/A_PretaChasing01.OGG", true);
 
@@ -43,18 +52,21 @@ void StartScene::Begin()
 void StartScene::End()
 {
 	delete render2D;
+	delete start;
+	delete end;
 
 	SOUND->Stop("StartScene_bgm");
 }
 
 void StartScene::Start()
 {
+	startgame = true;
 	SCENE->ChangeScene("play");
 }
 
 void StartScene::Exit()
 {
-
+	PostQuitMessage(0);
 }
 
 void StartScene::Texture2D()
