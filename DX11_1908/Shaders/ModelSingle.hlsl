@@ -16,14 +16,11 @@ struct PixelInput
     float3 viewDir : VIEWDIR;
 };
 
-PixelInput VS(VertexUVNormalTangentInstance input)
+PixelInput VS(VertexUVNormalTangent input)
 {
     PixelInput output;
 
-    matrix transform = SkinWorld(input.instanceID, input.indices, input.weights);
-    
-    //matrix boneWorld = world;
-    matrix boneWorld = mul(transform, input.transform);
+    matrix boneWorld = world;
     
     output.position = mul(input.position, boneWorld);
     
