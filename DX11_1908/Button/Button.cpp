@@ -115,7 +115,7 @@ void Button::Render()
 void Button::Create()
 {
 	render2D = new Render2D();
-	Texture* texture = Texture::Add(L"Textures/Selected.png");
+	Texture* texture = Texture::Add(L"Textures/Selected.jpg");
 
 	render2D->scale.SetX(90);
 	render2D->scale.SetY(20);
