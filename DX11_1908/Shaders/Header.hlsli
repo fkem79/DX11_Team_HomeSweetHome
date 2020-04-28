@@ -54,6 +54,9 @@ cbuffer LightVP : register(b4)
     matrix LightP;
 }
 
+//VS
+//////////////////////////////////////////////////////////////////////
+//PS
 cbuffer Light : register(b0)
 {
     float3 lightDir;    
@@ -141,6 +144,19 @@ struct VertexUVNormalTangent
     float2 uv : UV;
     float3 normal : NORMAL;
     float3 tangent : TANGENT;
+};
+
+struct VertexUVNormalTangentInstance
+{
+    float4 position : POSITION;
+    float2 uv : UV;
+    float3 normal : NORMAL;
+    float3 tangent : TANGENT;
+    float4 indices : BLENDINDICES;
+    float4 weights : BLENDWEIGHT;
+    
+    matrix transform : INSTANCE;
+    uint instanceID : SV_InstanceID;
 };
 
 struct VertexUVNormalTangentBlend

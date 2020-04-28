@@ -5,6 +5,7 @@ class Model;
 class ModelMesh
 {
 private:
+	const static UINT NUM = 1000;
 	friend class Model;
 
 	class BoneBuffer : public ConstBuffer
@@ -67,5 +68,6 @@ public:
 
 	ModelVertex* GetModelVertexInfo() { return vertices; }
 	UINT GetMeshVertexCount() { return vertexCount; }
+	UINT GetMeshIndexCount() { return indexCount; }
 	VertexBuffer* GetMeshVertexBuffer() { return vertexBuffer; }
 };
