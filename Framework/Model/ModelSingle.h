@@ -13,7 +13,7 @@ private:
 	string shaderName;
 
 	//VertexBuffer* instanceBuffer;
-	Matrix worlds[MAX_MODEL_INSTANCE];
+	//Matrix worlds[MAX_MODEL_INSTANCE];
 
 	bool check;
 	bool boxRenderCheck;
