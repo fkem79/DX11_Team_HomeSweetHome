@@ -13,7 +13,7 @@ Belle::Belle()
 
 	model->PlayClip(0, state);
 
-	transform->scale = Vector3(0.05f, 0.05f, 0.05f);
+	transform->scale = Vector3(0.1f, 0.1f, 0.1f);
 
 	model->GetModel()->SetSpecular(Float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
