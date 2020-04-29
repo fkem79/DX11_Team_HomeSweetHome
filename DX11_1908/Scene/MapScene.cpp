@@ -50,11 +50,13 @@ void MapScene::PreRender()
 
 void MapScene::Render()
 {
-	player->Render();
 	belle->Render();
+
+	player->Render();
 	
 	tile1->Render();
 	tile2->Render();
+
 	ocm->Render();
 }
 

@@ -14,8 +14,8 @@ void Frustum::Update()
 {
 	Matrix V, P;
 	V = CAMERA->GetView();
-	//P = Environment::Get()->GetProjection();
-	P = projection;
+	P = Environment::Get()->GetProjection();
+	//P = projection;
 
 	Float4x4 matrix;
 	XMStoreFloat4x4(&matrix, V* P);

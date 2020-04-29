@@ -38,6 +38,8 @@ private:
 
 	bool allObjBoxRenderOn;
 
+	Frustum* frustum;
+
 public:
 
 	ObjectCreateManager();

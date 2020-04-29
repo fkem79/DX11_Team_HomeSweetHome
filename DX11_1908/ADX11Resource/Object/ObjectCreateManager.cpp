@@ -5,7 +5,7 @@ ObjectCreateManager::ObjectCreateManager()
 	:mapToolWindow(false), totalObjTestX(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
 	fileCheck(true), allObjBoxRenderOn(true),curObjNum(1000), totalObjNum(0), shaderMode(1)
 {
-	
+	frustum = new Frustum();
 }
 
 ObjectCreateManager::~ObjectCreateManager()
@@ -14,10 +14,13 @@ ObjectCreateManager::~ObjectCreateManager()
 		delete obj;
 
 	totalObj.clear();
+	delete frustum;
 }
 
 void ObjectCreateManager::Update()
 {
+	frustum->Update();
+
 	if (totalObj.size() <= 0)
 		curObjNum = 1000;
 
@@ -31,6 +34,7 @@ void ObjectCreateManager::Update()
 			{
 				//ms->SetCheck(!check);
 				curObjNum = ms->GetModelNum();
+				break;
 			}
 		}
 	}
@@ -50,7 +54,10 @@ void ObjectCreateManager::Update()
 void ObjectCreateManager::Render()
 {
 	for (ModelSingle* obj : totalObj)
-		obj->Render();
+	{
+		if(frustum->ContainPoint(obj->position))
+			obj->Render();
+	}
 }
 
 void ObjectCreateManager::PostRender()
