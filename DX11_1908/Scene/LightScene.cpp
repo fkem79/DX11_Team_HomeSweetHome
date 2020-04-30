@@ -6,7 +6,7 @@ LightScene::LightScene()
 	string name = "Bunny";
 
 	//Export(name);
-	bunny = new ModelRender(L"Lighting");
+	bunny = new ModelRender(name, L"Lighting");
 	bunny->ReadMaterial(name + "/" + name);
 	bunny->ReadMesh(name + "/" + name);
 	bunny->GetModel()->SetDiffuseMap(L"Textures/White.png");
@@ -16,7 +16,7 @@ LightScene::LightScene()
 
 	name = "Plane";
 	//Export(name);
-	plane = new ModelRender(L"Lighting");
+	plane = new ModelRender(name, L"Lighting");
 	plane->ReadMaterial(name + "/" + name);
 	plane->ReadMesh(name + "/" + name);
 	plane->AddTransform()->scale = Vector3(30, 30, 30);

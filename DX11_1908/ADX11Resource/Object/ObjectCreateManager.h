@@ -17,9 +17,12 @@ private:
 	
 	int shaderMode;
 
-	vector<ModelSingle*> totalObj;
+	//vector<ModelSingle*> totalObj;
+	vector<ModelRender*> totalObj;
 	vector<string> loadCompleteList;
 	
+	vector<ModelRender*> total;
+
 	int curObjIndex;
 	UINT totalObjNum;
 

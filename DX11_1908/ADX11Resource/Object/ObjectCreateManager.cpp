@@ -10,7 +10,10 @@ ObjectCreateManager::ObjectCreateManager()
 
 ObjectCreateManager::~ObjectCreateManager()
 {
-	for (ModelSingle* obj : totalObj)
+	//for (ModelSingle* obj : totalObj)
+	//	delete obj;
+
+	for (ModelRender* obj : total)
 		delete obj;
 
 	totalObj.clear();
@@ -25,8 +28,8 @@ void ObjectCreateManager::Update()
 	}
 	else
 	{
-		addXPos = Random(totalObj[totalObj.size() - 1]->position.x - 5.0f, totalObj[totalObj.size() - 1]->position.x + 5.0f);
-		addZPos = Random(totalObj[totalObj.size() - 1]->position.z - 5.0f, totalObj[totalObj.size() - 1]->position.z + 5.0f);
+		addXPos = Random(totalObj[totalObj.size() - 1]->GetTransform(totalObj.size() - 1)->position.x - 5.0f, totalObj[totalObj.size() - 1]->GetTransform(totalObj.size() - 1)->position.x + 5.0f);
+		addZPos = Random(totalObj[totalObj.size() - 1]->GetTransform(totalObj.size() - 1)->position.z - 5.0f, totalObj[totalObj.size() - 1]->GetTransform(totalObj.size() - 1)->position.z + 5.0f);
 	}
 
 	if (totalObj.size() <= 0)
@@ -36,7 +39,7 @@ void ObjectCreateManager::Update()
 	{
 		Ray ray = CAMERA->GetRay();
 
-		for (ModelSingle* ms : totalObj)
+		for (auto ms : totalObj)
 		{
 			if (ms->GetCollBox()->IsCollision(ray))
 			{
@@ -46,7 +49,7 @@ void ObjectCreateManager::Update()
 		}
 	}
 
-	for (ModelSingle* obj : totalObj)
+	for (auto obj : totalObj)
 	{
 		if(!allObjBoxRenderOn)
 			obj->SetBoxRenderCheck(false);
@@ -60,13 +63,15 @@ void ObjectCreateManager::Update()
 
 void ObjectCreateManager::Render()
 {
-	for (ModelSingle* obj : totalObj)
+	for (auto obj : totalObj)
+	{
 		obj->Render();
+	}
 }
 
 void ObjectCreateManager::PostRender()
 {
-	for (ModelSingle* obj : totalObj)
+	for (auto obj : totalObj)
 		obj->PostRender();
 
 	ObjectCreateWindow();
@@ -176,9 +181,9 @@ void ObjectCreateManager::ObjectSettingWindow()
 			ImGui::Separator();
 
 			ImGui::Text("Obj");
-			ImGui::InputFloat3("Obj Position", totalObj[num]->position.data.m128_f32, 3);
-			ImGui::InputFloat3("Obj Scale", totalObj[num]->scale.data.m128_f32, 3);
-			ImGui::InputFloat3("Obj Rotation", totalObj[num]->rotation.data.m128_f32, 3);
+			ImGui::InputFloat3("Obj Position", totalObj[num]->GetTransform(num)->position.data.m128_f32, 3);
+			ImGui::InputFloat3("Obj Scale", totalObj[num]->GetTransform(num)->scale.data.m128_f32, 3);
+			ImGui::InputFloat3("Obj Rotation", totalObj[num]->GetTransform(num)->rotation.data.m128_f32, 3);
 		}
 		else
 		{
@@ -202,22 +207,35 @@ void ObjectCreateManager::MapToolAddWindow()
 
 		if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
 		{
-			string shader;
+			wstring shader;
 
 			if (shaderMode ==1)
-				shader = "ModelSingle";
+				shader = L"ModelSingle";
 			else if(shaderMode ==2)
-				shader = "ModelInstancing";
+				shader = L"ModelInstancing";
 
-			ModelSingle* model = new ModelSingle(temp, shader);
+			//ModelSingle* model = new ModelSingle(temp, shader);
+			//model->SetModelNum(totalObjNum++);
+			//model->scale *= 0.1f;
+			//model->rotation = { 1.57f, 0, 0 };
+			//model->position = { addXPos , 1, addZPos };
+			//totalObj.push_back(model);
+			//
+			//curObjIndex = totalObj.size() - 1;
+			//addNameWindow = false;
+
+			ModelRender* model = new ModelRender(temp, shader);
 			model->SetModelNum(totalObjNum++);
-			model->scale *= 0.1f;
-			model->rotation = { 1.57f, 0, 0 };
-			model->position = { addXPos , 1, addZPos };
+			model->AddTransform();
+			UINT modelNum = model->GetModelNum();
+			model->GetTransform(modelNum)->scale *= 0.1;
+			model->GetTransform(modelNum)->rotation = { 1.57f, 0 ,0 };
+			model->GetTransform(modelNum)->position = { addXPos, 1, addZPos };
 			totalObj.push_back(model);
 
 			curObjIndex = totalObj.size() - 1;
 			addNameWindow = false;
+			
 		}
 	}
 	ImGui::BeginChildFrame(2, ImVec2(150, 100));
@@ -244,11 +262,11 @@ void ObjectCreateManager::MapToolSameAdd()
 
 	if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
 	{
-		ModelSingle* model = new ModelSingle(temp);
+		ModelRender* model = new ModelRender(curFileName);
 		model->SetModelNum(totalObjNum++);
-		model->scale *= 0.1f;
-		model->rotation = { 1.57f, 0, 0 };
-		model->position = { addXPos, 1, 10 };
+		model->GetTransform(totalObjNum)->scale *= 0.1f;
+		model->GetTransform(totalObjNum)->rotation = { 1.57f, 0, 0 };
+		model->GetTransform(totalObjNum)->position = { addXPos, 1, 10 };
 		totalObj.push_back(model);
 
 		addXPos = totalObj.size() * 10.0f;
@@ -260,11 +278,14 @@ void ObjectCreateManager::MapToolCopy()
 {
 	UINT num = curObjIndex;
 
-	ModelSingle* model = new ModelSingle(totalObj[num]->GetModelName(), totalObj[num]->GetShaderName());
+	ModelRender* model = new ModelRender(
+		totalObj[num]->GetModelName(), Path::ToWString(totalObj[num]->GetShaderName()));
 	model->SetModelNum(totalObjNum++);
-	model->scale *= totalObj[num]->scale;
-	model->rotation = totalObj[num]->rotation;
-	model->position = { totalObj[num]->position.x, totalObj[num]->position.y, totalObj[num]->position.z };
+	model->GetTransform(num)->scale *= totalObj[num]->GetTransform(num)->scale;
+	model->GetTransform(num)->rotation = totalObj[num]->GetTransform(num)->rotation;
+	model->GetTransform(num)->position = { totalObj[num]->GetTransform(num)->position.x,
+		totalObj[num]->GetTransform(num)->position.y,
+		totalObj[num]->GetTransform(num)->position.z };
 
 	model->GetCollBox()->position = totalObj[num]->GetCollBox()->position;
 	model->GetCollBox()->rotation = totalObj[num]->GetCollBox()->rotation;
@@ -289,7 +310,7 @@ void ObjectCreateManager::MapToolDelete()
 	totalObjNum = totalObj.size();
 
 	UINT i = 0;
-	for (ModelSingle* ms : totalObj)
+	for (ModelRender* ms : totalObj)
 		ms->SetModelNum(i++);
 }
 
@@ -309,7 +330,7 @@ void ObjectCreateManager::MapToolSave()
 
 		vector<ObjData> datas;
 
-		for (ModelSingle* model : totalObj)
+		for (ModelRender* model : totalObj)
 		{
 			ObjData objData;
 
@@ -317,9 +338,9 @@ void ObjectCreateManager::MapToolSave()
 			objData.objNum = model->GetModelNum();
 			objData.objShader = model->GetShaderName();
 
-			objData.Position = model->position;
-			objData.Rotation = model->rotation;
-			objData.Scale = model->scale;
+			objData.Position = model->GetTransform(model->GetModelNum())->position;
+			objData.Rotation = model->GetTransform(model->GetModelNum())->rotation;
+			objData.Scale = model->GetTransform(model->GetModelNum())->scale;
 
 			datas.push_back(objData);
 		}
@@ -370,7 +391,7 @@ void ObjectCreateManager::MapToolLoad()
 
 			UINT size = reader.UInt();
 
-			for (ModelSingle* ms : totalObj)
+			for (ModelRender* ms : totalObj)
 				delete ms;
 
 			totalObj.clear();
@@ -383,12 +404,12 @@ void ObjectCreateManager::MapToolLoad()
 				UINT modelNum = reader.UInt();
 				string shaderName = reader.String();
 
-				ModelSingle* model = new ModelSingle(modelName, shaderName);
+				ModelRender* model = new ModelRender(modelName, Path::ToWString(shaderName));
 				model->SetModelNum(modelNum);
 
-				model->position = { reader.Float(), reader.Float(), reader.Float() };
-				model->rotation = { reader.Float(), reader.Float(), reader.Float() };
-				model->scale = { reader.Float(), reader.Float(), reader.Float() };
+				model->GetTransform(i)->position = { reader.Float(), reader.Float(), reader.Float() };
+				model->GetTransform(i)->rotation = { reader.Float(), reader.Float(), reader.Float() };
+				model->GetTransform(i)->scale = { reader.Float(), reader.Float(), reader.Float() };
 
 				totalObj.push_back(model);
 			}

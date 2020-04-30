@@ -18,12 +18,20 @@ private:
 	ID3D11Texture2D* texture;
 	ID3D11ShaderResourceView* srv;
 
+	UINT modelNum;
+	BoxCollider* coll;
+	bool boxRenderCheck;
+	string modelName;
+	string shaderName;
 public:
-	ModelRender(wstring shaderFile);
+	ModelRender(string name);
+	ModelRender(string name, wstring shaderName);
 	~ModelRender();
 
 	void Update();
+	void PreRender();
 	void Render();
+	void PostRender();
 
 	void UpdateTransform(UINT instanceID, UINT boneIndex, Transform& transform);
 	void UpdateTransforms();
@@ -35,6 +43,16 @@ public:
 	Transform* GetTransform(UINT index) { return transforms[index]; }
 
 	Model* GetModel() { return model; }
+	void SetModelNum(UINT value) { modelNum = value; }
+	UINT GetModelNum() { return modelNum; }
+
+	BoxCollider* GetCollBox() { return coll; }
+	void SetBoxRenderCheck(bool value) { boxRenderCheck = value; }
+	string GetModelName() { return modelName; }
+	string GetShaderName() { return shaderName; }
+
+	void CreateCollBox();
+	void Export(string name);
 private:
 	void UpdateBones(ModelBone* bone, Matrix& matrix);
 
