@@ -8,7 +8,7 @@
 
 #define MAX_MODEL_BONE 300
 #define MAX_MODEL_KEY 600
-#define MAX_MODEL_INSTANCE 5000
+#define MAX_MODEL_INSTANCE 50
 
 #ifdef NDEBUG
 	#define V(hr) hr
