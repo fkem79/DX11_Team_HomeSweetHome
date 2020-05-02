@@ -49,40 +49,6 @@ void Belle::Input()
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
-
-	if (KEYDOWN(VK_CONTROL))
-		SetAnimation(AIM);
-
-	if (KEYDOWN(VK_NUMPAD0))
-		SetAnimation(APPEAR);
-
-	if (KEYDOWN(VK_NUMPAD1))
-		SetAnimation(APPEARWALL);
-
-	if (KEYDOWN(VK_NUMPAD2))
-		SetAnimation(CONFUSE);
-
-	if (KEYDOWN(VK_NUMPAD3))
-		SetAnimation(HOLD);
-
-	if (KEYDOWN(VK_NUMPAD4))
-		SetAnimation(PURSUITWALK);
-
-	if (KEYDOWN(VK_NUMPAD5))
-		SetAnimation(ROAR);
-
-	if (KEYDOWN(VK_NUMPAD6))
-		SetAnimation(STARTROAR);
-
-
-	//if (KEYDOWN(VK_F3))
-		//SetAnimation(ROAR);
-
-	/*
-	if (KEYDOWN(VK_F3))
-		SetAnimation(TurnLeft);
-	if (KEYDOWN(VK_F4))
-		SetAnimation(TurnRight);*/
 }
 
 void Belle::Move()
@@ -90,7 +56,7 @@ void Belle::Move()
 	if (state == AIM || state == APPEAR || state == APPEARWALL || state == ATTACK || state == CONFUSE || state == HOLD ||
 		state == ROAR || state == STARTROAR)
 		return;
-
+	
 	float magnitude = velocity.Length();
 
 	if (magnitude > 1.0f)
