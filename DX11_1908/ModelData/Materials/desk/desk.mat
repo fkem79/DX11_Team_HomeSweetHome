@@ -1,0 +1,110 @@
+<Materials>
+    <Material>
+        <Name>MI_Desk01</Name>
+        <DiffuseFile>T_Desk01_D.png</DiffuseFile>
+        <SpecularFile>T_Desk01_C.png</SpecularFile>
+        <NormalFile>T_Desk01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_BookPartition01</Name>
+        <DiffuseFile>T_BookShelf01_D.png</DiffuseFile>
+        <SpecularFile>T_BookShelf01_C.png</SpecularFile>
+        <NormalFile>T_BookShelf01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Book01</Name>
+        <DiffuseFile>T_Magazine01_D.png</DiffuseFile>
+        <SpecularFile>T_Magazine01_C.png</SpecularFile>
+        <NormalFile>T_Magazine01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Book01</Name>
+        <DiffuseFile>T_Magazine02_D.png</DiffuseFile>
+        <SpecularFile>T_Magazine01_C.png</SpecularFile>
+        <NormalFile>T_Magazine01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Book01</Name>
+        <DiffuseFile>T_Magazine03_D.png</DiffuseFile>
+        <SpecularFile>T_Magazine01_C.png</SpecularFile>
+        <NormalFile>T_Magazine01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Book01</Name>
+        <DiffuseFile>T_Magazine04_D.png</DiffuseFile>
+        <SpecularFile>T_Magazine01_C.png</SpecularFile>
+        <NormalFile>T_Magazine01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Book01</Name>
+        <DiffuseFile>T_Magazine05_D.png</DiffuseFile>
+        <SpecularFile>T_Magazine01_C.png</SpecularFile>
+        <NormalFile>T_Magazine01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_PhotoFrameTable01</Name>
+        <DiffuseFile>T_FrameSmall02_D.png</DiffuseFile>
+        <SpecularFile>T_FrameSmall01_C.png</SpecularFile>
+        <NormalFile>T_FrameSmall01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Radio01</Name>
+        <DiffuseFile>T_Radio01_D.png</DiffuseFile>
+        <SpecularFile>T_Radio01_C.png</SpecularFile>
+        <NormalFile>T_Radio01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_DeskLampOn01</Name>
+        <DiffuseFile>T_DeskLamp01_D.png</DiffuseFile>
+        <SpecularFile>T_DeskLamp01_C.png</SpecularFile>
+        <NormalFile>T_DeskLamp01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_Chair02</Name>
+        <DiffuseFile>T_Chair02_D.png</DiffuseFile>
+        <SpecularFile>T_Chair02_C.png</SpecularFile>
+        <NormalFile>T_Chair02_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+    <Material>
+        <Name>MI_PhotoFrameTable01</Name>
+        <DiffuseFile>T_FrameSmall02_D.png</DiffuseFile>
+        <SpecularFile>T_FrameSmall01_C.png</SpecularFile>
+        <NormalFile>T_FrameSmall01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+</Materials>

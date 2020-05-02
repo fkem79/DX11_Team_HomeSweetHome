@@ -14,11 +14,6 @@ ModelSingle::ModelSingle(string name)
 	//model->SetShader(L"ModelInstancing");
 
 	CreateCollBox();
-
-	/*for (UINT i = 0; i < MAX_MODEL_INSTANCE; i++)
-		worlds[i] = XMMatrixIdentity();
-
-	instanceBuffer = new VertexBuffer(worlds, sizeof(Matrix), MAX_MODEL_INSTANCE, true);*/
 }
 
 ModelSingle::ModelSingle(string name, string shaderName)
