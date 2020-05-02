@@ -3,7 +3,6 @@
 class Player
 {
 private:
-	PlayerHead* head;
 	PlayerLHand* leftHand;
 	FlashLight* light;
 
