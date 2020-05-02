@@ -49,6 +49,30 @@ void Belle::Input()
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);
+
+	if (KEYDOWN(VK_CONTROL))
+		SetAnimation(AIM);
+
+	if (KEYDOWN(VK_NUMPAD0))
+		SetAnimation(APPEAR);
+
+	if (KEYDOWN(VK_NUMPAD1))
+		SetAnimation(APPEARWALL);
+
+	if (KEYDOWN(VK_NUMPAD2))
+		SetAnimation(CONFUSE);
+
+	if (KEYDOWN(VK_NUMPAD3))
+		SetAnimation(HOLD);
+
+	if (KEYDOWN(VK_NUMPAD4))
+		SetAnimation(PURSUITWALK);
+
+	if (KEYDOWN(VK_NUMPAD5))
+		SetAnimation(ROAR);
+
+	if (KEYDOWN(VK_NUMPAD6))
+		SetAnimation(STARTROAR);
 }
 
 void Belle::Move()
