@@ -25,7 +25,7 @@ void MapScene::Update()
 {
 	player->Update();
 	belle->Update();
-
+	
 	ocm->Update();
 }
 

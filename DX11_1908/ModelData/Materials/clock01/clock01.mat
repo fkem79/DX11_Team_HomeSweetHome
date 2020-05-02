@@ -1,0 +1,11 @@
+<Materials>
+    <Material>
+        <Name>MI_Clock</Name>
+        <DiffuseFile>T_LivingroomProps01_D.png</DiffuseFile>
+        <SpecularFile>T_LivingroomProps01_C.png</SpecularFile>
+        <NormalFile>T_LivingroomProps01_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+</Materials>

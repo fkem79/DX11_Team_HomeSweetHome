@@ -24,6 +24,7 @@ public:
 	virtual ~Transform();
 
 	void UpdateWorld();
+	void UpdateWorldAddWorld(Matrix* world);
 
 	void SetParent(Matrix* matrix) { parent = matrix; }
 

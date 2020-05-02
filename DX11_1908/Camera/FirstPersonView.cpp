@@ -47,6 +47,19 @@ void FirstPersonView::Update()
 
 	if (KEYUP(VK_F1))
 		mouseControlOn = !mouseControlOn;
+
+	/*
+	world = XMMatrixTransformation(pivot.data, XMQuaternionIdentity(), scale.data, pivot.data,
+		XMQuaternionRotationRollPitchYaw(rotation.GetX(), rotation.GetY(), rotation.GetZ()),
+		position.data);
+	*/
+	Matrix R, T;
+
+	R = XMMatrixRotationRollPitchYaw(rotation.GetX(), rotation.GetY(), rotation.GetZ());
+	//T = XMMatrixTransformation();
+	T = XMMatrixTranslation(0, 7, 8);
+
+	//transform = R * T;
 }
 
 void FirstPersonView::PostRender()

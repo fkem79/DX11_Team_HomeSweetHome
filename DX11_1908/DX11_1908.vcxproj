@@ -236,6 +236,7 @@
     <ClInclude Include="ADX11Resource\Model\PlayerHead.h" />
     <ClInclude Include="ADX11Resource\Model\PlayerLHand.h" />
     <ClInclude Include="ADX11Resource\Object\DoorWall.h" />
+    <ClInclude Include="ADX11Resource\Object\FlashLight.h" />
     <ClInclude Include="ADX11Resource\Object\ObjectCreateManager.h" />
     <ClInclude Include="AStar\AStar.h" />
     <ClInclude Include="AStar\Heap.h" />
@@ -247,6 +248,7 @@
     <ClInclude Include="Camera\FirstPersonView.h" />
     <ClInclude Include="Camera\FixityCam.h" />
     <ClInclude Include="Camera\FollowCam.h" />
+    <ClInclude Include="Camera\FPV.h" />
     <ClInclude Include="Camera\FreeCam.h" />
     <ClInclude Include="DX11_1908.h" />
     <ClInclude Include="Environment\Environment.h" />
@@ -304,6 +306,7 @@
     <ClCompile Include="ADX11Resource\Model\PlayerHead.cpp" />
     <ClCompile Include="ADX11Resource\Model\PlayerLHand.cpp" />
     <ClCompile Include="ADX11Resource\Object\DoorWall.cpp" />
+    <ClCompile Include="ADX11Resource\Object\FlashLight.cpp" />
     <ClCompile Include="ADX11Resource\Object\ObjectCreateManager.cpp" />
     <ClCompile Include="AStar\AStar.cpp" />
     <ClCompile Include="AStar\Heap.cpp" />
@@ -315,6 +318,7 @@
     <ClCompile Include="Camera\FirstPersonView.cpp" />
     <ClCompile Include="Camera\FixityCam.cpp" />
     <ClCompile Include="Camera\FollowCam.cpp" />
+    <ClCompile Include="Camera\FPV.cpp" />
     <ClCompile Include="Camera\FreeCam.cpp" />
     <ClCompile Include="DX11_1908.cpp" />
     <ClCompile Include="Environment\Environment.cpp" />

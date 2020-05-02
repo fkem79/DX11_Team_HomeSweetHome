@@ -25,6 +25,15 @@ void Transform::UpdateWorld()
 	worldBuffer->SetWorld(world);
 }
 
+void Transform::UpdateWorldAddWorld(Matrix* world)
+{
+	this->world = *world;
+	if (parent != nullptr)
+		*world *= *parent;
+
+	worldBuffer->SetWorld(*world);
+}
+
 Vector3 Transform::GetRight()
 {		
 	return XMVector3Normalize(XMVector3TransformNormal(kRight, world));

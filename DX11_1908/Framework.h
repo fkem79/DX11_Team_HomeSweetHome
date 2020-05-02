@@ -24,6 +24,7 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "Camera/FollowCam.h"
 #include "Camera/FixityCam.h"
 #include "Camera/FirstPersonView.h"
+#include "Camera/FPV.h"
 
 #include "Environment/Environment.h"
 #include "Environment/Frustum.h"
@@ -36,6 +37,8 @@ extern std::unique_ptr<Mouse> g_mouse;
 #include "Objects/Landscape/Scattering.h"
 
 #include "Objects/UI/Render2D.h"
+
+#include "ADX11Resource/Object/FlashLight.h"
 
 #include "Objects/Model/Kaya.h"
 #include "ADX11Resource/Model/Belle.h"

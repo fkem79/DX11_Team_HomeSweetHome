@@ -12,10 +12,12 @@ Environment::Environment()
 	CreatePerspective();	
     CreateSamplerState();
 
-   // mainCamera = new FreeCam();
-    //mainCamera->position = Vector3(10, 10, -45);    
+    //mainCamera = new FreeCam();
+    //mainCamera->position = Vector3(10, 10, -45);   
+    mainCamera = new FPV();
+    mainCamera->position = Vector3(10.0f, 17.0f, 10.0f);
     //mainCamera = new FollowCam();
-    mainCamera = new FirstPersonView();
+    //mainCamera = new FirstPersonView();
 }
 
 Environment::~Environment()

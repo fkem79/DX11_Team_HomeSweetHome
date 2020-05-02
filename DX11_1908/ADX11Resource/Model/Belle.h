@@ -5,10 +5,17 @@ private:
 	enum AnimState
 	{
 		IDLE,
-		RUN,
+		AIM,
+		APPEAR,
+		APPEARWALL,
 		ATTACK,
-		TurnLeft,
-		TurnRight
+		CONFUSE,
+		HOLD,
+		PURSUITWALK,
+		ROAR,
+		RUN,
+		STARTROAR,
+		WALK
 	}state;
 
 	Transform* transform;

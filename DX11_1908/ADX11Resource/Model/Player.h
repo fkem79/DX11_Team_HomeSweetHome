@@ -1,9 +1,11 @@
 #pragma once
+
 class Player
 {
 private:
 	PlayerHead* head;
 	PlayerLHand* leftHand;
+	FlashLight* light;
 
 	float oldYPos;
 public:
@@ -13,8 +15,6 @@ public:
 	void Update();
 	void Render();
 	void PostRender();
-
-	void CharAndCamSet();
 
 	PlayerHead* GetPlayerHead() { return head; }
 };

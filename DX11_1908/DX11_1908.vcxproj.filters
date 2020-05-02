@@ -101,6 +101,8 @@
     <ClCompile Include="Button\Button.cpp" />
     <ClCompile Include="Button\StartButton.cpp" />
     <ClCompile Include="Button\EndButton.cpp" />
+    <ClCompile Include="ADX11Resource\Object\FlashLight.cpp" />
+    <ClCompile Include="Camera\FPV.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ADX11Resource\Model\Belle.h" />
@@ -169,6 +171,8 @@
     <ClInclude Include="Button\Button.h" />
     <ClInclude Include="Button\StartButton.h" />
     <ClInclude Include="Button\EndButton.h" />
+    <ClInclude Include="ADX11Resource\Object\FlashLight.h" />
+    <ClInclude Include="Camera\FPV.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="DX11_1908.rc" />

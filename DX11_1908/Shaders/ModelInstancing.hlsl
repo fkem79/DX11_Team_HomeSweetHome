@@ -59,6 +59,7 @@ PixelInput VS(VertexInput input)
     return output;
 }
 
+
 float4 PS(PixelInput input) : SV_TARGET
 {
     float4 albedo = diffuseMap.Sample(linearSamp, input.uv);
@@ -102,3 +103,34 @@ float4 PS(PixelInput input) : SV_TARGET
     
     return diffuse * mDiffuse + specular * mSpecular + ambient * mAmbient;
 }
+/*
+float4 PS(PixelInput input) : SV_TARGET
+{
+    float4 albedo = diffuseMap.Sample(linearSamp, input.uv);
+    float3 normal = normalize(input.normal);
+    
+    float4 result = CalcAmbient(normal, albedo);
+        
+    for (uint i = 0; i < lightCount; i++)
+    {
+        [flatten]
+        if (lights[i].type == 0)
+        {
+            result += CalcDirection(normal, albedo, input.wPosition, input.cPosition, lights[i]);
+        }
+        else if (lights[i].type == 1)
+        {
+            result += CalcPoint(normal, albedo, input.wPosition, input.cPosition, lights[i]);
+        }
+        else if (lights[i].type == 2)
+        {
+            result += CalcSpot(normal, albedo, input.wPosition, input.cPosition, lights[i]);
+        }
+        else if (lights[i].type == 3)
+        {
+            result += CalcCapsule(normal, albedo, input.wPosition, input.cPosition, lights[i]);
+        }
+    }
+    
+    return result;
+}*/

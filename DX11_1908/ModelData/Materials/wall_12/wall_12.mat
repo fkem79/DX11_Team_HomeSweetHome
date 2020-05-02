@@ -1,0 +1,11 @@
+<Materials>
+    <Material>
+        <Name>MI_DCN_Wall04</Name>
+        <DiffuseFile>T_Plain_Wall_04_D.png</DiffuseFile>
+        <SpecularFile>T_Plain_Wall_04SL_C.png</SpecularFile>
+        <NormalFile>T_Plain_Wall_04_N.png</NormalFile>
+        <Ambient R="0.588" G="0.588" B="0.588" A="1"/>
+        <Diffuse R="0.588" G="0.588" B="0.588" A="1"/>
+        <Specular R="0.89999998" G="0.89999998" B="0.89999998" A="2"/>
+    </Material>
+</Materials>

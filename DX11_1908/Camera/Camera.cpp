@@ -2,6 +2,7 @@
 
 Camera::Camera()
 	: position(0, 0, 0), rotation(0, 0, 0), forward(0, 0, 1), right(1, 0, 0), up(0, 1, 0), target(nullptr), targetOffset(0, 5, 5)
+	,camNum(0)
 {
 	oldPos = MOUSEPOS;
 
@@ -28,7 +29,6 @@ void Camera::Rotation()
 	Matrix rotY = XMMatrixRotationY(rotation.GetY());
 
 	matRotation = rotX * rotY;
-		
 
 	forward = XMVector3TransformNormal(kForward, matRotation);	
 	up = XMVector3TransformNormal(kUp, matRotation);	
@@ -39,6 +39,7 @@ void Camera::View()
 {
 	Vector3 focus = position + forward;
 	matView = XMMatrixLookAtLH(position.data, focus.data, up.data);
+	invMatView = XMMatrixInverse(nullptr, matView);
 }
 
 void Camera::PostRender()

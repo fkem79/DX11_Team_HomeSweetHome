@@ -4,66 +4,60 @@
 Player::Player()
 	:oldYPos(0.0f)
 {
-	head = new PlayerHead();
+	//head = new PlayerHead();
 	leftHand = new PlayerLHand();
+	light = new FlashLight();
 
 	head->GetTransform()->position = { 10.0f, 0.0f, 10.0f };
 	head->GetTransform()->rotation = { 0, 180.0f, 0 };
-	leftHand->GetTransform()->SetParent(head->GetTransform()->GetWorldPointer());
-	leftHand->GetTransform()->position = { 3.0f, 160.0f, 0.0f };
+	//leftHand->GetTransform()->SetParent(head->GetTransform()->GetWorldPointer());
+	if(CAMERA->GetCamNum() ==1)
+		leftHand->GetTransform()->SetParent(CAMERA->GetCamInvView());
+
+	leftHand->GetTransform()->position = { -0.5f, -1.6f, -0.5f };
+	leftHand->GetTransform()->rotation = { 0.0f, 9.6f, 0.0f };
+	leftHand->GetTransform()->scale = { 0.1f, 0.1f, 0.1f };
+	//leftHand->GetTransform()->position = { 3.0f, 160.0f, 0.0f };
+
+	light->GetFlashLight()->GetTransform(0)->SetParent(leftHand->GetTransform()->GetWorldPointer());
+	light->GetFlashLight()->GetTransform(0)->position = { 10, 11, -21 };
+	light->GetFlashLight()->GetTransform(0)->scale = { 1,1,1 };
 
 	CAMERA->SetTarget(head->GetTransform());
+	
 }
 
 Player::~Player()
 {
-	delete head;
+	//delete head;
 	delete leftHand;
+	delete light;
 }
 
 void Player::Update()
 {
-	head->Update();
+	//head->Update();
 	leftHand->Update();
-	//CharAndCamSet();
-	//잠시 보류
+	light->Update();
 }
 
 void Player::Render()
 {
-	head->Render();
+	//head->Render();
 	leftHand->Render();
+	light->Render();
 }
 
 void Player::PostRender()
 {
 	ImGui::Text("Player");
-	ImGui::Text("Head  Pos X %f, Y %f, Z %f", head->GetTransform()->position.GetX(),
-		head->GetTransform()->position.GetY(), head->GetTransform()->position.GetZ());
+	
+	ImGui::InputFloat3("Head pos", head->GetTransform()->position.data.m128_f32);
 
-	ImGui::Text("LHand Pos X %f, Y %f, Z %f", leftHand->GetTransform()->position.GetX(),
-		leftHand->GetTransform()->position.GetY(), leftHand->GetTransform()->position.GetZ());
+	ImGui::InputFloat3("LH pos", leftHand->GetTransform()->position.data.m128_f32);
+	ImGui::InputFloat3("LH rot", leftHand->GetTransform()->rotation.data.m128_f32);
+	ImGui::InputFloat3("LH sca", leftHand->GetTransform()->scale.data.m128_f32);
 
-	ImGui::Text("LHand Rot X %f, Y %f", leftHand->GetTransform()->rotation.GetX(),
-		leftHand->GetTransform()->rotation.GetY() );
-}
-
-void Player::CharAndCamSet()
-{
-	if (CAMERA->GetTargetTransform() == nullptr)
-		return;
-
-	//float val = CAMERA->GetTargetOffset().GetY() - oldYPos;
-	float val = CAMERA->GetTargetOffset().GetY();
-
-	if (val > 7.0f)
-	{
-		float cur = val/ 13.0f;
-		//leftHand->GetTransform()->rotation.SetX(cur);
-		//leftHand->GetTransform()->rotation.SetY(-cur);
-		leftHand->GetTransform()->position.SetY(160.0f+cur);
-	}
-
-	//oldYPos = CAMERA->GetTargetOffset().GetY();
-		
+	ImGui::InputFloat3("l pos", light->GetFlashLight()->GetTransform(0)->position.data.m128_f32);
+	ImGui::InputFloat3("l rot", light->GetFlashLight()->GetTransform(0)->rotation.data.m128_f32);
 }

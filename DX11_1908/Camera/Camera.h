@@ -13,11 +13,15 @@ protected:
 
 	Matrix matRotation;
 	Matrix matView;
-
+	
 	Vector3 oldPos;
 
 	Transform* target;
 	Vector3 targetOffset;
+
+	//Ãß°¡
+	Matrix invMatView;
+	UINT camNum;
 	
 public:
 	Camera();
@@ -31,9 +35,14 @@ public:
 	virtual void SetTarget(Transform* value) {}
 
 	Ray GetRay();
+
 	Matrix GetView() { return matView; }
 	Matrix* GetCamView() { return &matView; }
 	Matrix* GetCamRotation() { return &matRotation; }
+	Matrix* GetCamInvView() { return &invMatView; }
+
 	Transform* GetTargetTransform() { return target; }
 	Vector3 GetTargetOffset() { return targetOffset; }
+
+	UINT GetCamNum() { return camNum; }
 };

@@ -6,6 +6,7 @@ private:
 	Belle* belle;
 	Player* player;
 	ObjectCreateManager* ocm;
+	
 
 public:
 	MapScene();
