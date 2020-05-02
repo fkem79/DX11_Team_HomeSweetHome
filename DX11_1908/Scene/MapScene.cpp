@@ -4,7 +4,7 @@
 MapScene::MapScene()
 {
 	player = new Player();
-	player->GetPlayerHead()->GetTransform()->position = { 0, 5, 0 };
+	//player->GetPlayerHead()->GetTransform()->position = { 0, 5, 0 };
 
 	belle = new Belle();
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };

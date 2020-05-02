@@ -15,5 +15,5 @@ public:
 	void Render();
 	void PostRender();
 
-	PlayerHead* GetPlayerHead() { return head; }
+	//PlayerHead* GetPlayerHead() { return head; }
 };

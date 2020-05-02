@@ -4,13 +4,11 @@
 Player::Player()
 	:oldYPos(0.0f)
 {
-	//head = new PlayerHead();
+
 	leftHand = new PlayerLHand();
 	light = new FlashLight();
 
-	head->GetTransform()->position = { 10.0f, 0.0f, 10.0f };
-	head->GetTransform()->rotation = { 0, 180.0f, 0 };
-	//leftHand->GetTransform()->SetParent(head->GetTransform()->GetWorldPointer());
+	
 	if(CAMERA->GetCamNum() ==1)
 		leftHand->GetTransform()->SetParent(CAMERA->GetCamInvView());
 
@@ -22,8 +20,6 @@ Player::Player()
 	light->GetFlashLight()->GetTransform(0)->SetParent(leftHand->GetTransform()->GetWorldPointer());
 	light->GetFlashLight()->GetTransform(0)->position = { 10, 11, -21 };
 	light->GetFlashLight()->GetTransform(0)->scale = { 1,1,1 };
-
-	CAMERA->SetTarget(head->GetTransform());
 	
 }
 
@@ -52,7 +48,6 @@ void Player::PostRender()
 {
 	ImGui::Text("Player");
 	
-	ImGui::InputFloat3("Head pos", head->GetTransform()->position.data.m128_f32);
 
 	ImGui::InputFloat3("LH pos", leftHand->GetTransform()->position.data.m128_f32);
 	ImGui::InputFloat3("LH rot", leftHand->GetTransform()->rotation.data.m128_f32);
