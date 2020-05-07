@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 ModelRender::ModelRender(wstring shaderFile)
-	: shaderFile(shaderFile), modelNum(0)
+	: shaderFile(shaderFile), modelNum(0), boxCollRenderCheck(true)
 {
 	model = new Model();
 
@@ -51,8 +51,11 @@ void ModelRender::Render()
 	for (auto mesh : *model->GetMeshes())
 		mesh->Render(transforms.size());
 
-	for (BoxCollider* bc : totalCollBox)
-		bc->Render();
+	if (boxCollRenderCheck)
+	{
+		for (BoxCollider* bc : totalCollBox)
+			bc->Render();
+	}
 }
 
 void ModelRender::UpdateTransform(UINT instanceID, UINT boneIndex, Transform& transform)

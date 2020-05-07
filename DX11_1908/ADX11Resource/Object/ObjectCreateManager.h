@@ -38,9 +38,9 @@ private:
 	bool fileCheck;
 
 	bool allObjBoxRenderOn;
+	bool selectObjBoxRenderOn;
 
 	Frustum* frustum;
-	int indexCount = 0;
 public:
 
 	ObjectCreateManager();

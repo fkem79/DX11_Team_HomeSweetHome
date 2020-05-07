@@ -22,6 +22,7 @@ private:
 	string modelName;
 	UINT modelNum;
 	vector<BoxCollider*> totalCollBox;
+	bool boxCollRenderCheck;
 
 public:
 	ModelRender(wstring shaderFile);
@@ -46,15 +47,16 @@ public:
 	UINT GetModelNum() { return modelNum; }
 	void SetModelName(string value) { modelName = value; }
 	void SetModelNum(UINT value) { modelNum = value; }
+	void SetBoxCollRenderCheck(bool value) { boxCollRenderCheck = value; }
 
 	BoxCollider* AddCollBox();
 	BoxCollider* GetCollBox(UINT index) { return totalCollBox[index]; }
 	vector<BoxCollider*>* GetTotalCollBox() { return &totalCollBox; }
 	vector<Transform*>* GetTransforms() { return &transforms; }
 
-
 	int GetTransformsSize() { return transforms.size(); }
 	int GetCollBoxSize() { return totalCollBox.size(); }
+	bool GetBoxCollRenderCheck() { return boxCollRenderCheck; }
 
 private:
 	void UpdateBones(ModelBone* bone, Matrix& matrix);

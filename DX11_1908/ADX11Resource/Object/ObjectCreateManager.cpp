@@ -3,7 +3,8 @@
 
 ObjectCreateManager::ObjectCreateManager()
 	:mapToolWindow(false), addXPos(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
-	fileCheck(true), allObjBoxRenderOn(true), curObjIndex(-1), curModelIndex(-1),totalObjNum(0), shaderMode(1)
+	fileCheck(true), allObjBoxRenderOn(true), selectObjBoxRenderOn(true),
+	curObjIndex(-1), curModelIndex(-1),totalObjNum(0), shaderMode(1)
 {
 
 }
@@ -21,36 +22,44 @@ void ObjectCreateManager::Update()
 	addXPos = Random(1.0f, 20.0f);
 	addZPos = Random(1.0f, 20.0f);
 
-	if (KEYPRESS(VK_LBUTTON))
+	if (KEYPRESS(VK_LBUTTON) && allObjBoxRenderOn)
 	{
 		Ray ray = CAMERA->GetRay();
 
 		for (auto totalObj : insTotalObj)
 		{
 			int boxIndex = 0;
-			indexCount = 0;
+			
 			for (BoxCollider* coll : *totalObj->GetTotalCollBox())
 			{
 				if (coll->IsCollision(ray))
 				{
-					//ms->SetCheck(!check);
-					//curObjIndex = ms->GetObjectNum();
 					curModelIndex = totalObj->GetModelNum();
-					//curObjIndex = boxIndex;
-					curObjIndex = indexCount;
+					curObjIndex = boxIndex;
 					break;
 				}
 				boxIndex++;
-				indexCount++;
 			}
 			boxIndex = 0;
-			indexCount = 0;
 		}
 	}
 
+	int mIndex = 0;
 	for (auto obj : insTotalObj)
 	{
+		int objIndex = 0;
+		for (BoxCollider* boxColl : *obj->GetTotalCollBox())
+		{
+			if (mIndex == curModelIndex && curObjIndex == objIndex)
+				boxColl->SetColor(Float4(1, 0, 0, 1));
+			else
+				boxColl->SetColor(Float4(0, 1, 0, 1));
+
+			objIndex++;
+		}
 		obj->Update();
+		mIndex++;
+		objIndex = 0;
 	}
 
 }
@@ -59,6 +68,9 @@ void ObjectCreateManager::Render()
 {
 	for (ModelRender* obj : insTotalObj)
 		obj->Render();
+
+	if (curModelIndex > -1 && curObjIndex > -1 && curModelIndex < insTotalObj.size() && selectObjBoxRenderOn)
+		insTotalObj[curModelIndex]->GetCollBox(curObjIndex)->Render();
 }
 
 void ObjectCreateManager::PostRender()
@@ -126,10 +138,13 @@ void ObjectCreateManager::ObjectCreateWindow()
 		int transCount = 0;
 		for (auto total : insTotalObj)
 		{
+			total->SetBoxCollRenderCheck(allObjBoxRenderOn);
 			for (auto mr : *total->GetTransforms())
 				transCount++;
 		}
-		ImGui::Text("All Transform Count : %d", transCount);
+		ImGui::Text("All Transform(Obj) Count : %d", transCount);
+		ImGui::Checkbox("All Coll Box Render", &allObjBoxRenderOn);
+		ImGui::Checkbox("Select Obj Coll Box Render", &selectObjBoxRenderOn);
 
 		ImGui::End();
 	}
@@ -175,8 +190,8 @@ void ObjectCreateManager::ObjectSettingWindow()
 	
 	//ImGui::Text(" Model Index: %d, Obj Index : %d", curModelIndex, curObjIndex);
 	{
-		ImGui::BeginChildFrame(1, ImVec2(400, 150));
-		ImGui::BeginChild("g1", ImVec2(400, 150), false);
+		ImGui::BeginChildFrame(1, ImVec2(350, 120));
+		ImGui::BeginChild("g1", ImVec2(350, 120), false);
 
 		if (curModelIndex !=-1 && curObjIndex != -1)
 		{
