@@ -3,56 +3,53 @@
 
 ObjectCreateManager::ObjectCreateManager()
 	:mapToolWindow(false), addXPos(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
-	fileCheck(true), allObjBoxRenderOn(true),curObjIndex(-1), totalObjNum(0), shaderMode(1)
+	fileCheck(true), allObjBoxRenderOn(true), curObjIndex(-1), curModelIndex(-1),totalObjNum(0), shaderMode(1)
 {
-	
+
 }
 
 ObjectCreateManager::~ObjectCreateManager()
 {
-	for (ModelSingle* obj : totalObj)
+	for (ModelRender* obj : insTotalObj)
 		delete obj;
 
-	totalObj.clear();
+	insTotalObj.clear();
 }
 
 void ObjectCreateManager::Update()
 {
-	if (totalObj.size() <= 0)
-	{
-		addXPos = 10;
-		addZPos = 10;
-	}
-	else
-	{
-		addXPos = Random(totalObj[totalObj.size() - 1]->position.x - 5.0f, totalObj[totalObj.size() - 1]->position.x + 5.0f);
-		addZPos = Random(totalObj[totalObj.size() - 1]->position.z - 5.0f, totalObj[totalObj.size() - 1]->position.z + 5.0f);
-	}
-
-	if (totalObj.size() <= 0)
-		curObjIndex = -1;
+	addXPos = Random(1.0f, 20.0f);
+	addZPos = Random(1.0f, 20.0f);
 
 	if (KEYPRESS(VK_LBUTTON))
 	{
 		Ray ray = CAMERA->GetRay();
 
-		for (ModelSingle* ms : totalObj)
+		for (auto totalObj : insTotalObj)
 		{
-			if (ms->GetCollBox()->IsCollision(ray))
+			int boxIndex = 0;
+			indexCount = 0;
+			for (BoxCollider* coll : *totalObj->GetTotalCollBox())
 			{
-				//ms->SetCheck(!check);
-				curObjIndex = ms->GetModelNum();
+				if (coll->IsCollision(ray))
+				{
+					//ms->SetCheck(!check);
+					//curObjIndex = ms->GetObjectNum();
+					curModelIndex = totalObj->GetModelNum();
+					//curObjIndex = boxIndex;
+					curObjIndex = indexCount;
+					break;
+				}
+				boxIndex++;
+				indexCount++;
 			}
+			boxIndex = 0;
+			indexCount = 0;
 		}
 	}
 
-	for (ModelSingle* obj : totalObj)
+	for (auto obj : insTotalObj)
 	{
-		if(!allObjBoxRenderOn)
-			obj->SetBoxRenderCheck(false);
-		else
-			obj->SetBoxRenderCheck(true);
-		
 		obj->Update();
 	}
 
@@ -60,15 +57,12 @@ void ObjectCreateManager::Update()
 
 void ObjectCreateManager::Render()
 {
-	for (ModelSingle* obj : totalObj)
+	for (ModelRender* obj : insTotalObj)
 		obj->Render();
 }
 
 void ObjectCreateManager::PostRender()
 {
-	for (ModelSingle* obj : totalObj)
-		obj->PostRender();
-
 	ObjectCreateWindow();
 }
 
@@ -79,20 +73,18 @@ void ObjectCreateManager::ObjectCreateWindow()
 		if (ImGui::BeginMenu("File"))
 		{
 			if (ImGui::MenuItem("MapToolWindow", "Maptool Window"))
-			{
 				mapToolWindow = true;
-			}
-			if (ImGui::MenuItem("test", "test")) { /* do something */ }
+	
+			if (ImGui::MenuItem("test", "test")) {  }
 
 			ImGui::EndMenu();
 		}
 	}
 	ImGui::EndMainMenuBar();
 
-
 	if (mapToolWindow)
 	{
-		ImGui::Begin("MapTool Window (test Version)", &mapToolWindow);
+		ImGui::Begin("MapTool Window", &mapToolWindow);
 
 		ObjectSettingWindow();
 
@@ -119,20 +111,25 @@ void ObjectCreateManager::ObjectCreateWindow()
 		if (ImGui::Button("Save"))
 		{
 			saveNameWindow = true;
-			MapToolSave();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Load"))
 		{
 			loadNameWindow = true;
-			MapToolLoad();
 		}
 		ImGui::SameLine();
 		if (ImGui::Button("Close"))
 			mapToolWindow = false;
 
-		ImGui::Checkbox("Object Box Render OnOff", &allObjBoxRenderOn);
-		ImGui::Text("All Object Count : %d", totalObj.size());
+		//ImGui::Checkbox("Object Box Render OnOff", &allObjBoxRenderOn);
+		ImGui::Text("All Model Count(insTotalObj) : %d", insTotalObj.size());
+		int transCount = 0;
+		for (auto total : insTotalObj)
+		{
+			for (auto mr : *total->GetTransforms())
+				transCount++;
+		}
+		ImGui::Text("All Transform Count : %d", transCount);
 
 		ImGui::End();
 	}
@@ -151,41 +148,61 @@ void ObjectCreateManager::ObjectCreateWindow()
 	{
 		MapToolLoad();
 	}
+
 }
 
 void ObjectCreateManager::ObjectSettingWindow()
 {
-	ImGui::InputInt(" ", &curObjIndex, 5);
+	ImGui::InputInt("Model Index", &curModelIndex,20);
 	{
-		if (curObjIndex >= totalObj.size())
-			curObjIndex = totalObj.size() - 1;
-		else if (curObjIndex < 0)
-			curObjIndex = -1;
+		if(insTotalObj.size()<=0)
+			curModelIndex = -1;
+		else if (curModelIndex >= insTotalObj.size())
+			curModelIndex = insTotalObj.size() - 1;
+		else if (curModelIndex < 0)
+			curModelIndex = -1;
 	}
-
-	UINT num = curObjIndex;
+	//ImGui::SameLine();
+	ImGui::InputInt("Obj Index", &curObjIndex,10);
+	{
+		if (curModelIndex < 0 || curObjIndex < 0)
+			curObjIndex = -1;
+		else if (curObjIndex >= insTotalObj[curModelIndex]->GetTransformsSize())
+			curObjIndex = insTotalObj[curModelIndex]->GetTransformsSize() - 1;
+		//else
+			//curObjIndex = -1;
+	}
+	
+	//ImGui::Text(" Model Index: %d, Obj Index : %d", curModelIndex, curObjIndex);
 	{
 		ImGui::BeginChildFrame(1, ImVec2(400, 150));
 		ImGui::BeginChild("g1", ImVec2(400, 150), false);
 
-		if (curObjIndex != -1)
+		if (curModelIndex !=-1 && curObjIndex != -1)
 		{
-			ImGui::Text("Name : %s objNum : %d Shader : %s",
-				totalObj[num]->GetModelName().c_str(), totalObj[num]->GetModelNum(), totalObj[num]->GetShaderName().c_str());
+			/* 
+				model index는 선택된 모델의 번호
+				obj index는 선택된 모델에서 인스턴싱으로 개수를 여러 개 만들었을 때 몇번 째로 만든건지
+				ex) bed 추가 -> model index : 0, obj Index : 0
+					bed 한 개 더 추가 -> model index : 0, obj Index : 1
+					desk 추가 -> model index : 1, obj Index :0
+					총 2개의 모델, 3개의 오브젝트
+			 */
+			ImGui::Text("Name: %s, Model Index: %d, Obj Index : %d", 
+				insTotalObj[curModelIndex]->GetModelName().c_str(), curModelIndex, curObjIndex);
 
-			ImGui::Separator();
-
-			ImGui::Text("Obj");
-			ImGui::InputFloat3("Obj Position", totalObj[num]->position.data.m128_f32, 3);
-			ImGui::InputFloat3("Obj Scale", totalObj[num]->scale.data.m128_f32, 3);
-			ImGui::InputFloat3("Obj Rotation", totalObj[num]->rotation.data.m128_f32, 3);
+			ImGui::InputFloat3("model pos", insTotalObj[curModelIndex]->GetTransform(curObjIndex)->position.data.m128_f32);
+			ImGui::InputFloat3("model rot", insTotalObj[curModelIndex]->GetTransform(curObjIndex)->rotation.data.m128_f32);
+			ImGui::InputFloat3("model sca", insTotalObj[curModelIndex]->GetTransform(curObjIndex)->scale.data.m128_f32);
+			ImGui::Text("transforms count :%d , collbox count : %d",
+				insTotalObj[curModelIndex]->GetTransformsSize(), insTotalObj[curModelIndex] ->GetCollBoxSize() );
 		}
 		else
 		{
 			ImGui::Text("Select Object or Add Object");
 			ImGui::Text("Not Obj");
 		}
-
+		
 		ImGui::EndChild();
 		ImGui::EndChildFrame();
 	}
@@ -202,33 +219,48 @@ void ObjectCreateManager::MapToolAddWindow()
 
 		if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
 		{
-			string shader;
+			// 일단 메쉬랑 메테리얼 있는지 없는지 모르니까 그냥 생성한다.
+			ModelReader* mReader = new ModelReader();
+			mReader->ReadFile("ModelData/Models/" + temp + ".fbx");
+			mReader->ExportMaterial(temp + "/" + temp);
+			mReader->ExportMesh(temp + "/" + temp);
+			delete mReader;
 
-			if (shaderMode ==1)
-				shader = "ModelSingle";
-			else if(shaderMode ==2)
-				shader = "ModelInstancing";
+			int index = SearchModelName(temp);
+			if (index == -1) // 이미 totalObj에 존재하는지 확인한다.
+			{
+				// 존재 안 하면 그냥 만들고 추가한다.
+				ModelRender* model = new ModelRender(L"ModelInstancing");
+				model->SetModelNum(insTotalObj.size());
 
-			ModelSingle* model = new ModelSingle(temp, shader);
-			model->SetModelNum(totalObjNum++);
-			model->scale *= 0.1f;
-			model->rotation = { 1.57f, 0, 0 };
-			model->position = { addXPos , 1, addZPos };
-			totalObj.push_back(model);
+				model->SetModelName(temp);
+				model->ReadMaterial(temp + "/" + temp);
+				model->ReadMesh(temp + "/" + temp);
 
-			curObjIndex = totalObj.size() - 1;
+				Transform* trans = model->AddTransform();
+				trans->scale *= 0.1f;
+				trans->rotation = { 1.57f, 0, 0 };
+				trans->position = { addXPos , 1, addZPos };
+				trans->UpdateWorld();
+				model->UpdateTransforms();
+
+				insTotalObj.push_back(model);
+			}
+			else
+			{
+				// 존재하면 새로 생성안하고 새로운 트랜스폼만 추가해서 한 개 추가만 해주면 된다.
+				Transform* trans = insTotalObj[index]->AddTransform();
+				trans->scale *= 0.1f;
+				trans->rotation = { 1.57f, 0, 0 };
+				trans->position = { addXPos , 1, addZPos };
+				trans->UpdateWorld();
+				insTotalObj[index]->UpdateTransforms();
+			}
+			
 			addNameWindow = false;
 		}
 	}
-	ImGui::BeginChildFrame(2, ImVec2(150, 100));
-	ImGui::BeginChild("box1", ImVec2(150, 100), false);
-	
-	ImGui::RadioButton("ModelSingle", &shaderMode, 1);
-	ImGui::RadioButton("ModelInstancing", &shaderMode, 2);
 
-	ImGui::EndChild();
-	ImGui::EndChildFrame();
-	ImGui::SameLine();
 	if (!fileCheck)
 		ImGui::Text("Not Exist");
 
@@ -240,57 +272,80 @@ void ObjectCreateManager::MapToolAddWindow()
 
 void ObjectCreateManager::MapToolSameAdd()
 {
-	string temp = curFileName;
+	if (curModelIndex <= -1 || curModelIndex >= insTotalObj.size())
+		return;
 
-	if (fileCheck = Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
+	string temp = insTotalObj[curModelIndex]->GetModelName();
+
+	if (Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
 	{
-		ModelSingle* model = new ModelSingle(temp);
-		model->SetModelNum(totalObjNum++);
-		model->scale *= 0.1f;
-		model->rotation = { 1.57f, 0, 0 };
-		model->position = { addXPos, 1, 10 };
-		totalObj.push_back(model);
-
-		addXPos = totalObj.size() * 10.0f;
-		addNameWindow = false;
+		int index = SearchModelName(temp);
+		
+		Transform* trans = insTotalObj[index]->AddTransform();
+		trans->scale *= 0.1f;
+		trans->rotation = { 1.57f, 0, 0 };
+		trans->position = { addXPos , 1, addZPos };
+		trans->UpdateWorld();
+		insTotalObj[index]->UpdateTransforms();
 	}
 }
 
 void ObjectCreateManager::MapToolCopy()
 {
-	UINT num = curObjIndex;
+	if (curModelIndex <= -1 || curModelIndex >= insTotalObj.size())
+		return;
 
-	ModelSingle* model = new ModelSingle(totalObj[num]->GetModelName(), totalObj[num]->GetShaderName());
-	model->SetModelNum(totalObjNum++);
-	model->scale *= totalObj[num]->scale;
-	model->rotation = totalObj[num]->rotation;
-	model->position = { totalObj[num]->position.x, totalObj[num]->position.y, totalObj[num]->position.z };
+	string temp = insTotalObj[curModelIndex]->GetModelName();
 
-	model->GetCollBox()->position = totalObj[num]->GetCollBox()->position;
-	model->GetCollBox()->rotation = totalObj[num]->GetCollBox()->rotation;
-	model->GetCollBox()->scale = totalObj[num]->GetCollBox()->scale;
+	if (Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
+	{
+		int index = SearchModelName(temp);
 
-	totalObj.push_back(model);
-	curObjIndex = totalObj.size()-1;
+		Transform* trans = insTotalObj[index]->AddTransform();
+		trans->scale = insTotalObj[index]->GetTransform(curObjIndex)->scale;
+		trans->rotation = insTotalObj[index]->GetTransform(curObjIndex)->rotation;
+		trans->position = insTotalObj[index]->GetTransform(curObjIndex)->position;
+		trans->UpdateWorld();
+		insTotalObj[index]->UpdateTransforms();
+
+		curObjIndex = insTotalObj[index]->GetTransformsSize()-1;
+	}
 }
 
 void ObjectCreateManager::MapToolDelete()
 {
-	if (totalObj.size() <= 0 || curObjIndex <0)
+	if (curModelIndex <= -1 || curModelIndex >= insTotalObj.size())
 		return;
 
+	UINT modelNum = curModelIndex;
 	UINT num = curObjIndex;
-	auto obj = totalObj.begin() + num;
 
-	delete *obj;
+	Transform* transTemp = insTotalObj[curModelIndex]->GetTransform(num);
+	auto dNum = insTotalObj[modelNum]->GetTransforms()->begin() + num;
+	insTotalObj[modelNum]->GetTransforms()->erase(dNum);
 
-	totalObj.erase(obj);
+	BoxCollider* boxTemp = insTotalObj[curModelIndex]->GetCollBox(num);
+	auto tNum = insTotalObj[modelNum]->GetTotalCollBox()->begin() + num;
+	insTotalObj[modelNum]->GetTotalCollBox()->erase(tNum);
+
+	delete boxTemp;
+	delete transTemp;
+
+	if(insTotalObj[modelNum]->GetTransformsSize() <=0)
+	{
+		ModelRender* modelTemp = insTotalObj[modelNum];
+		auto mNum = insTotalObj.begin() + modelNum;
+		insTotalObj.erase(mNum);
+
+		delete modelTemp;
+	
+		UINT i = 0;
+		for (ModelRender* mr : insTotalObj)
+			mr->SetModelNum(i++);
+	}
+
+	curModelIndex = -1;
 	curObjIndex = -1;
-	totalObjNum = totalObj.size();
-
-	UINT i = 0;
-	for (ModelSingle* ms : totalObj)
-		ms->SetModelNum(i++);
 }
 
 void ObjectCreateManager::MapToolSave()
@@ -309,19 +364,21 @@ void ObjectCreateManager::MapToolSave()
 
 		vector<ObjData> datas;
 
-		for (ModelSingle* model : totalObj)
+		for (ModelRender* mr : insTotalObj)
 		{
-			ObjData objData;
+			for(Transform* tr : *mr->GetTransforms())
+			{
+				ObjData objData;
 
-			objData.objName = model->GetModelName();
-			objData.objNum = model->GetModelNum();
-			objData.objShader = model->GetShaderName();
+				objData.objName = mr->GetModelName();
+				objData.objNum = mr->GetModelNum();
 
-			objData.Position = model->position;
-			objData.Rotation = model->rotation;
-			objData.Scale = model->scale;
+				objData.Position = tr->position;
+				objData.Rotation = tr->rotation;
+				objData.Scale = tr->scale;
 
-			datas.push_back(objData);
+				datas.push_back(objData);
+			}
 		}
 
 		writer.UInt(datas.size());
@@ -330,8 +387,7 @@ void ObjectCreateManager::MapToolSave()
 		{
 			writer.String(data.objName);
 			writer.UInt(data.objNum);
-			writer.String(data.objShader);
-
+		
 			writer.Float(data.Position.x);
 			writer.Float(data.Position.y);
 			writer.Float(data.Position.z);
@@ -369,35 +425,56 @@ void ObjectCreateManager::MapToolLoad()
 			BinaryReader reader("TextData/" + tempName + ".map");
 
 			UINT size = reader.UInt();
+			/* 잠시보류 : 로드할 거면 다시 실행하고 로드하면 오류 없음
+			{
+				for (ModelRender* obj : insTotalObj)
+					delete obj;
 
-			for (ModelSingle* ms : totalObj)
-				delete ms;
-
-			totalObj.clear();
-
-			totalObj.reserve(size);
+				insTotalObj.clear();
+				//insTotalObj.reserve(size);
+			}*/
 
 			for (UINT i = 0; i < size; i++)
 			{
-				string modelName = reader.String();
-				UINT modelNum = reader.UInt();
-				string shaderName = reader.String();
+				string temp = reader.String();
+				if (Path::ExistFile("ModelData/Models/" + temp + ".fbx"))
+				{
+					ModelReader* mReader = new ModelReader();
+					mReader->ReadFile("ModelData/Models/" + temp + ".fbx");
+					mReader->ExportMaterial(temp + "/" + temp);
+					mReader->ExportMesh(temp + "/" + temp);
+					delete mReader;
 
-				ModelSingle* model = new ModelSingle(modelName, shaderName);
-				model->SetModelNum(modelNum);
+					int index = SearchModelName(temp);
+					if (index == -1)
+					{
+						ModelRender* model = new ModelRender(L"ModelInstancing");
+						model->SetModelNum(reader.UInt());
+						model->SetModelName(temp);
+						model->ReadMaterial(temp + "/" + temp);
+						model->ReadMesh(temp + "/" + temp);
 
-				model->position = { reader.Float(), reader.Float(), reader.Float() };
-				model->rotation = { reader.Float(), reader.Float(), reader.Float() };
-				model->scale = { reader.Float(), reader.Float(), reader.Float() };
+						Transform* trans = model->AddTransform();
+						trans->position = { reader.Float(), reader.Float(), reader.Float() };
+						trans->rotation = { reader.Float(), reader.Float(), reader.Float() };
+						trans->scale = { reader.Float(), reader.Float(), reader.Float() };
+						trans->UpdateWorld();
+						model->UpdateTransforms();
 
-				totalObj.push_back(model);
+						insTotalObj.push_back(model);
+					}
+					else
+					{
+						Transform* trans = insTotalObj[index]->AddTransform();
+						UINT tempInt = reader.UInt();
+						trans->position = { reader.Float(), reader.Float(), reader.Float() };
+						trans->rotation = { reader.Float(), reader.Float(), reader.Float() };
+						trans->scale = { reader.Float(), reader.Float(), reader.Float() };
+						trans->UpdateWorld();
+						insTotalObj[index]->UpdateTransforms();
+					}
+				}
 			}
-
-			curObjIndex = totalObj.size() - 1;
-			totalObjNum = totalObj.size();
-			strcpy_s(curFileName, totalObj[curObjIndex]->GetModelName().c_str());
-			addXPos = totalObj.size() * 10.0f;
-
 			loadNameWindow = false;
 		}
 		else
@@ -414,4 +491,17 @@ void ObjectCreateManager::MapToolLoad()
 	}
 
 	ImGui::End();
+}
+
+int ObjectCreateManager::SearchModelName(string name)
+{
+	int rIndex = 0;
+	for (ModelRender* mr : insTotalObj)
+	{
+		if (mr->GetModelName() == name)
+			return rIndex;
+
+		rIndex++;
+	}
+	return -1;
 }

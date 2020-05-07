@@ -12,9 +12,6 @@ private:
 	string modelName;
 	string shaderName;
 
-	//VertexBuffer* instanceBuffer;
-	//Matrix worlds[MAX_MODEL_INSTANCE];
-
 	bool check;
 	bool boxRenderCheck;
 
@@ -41,6 +38,7 @@ public:
 	string GetModelName() { return modelName; }
 	string GetShaderName() { return shaderName; }
 	UINT GetModelNum() { return modelNum; }
+	bool GetBoxRenderCheck() { return boxRenderCheck; }
 	
 
 	void SetModelShader(string shaderName) { model->SetShader(Path::ToWString(shaderName)); }
