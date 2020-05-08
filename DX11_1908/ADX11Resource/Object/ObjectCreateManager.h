@@ -4,7 +4,7 @@ struct ObjData
 {
 	string objName;
 	UINT objNum;
-	string objShader;
+	//string objShader;
 
 	Float3 Position;
 	Float3 Rotation;
@@ -17,10 +17,11 @@ private:
 	
 	int shaderMode;
 
-	vector<ModelSingle*> totalObj;
-	vector<string> loadCompleteList;
+	//vector<ModelSingle*> totalObj;
+	vector<ModelRender*> insTotalObj;
 	
 	int curObjIndex;
+	int curModelIndex;
 	UINT totalObjNum;
 
 	char curFileName[20];
@@ -37,9 +38,10 @@ private:
 	bool fileCheck;
 
 	bool allObjBoxRenderOn;
+	bool selectObjBoxRenderOn;
 
-	Frustum* frustum;
-
+	wstring shaderName;
+	//Frustum* frustum;
 public:
 
 	ObjectCreateManager();
@@ -60,4 +62,5 @@ public:
 	void MapToolSave();
 	void MapToolLoad();
 
+	int SearchModelName(string name);
 };

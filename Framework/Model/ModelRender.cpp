@@ -1,7 +1,7 @@
 #include "Framework.h"
 
 ModelRender::ModelRender(wstring shaderFile)
-	: shaderFile(shaderFile)
+	: shaderFile(shaderFile), modelNum(0), boxCollRenderCheck(true)
 {
 	model = new Model();
 
@@ -9,12 +9,20 @@ ModelRender::ModelRender(wstring shaderFile)
 		worlds[i] = XMMatrixIdentity();
 
 	instanceBuffer = new VertexBuffer(worlds, sizeof(Matrix), MAX_MODEL_INSTANCE, true);
+	
 }
 
 ModelRender::~ModelRender()
 {
+	//for (BoxCollider* bc : totalCollBox)
+	//	delete bc;
+
+	//totalCollBox.clear();
+
 	for (Transform* transform : transforms)
 		delete transform;
+
+	transforms.clear();
 
 	texture->Release();
 	srv->Release();
@@ -29,6 +37,11 @@ void ModelRender::Update()
 
 	for (auto mesh : *model->GetMeshes())
 		mesh->Update();
+
+	for (BoxCollider* bc : totalCollBox)
+		bc->UpdateWorld();
+
+	model->SetSpecular(Float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void ModelRender::Render()
@@ -40,6 +53,12 @@ void ModelRender::Render()
 
 	for (auto mesh : *model->GetMeshes())
 		mesh->Render(transforms.size());
+
+	if (boxCollRenderCheck)
+	{
+		for (BoxCollider* bc : totalCollBox)
+			bc->Render();
+	}
 }
 
 void ModelRender::UpdateTransform(UINT instanceID, UINT boneIndex, Transform& transform)
@@ -103,8 +122,45 @@ Transform* ModelRender::AddTransform()
 {
 	Transform* transform = new Transform();
 	transforms.push_back(transform);
+	
+	BoxCollider* box = AddCollBox();
+	box->SetParent(transform->GetWorldPointer());
 
 	return transform;
+}
+
+BoxCollider* ModelRender::AddCollBox()
+{
+	Float3 min = { 0, 0, 0 };
+	Float3 max = { 0, 0, 0 };
+
+	for (ModelMesh* mesh : *model->GetMeshes())
+	{
+		for (int i = 0; i < mesh->GetMeshVertexCount(); i++)
+		{
+			ModelVertex* vertices = mesh->GetModelVertexInfo();
+
+			if (min.x > vertices[i].position.x)
+				min.x = vertices[i].position.x;
+			if (max.x < vertices[i].position.x)
+				max.x = vertices[i].position.x;
+
+			if (min.y > vertices[i].position.y)
+				min.y = vertices[i].position.y;
+			if (max.y < vertices[i].position.y)
+				max.y = vertices[i].position.y;
+
+			if (min.z > vertices[i].position.z)
+				min.z = vertices[i].position.z;
+			if (max.z < vertices[i].position.z)
+				max.z = vertices[i].position.z;
+		}
+	}
+
+	BoxCollider* box = new BoxCollider(min, max);
+	totalCollBox.push_back(box);
+
+	return box;
 }
 
 void ModelRender::UpdateBones(ModelBone* bone, Matrix& matrix)

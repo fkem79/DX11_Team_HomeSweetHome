@@ -36,6 +36,7 @@
     <FxCompile Include="Shaders\ScatteringTarget.hlsl" />
     <FxCompile Include="Shaders\Scattering.hlsl" />
     <FxCompile Include="Shaders\Water.hlsl" />
+    <FxCompile Include="Shaders\InstancingFlashLight.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="ADX11Resource\Model\Belle.cpp" />

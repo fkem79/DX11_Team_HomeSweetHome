@@ -18,6 +18,12 @@ private:
 	ID3D11Texture2D* texture;
 	ID3D11ShaderResourceView* srv;
 
+	// 추가한 건 여기에다가 넣었습니다
+	string modelName;
+	UINT modelNum;
+	vector<BoxCollider*> totalCollBox;
+	bool boxCollRenderCheck;
+
 public:
 	ModelRender(wstring shaderFile);
 	~ModelRender();
@@ -35,8 +41,24 @@ public:
 	Transform* GetTransform(UINT index) { return transforms[index]; }
 
 	Model* GetModel() { return model; }
+
+	// 추가
+	string GetModelName() { return modelName; }
+	UINT GetModelNum() { return modelNum; }
+	void SetModelName(string value) { modelName = value; }
+	void SetModelNum(UINT value) { modelNum = value; }
+	void SetBoxCollRenderCheck(bool value) { boxCollRenderCheck = value; }
+
+	BoxCollider* AddCollBox();
+	BoxCollider* GetCollBox(UINT index) { return totalCollBox[index]; }
+	vector<BoxCollider*>* GetTotalCollBox() { return &totalCollBox; }
+	vector<Transform*>* GetTransforms() { return &transforms; }
+
+	int GetTransformsSize() { return transforms.size(); }
+	int GetCollBoxSize() { return totalCollBox.size(); }
+	bool GetBoxCollRenderCheck() { return boxCollRenderCheck; }
+
 private:
 	void UpdateBones(ModelBone* bone, Matrix& matrix);
-
 	void CreateTexture();
 };
