@@ -68,6 +68,7 @@ PixelInput VS(VertexInput input)
     matrix boneWorld = mul(transform, input.transform);
     
     output.position = mul(input.position, boneWorld);
+    output.wPosition = output.position;
     
     output.viewDir = normalize(output.position.xyz - invView._41_42_43);
     
@@ -80,15 +81,18 @@ PixelInput VS(VertexInput input)
     output.tangent = mul(input.tangent, (float3x3) boneWorld);
     output.binormal = cross(output.normal, output.tangent);
     
+    output.cPosition = CamPos();
+    
     return output;
 }
 
 
 float4 PS(PixelInput input) : SV_TARGET
 {
-    float4 albedo = diffuseMap.Sample(linearSamp, input.uv);
     
-    float3 light = normalize(lightDir);
+    float4 albedo = diffuseMap.Sample(linearSamp, input.uv) * mDiffuse;
+    
+    //float3 light = normalize(lightDir);
     
     float3 T = normalize(input.tangent);
     float3 B = normalize(input.binormal);
@@ -104,26 +108,6 @@ float4 PS(PixelInput input) : SV_TARGET
         normal = normalMapping.xyz * 2.0f - 1.0f;
         normal = normalize(mul(normal, TBN));
     }
-    
-    float diffuseIntensity = saturate(dot(normal, -light));
-    float4 diffuse = albedo * diffuseIntensity;
-    
-    float4 specular = 0;
-    if (diffuseIntensity > 0)
-    {
-        float3 halfWay = normalize(input.viewDir + light);
-        specular = saturate(dot(-halfWay, normal));
-        
-        float4 specularIntensity = 1;
-        if (isSpecularMap)
-        {
-            specularIntensity = specularMap.Sample(linearSamp, input.uv);
-        }
-        
-        specular = pow(specular, lightSpecExp) * specularIntensity;
-    }
-    
-    float4 ambient = albedo * lightAmbient;
     
     float4 result = CalcAmbient(normal, albedo);
         
@@ -148,8 +132,8 @@ float4 PS(PixelInput input) : SV_TARGET
         }
     }
     
-   // return diffuse * mDiffuse + specular * mSpecular + ambient * mAmbient;
-    return result;
+    return result/* + ambient * mAmbient*/;
+    //return diffuse * mDiffuse + specular * mSpecular + ambient * mAmbient * result;
 }
 /*
 float4 PS(PixelInput input) : SV_TARGET

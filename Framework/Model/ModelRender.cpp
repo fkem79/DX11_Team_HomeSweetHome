@@ -9,6 +9,7 @@ ModelRender::ModelRender(wstring shaderFile)
 		worlds[i] = XMMatrixIdentity();
 
 	instanceBuffer = new VertexBuffer(worlds, sizeof(Matrix), MAX_MODEL_INSTANCE, true);
+	
 }
 
 ModelRender::~ModelRender()
@@ -39,6 +40,8 @@ void ModelRender::Update()
 
 	for (BoxCollider* bc : totalCollBox)
 		bc->UpdateWorld();
+
+	model->SetSpecular(Float4(0.0f, 0.0f, 0.0f, 1.0f));
 }
 
 void ModelRender::Render()

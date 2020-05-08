@@ -40,7 +40,8 @@ private:
 	bool allObjBoxRenderOn;
 	bool selectObjBoxRenderOn;
 
-	Frustum* frustum;
+	wstring shaderName;
+	//Frustum* frustum;
 public:
 
 	ObjectCreateManager();

@@ -45,4 +45,8 @@ public:
 	Vector3 GetTargetOffset() { return targetOffset; }
 
 	UINT GetCamNum() { return camNum; }
+
+	//Ãß°¡
+
+	Vector3 GetForward() { return forward; }
 };

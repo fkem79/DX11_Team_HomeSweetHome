@@ -4,9 +4,10 @@
 ObjectCreateManager::ObjectCreateManager()
 	:mapToolWindow(false), addXPos(0.0f), check(false), addNameWindow(false), saveNameWindow(false), loadNameWindow(false),
 	fileCheck(true), allObjBoxRenderOn(true), selectObjBoxRenderOn(true),
-	curObjIndex(-1), curModelIndex(-1),totalObjNum(0), shaderMode(1)
+	curObjIndex(-1), curModelIndex(-1),totalObjNum(0), shaderMode(1), shaderName(L"InstancingFlashLight")
 {
-
+	//ModelInstancing
+	//InstancingFlashLight
 }
 
 ObjectCreateManager::~ObjectCreateManager()
@@ -245,7 +246,7 @@ void ObjectCreateManager::MapToolAddWindow()
 			if (index == -1) // 이미 totalObj에 존재하는지 확인한다.
 			{
 				// 존재 안 하면 그냥 만들고 추가한다.
-				ModelRender* model = new ModelRender(L"ModelInstancing");
+				ModelRender* model = new ModelRender(shaderName);
 				model->SetModelNum(insTotalObj.size());
 
 				model->SetModelName(temp);
@@ -463,7 +464,7 @@ void ObjectCreateManager::MapToolLoad()
 					int index = SearchModelName(temp);
 					if (index == -1)
 					{
-						ModelRender* model = new ModelRender(L"ModelInstancing");
+						ModelRender* model = new ModelRender(shaderName);
 						model->SetModelNum(reader.UInt());
 						model->SetModelName(temp);
 						model->ReadMaterial(temp + "/" + temp);
