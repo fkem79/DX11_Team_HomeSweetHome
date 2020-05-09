@@ -6,12 +6,14 @@ cbuffer Mapping : register(b10)
     int isNormalMap;
 }
 
-struct VertexInput
+struct VertexUVNormalTangentBlendMesh
 {
     float4 position : POSITION;
     float2 uv : UV;
     float3 normal : NORMAL;
     float3 tangent : TANGENT;
+    float4 indices : BLENDINDICES;
+    float4 weights : BLENDWEIGHTS;
     
     matrix transform : INSTANCE;
     uint instanceID : SV_InstanceID;
@@ -30,41 +32,12 @@ struct PixelInput
     float3 cPosition : POSITION1;
 };
 
-/*
-struct VertexInput
-{
-    float4 position : POSITION;
-    float2 uv : UV;
-    float3 normal : NORMAL;
-    float3 tangent : TANGENT;
-    
-    matrix transform : INSTANCE;
-    uint instanceID : SV_InstanceID;
-};
-
-struct PixelInput
-{
-    float4 position : SV_Position;
-    float2 uv : UV;    
-    float3 normal : NORMAL;
-    float3 wPosition : POSITION0;
-    float3 cPosition : POSITION1;
-};
-*/
-//Texture2DArray transformMap : register(t10);
-
-PixelInput VS(VertexInput input)
+PixelInput VS(VertexUVNormalTangentBlendMesh input)
 {
     PixelInput output;
 
-    //matrix boneWorld = mul(bones[index], world);
+    matrix transform = SkinWorld(input.instanceID, input.indices, input.weights);
     
-    float4 m0 = transformMap.Load(int4(index * 4 + 0, input.instanceID, 0, 0));
-    float4 m1 = transformMap.Load(int4(index * 4 + 1, input.instanceID, 0, 0));
-    float4 m2 = transformMap.Load(int4(index * 4 + 2, input.instanceID, 0, 0));
-    float4 m3 = transformMap.Load(int4(index * 4 + 3, input.instanceID, 0, 0));
-    
-    matrix transform = matrix(m0, m1, m2, m3);
     matrix boneWorld = mul(transform, input.transform);
     
     output.position = mul(input.position, boneWorld);
@@ -86,13 +59,11 @@ PixelInput VS(VertexInput input)
     return output;
 }
 
-
 float4 PS(PixelInput input) : SV_TARGET
 {
-    
     float4 albedo = diffuseMap.Sample(linearSamp, input.uv) * mDiffuse;
     
-    //float3 light = normalize(lightDir);
+    float3 light = normalize(lightDir);
     
     float3 T = normalize(input.tangent);
     float3 B = normalize(input.binormal);
@@ -109,6 +80,27 @@ float4 PS(PixelInput input) : SV_TARGET
         normal = normalize(mul(normal, TBN));
     }
     
+    /*float diffuseIntensity = saturate(dot(normal, -light));
+    float4 diffuse = albedo * diffuseIntensity;
+    
+    float4 specular = 0;
+    if (diffuseIntensity > 0)
+    {
+        float3 halfWay = normalize(input.viewDir + light);
+        specular = saturate(dot(-halfWay, normal));
+        
+        float4 specularIntensity = 1;
+        if (isSpecularMap)
+        {
+            specularIntensity = specularMap.Sample(linearSamp, input.uv);
+        }
+        
+        specular = pow(specular, lightSpecExp) * specularIntensity;
+    }
+    
+    float4 ambient = albedo * lightAmbient;*/
+    
+   // return diffuse * mDiffuse + specular * mSpecular + ambient * mAmbient;
     float4 result = CalcAmbient(normal, albedo);
         
     for (uint i = 0; i < lightCount; i++)
@@ -132,6 +124,13 @@ float4 PS(PixelInput input) : SV_TARGET
         }
     }
     
-    return result/* + ambient * mAmbient*/;
-    //return diffuse * mDiffuse + specular * mSpecular + ambient * mAmbient * result;
+    return result;
+
+}
+
+float4 PS_Depth(PixelInput input) : SV_TARGET
+{
+    float depth = input.position.z / input.position.w;
+    
+    return float4(depth.xxx, 1.0f);
 }

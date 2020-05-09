@@ -2,13 +2,12 @@
 #include "Player.h"
 
 Player::Player()
-	:oldYPos(0.0f)
+	:oldYPos(0.0f), leftHandRenderOn(false)
 {
 
 	leftHand = new PlayerLHand();
 	light = new FlashLight();
 
-	
 	if(CAMERA->GetCamNum() ==1)
 		leftHand->GetTransform()->SetParent(CAMERA->GetCamInvView());
 
@@ -33,6 +32,9 @@ Player::~Player()
 void Player::Update()
 {
 	//head->Update();
+	if (KEYUP('F'))
+		leftHandRenderOn = !leftHandRenderOn;
+
 	leftHand->Update();
 	light->Update();
 }
@@ -40,8 +42,13 @@ void Player::Update()
 void Player::Render()
 {
 	//head->Render();
-	leftHand->Render();
-	light->Render();
+
+	if(leftHandRenderOn)
+	{
+		leftHand->Render();
+		light->Render();
+	}
+	
 }
 
 void Player::PostRender()

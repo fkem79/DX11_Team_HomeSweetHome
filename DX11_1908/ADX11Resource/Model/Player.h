@@ -7,6 +7,8 @@ private:
 	FlashLight* light;
 
 	float oldYPos;
+
+	bool leftHandRenderOn;
 public:
 	Player();
 	~Player();
@@ -15,5 +17,6 @@ public:
 	void Render();
 	void PostRender();
 
+	bool GetleftHandRenderCheck() { return leftHandRenderOn; }
 	//PlayerHead* GetPlayerHead() { return head; }
 };

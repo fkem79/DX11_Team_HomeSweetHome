@@ -8,6 +8,7 @@
 Program::Program()
 {
 	LIGHT->data.ambient = { 1.0f, 1.0f, 1.0f, 0.0f };
+	LIGHT->data.ambientFloor = { 0.0f, 0.0f, 0.0f, 0.0f };
 
 	SCENE->Add("start", new StartScene());
 	SCENE->Add("play", new MapScene());

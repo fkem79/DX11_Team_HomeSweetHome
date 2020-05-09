@@ -8,26 +8,24 @@ MapScene::MapScene()
 	belle = new Belle();
 	belle->GetTransform()->position = { 30.0f, 0.0f, 50.0f };
 
-	Environment::Get()->GetLight()->data.ambient = { 0.1, 0.1, 0.1, 1 };
+	Environment::Get()->GetLight()->data.ambient = { 0.05f, 0.05f, 0.05f, 1 };
 
 	ocm = new ObjectCreateManager();
 
 	buffer = new LightInfoBuffer();
 	LightInfo info;
-	//info.type = LightInfo::POINT;
 	//info.inner = 85.0f;
 	info.inner =  88.256f;//89.419f;
 	//info.outer = 30.0f; 
 	info.outer = 14.712f;//16.258f;  
 	info.range = 62.0f;
 	info.type = LightInfo::SPOT;
+	info.range = 110.0f;
 	info.color = Float4(1, 1, 1, 1);
 	info.position = Float3(-5, 5, 0);
 	info.direction = Float3(0, 0, 1);
 
 	buffer->Add(info);
-
-	
 }
 
 MapScene::~MapScene()
@@ -41,12 +39,19 @@ MapScene::~MapScene()
 void MapScene::Update()
 {
 	buffer->data.lights[0].position = CAMERA->position/* + CAMERA->GetForward()*/;
+	//static Vector3 prev_forworad = { CAMERA->GetForward().x*1.5f,  CAMERA->GetForward().y, CAMERA->GetForward().z*1.5f };
 	static Vector3 prev_forworad = CAMERA->GetForward();
 	if (!(prev_forworad == CAMERA->GetForward()))
 	{
 		prev_forworad = CAMERA->GetForward();
 		buffer->data.lights[0].direction = CAMERA->GetForward();
 	}
+
+	if (!player->GetleftHandRenderCheck())
+		buffer->data.lights[0].color = Float4(0, 0, 0, 0);
+	else
+		buffer->data.lights[0].color = Float4(1, 1, 1, 1);
+
 	player->Update();
 	belle->Update();
 	
@@ -92,7 +97,7 @@ void MapScene::PostRender()
 		ImGui::SliderInt("Type" + i, (int*)&buffer->data.lights[i].type, 0, 3);
 		ImGui::ColorEdit4("Color" + i, (float*)&buffer->data.lights[i].color);
 		ImGui::SliderFloat3("Position" + i, (float*)&buffer->data.lights[i].position, -100, 100);
-		ImGui::SliderFloat("Range" + i, &buffer->data.lights[i].range, 0, 100);
+		ImGui::SliderFloat("Range" + i, &buffer->data.lights[i].range, 0, 500);
 		ImGui::InputFloat3("Direction" + i, (float*)&buffer->data.lights[i].direction);
 		//ImGui::SliderFloat3("Direction" + i, (float*)&buffer->data.lights[i].direction, -1, 1);
 		ImGui::SliderFloat("Outer" + i, &buffer->data.lights[i].outer, 0, 180);

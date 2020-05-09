@@ -2,14 +2,14 @@
 #include "PlayerLHand.h"
 
 PlayerLHand::PlayerLHand()
-	: moveSpeed(10.0f), rotSpeed(2.0f), state(IDLE), accelation(10.0f),
+	: moveSpeed(10.0f), rotSpeed(2.0f), state(HOLDING), accelation(10.0f),
 	deceleration(3.0f), velocity(0, 0, 0)
 {
 	model = new ModelAnimator(L"ModelAnimationInstancing");
 	//model = new ModelAnimator(L"ModelInstancing");
 	transform = model->AddTransform();
 	ReadData();
-	model->SetEndEvent(ATTACK, bind(&PlayerLHand::SetIdle, this));
+	model->SetEndEvent(CHECK, bind(&PlayerLHand::SetIdle, this));
 
 	model->PlayClip(0, state);
 
@@ -37,6 +37,10 @@ void PlayerLHand::Update()
 
 	if (KEYDOWN(VK_SPACE))
 		SetAnimation(ATTACK);*/
+
+	//if (KEYUP('G'))
+	//	SetAnimation(CHECK);
+
 	model->Update();
 	transform->UpdateWorld();
 }
@@ -57,7 +61,7 @@ void PlayerLHand::SetAnimation(AnimState value)
 
 void PlayerLHand::SetIdle()
 {
-	SetAnimation(IDLE);
+	SetAnimation(HOLDING);
 }
 
 void PlayerLHand::ReadData()
@@ -70,16 +74,21 @@ void PlayerLHand::ReadData()
 	reader->ExportMesh(name + "/" + name);
 	delete reader;
 
-	
 	reader = new ModelReader();
 	reader->ReadFile("ModelData/Animations/" + name + "/Holding.fbx");
 	reader->ExportAnimClip(0, name + "/Holding");
+	delete reader;
+
+	reader = new ModelReader();
+	reader->ReadFile("ModelData/Animations/" + name + "/Check.fbx");
+	reader->ExportAnimClip(0, name + "/Check");
 	delete reader;
 
 	string path = name + "/" + name;
 	model->ReadMaterial(path);
 	model->ReadMesh(path);
 	model->ReadClip(name + "/Holding");
+	model->ReadClip(name + "/Check");
 	
 	//model->ReadClip(name + "/Idle");
 	//model->ReadClip(name + "/Idle");

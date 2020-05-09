@@ -5,8 +5,8 @@ Belle::Belle()
 	: moveSpeed(10.0f), rotSpeed(2.0f), state(IDLE), accelation(10.0f),
 	deceleration(3.0f), velocity(0, 0, 0)
 {
-	model = new ModelAnimator(L"ModelAnimationInstancing");
-	//model = new ModelAnimator(L"ModelInstancing");
+	//model = new ModelAnimator(L"ModelAnimationInstancing");
+	model = new ModelAnimator(L"BelleShader");
 	transform = model->AddTransform();
 	ReadData();
 	model->SetEndEvent(ATTACK, bind(&Belle::SetIdle, this));
