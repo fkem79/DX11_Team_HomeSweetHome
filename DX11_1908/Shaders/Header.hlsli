@@ -280,7 +280,7 @@ float4 CalcPoint(float3 normal, float4 color, float3 wPosition, float3 cPosition
     float distanceToLightNormal = 1.0f - saturate(distanceToLight / light.range);
     float attention = distanceToLightNormal * distanceToLightNormal;
     
-    return color * attention;
+    return color * attention * 5.0f;
 }
 
 float4 CalcSpot(float3 normal, float4 color, float3 wPosition, float3 cPosition, Light light)
@@ -343,5 +343,5 @@ float4 CalcCapsule(float3 normal, float4 color, float3 wPosition, float3 cPositi
     float distanceToLightNormal = 1.0f - saturate(distanceToLight / light.range);
     float attention = distanceToLightNormal * distanceToLightNormal;
     
-    return color * attention;
+    return color * attention * 5.0f;
 }

@@ -8,6 +8,7 @@ private:
 	ObjectCreateManager* ocm;
 	LightInfoBuffer* buffer;
 
+
 public:
 	MapScene();
 	~MapScene();
@@ -16,4 +17,6 @@ public:
 	virtual void PreRender() override;
 	virtual void Render() override;
 	virtual void PostRender() override;
+
+	void CreateLight();
 };
